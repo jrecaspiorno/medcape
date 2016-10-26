@@ -51,6 +51,9 @@ Tras instalar `sshfs` y crear el directgorio `/home/debian/shared/`:
 sshfs -o idmap=user jrecas@jrecas-ws.dacya.ucm.es:/home/jrecas/Trabajo/Programacion/BBB /home/debian/shared/
 ```
 
+`addgroup debian fuse`
+
+
 # SPI
 
 He creado el fichero `/media/jrecas/BEAGLEBONE/uEnv.txt` en el que especifico que se deshabilita el HDMI y se carga el `device tree` de SPI `/lib/firmware/BB-SPI1-01-00A0.dtbo`:
@@ -143,7 +146,7 @@ J4 Pin        | J4 Pin
 4             | 3
 6             | 5 (GND->P9-1)
 8             | 7
-10 (5V->P9-5) | 9 (3V3->P9-3)
+10 (5V->P9-7) | 9 (3V3->P9-3)
 
   * SPI
 

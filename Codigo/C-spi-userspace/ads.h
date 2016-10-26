@@ -1,8 +1,8 @@
 #ifndef _ADS_H_
 #define _ADS_H_
 
-//#define ADS1198
-#define ADS1192
+#define ADS1198
+//#define ADS1192
 
 #ifdef ADS1198
     #include "ads1198.h"

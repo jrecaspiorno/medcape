@@ -20,13 +20,13 @@
 //  RESETB        | 8  (P9-25)  | 7           | CS           
 //  GND           | 10          | 9           | NC           
 //  GPIO2         | 12          | 11 (P9-30)  | DIN          
-//  NC/**START**  | 14 (P9-27)  | 13 (P9-23)  | DOUT         
+//  NC/**START**  | 14 (P9-27)  | 13 (P9-29)  | DOUT         
 //  NC            | 16          | 15 (P9-23)  | DRDYB        
 //  GND           | 18          | 17          | NC           
 //  NC            | 20          | 19          | NC  
 
 
-//SPI1_D0   P9-23 (BBB) Input           ->  J3-13 DOUT (ADS1x98ECG)
+//SPI1_D0   P9-29 (BBB) Input           ->  J3-13 DOUT (ADS1x98ECG)
 //SPI1_D1   P9-30 (BBB) Output          ->  J3-11 DIN  (ADS1x98ECG)
 //SPI1_SCLK P9-31 (BBB)                 ->  J3-03 SCLK (ADS1x98ECG)
 //SPI1_CS0  P9-28 (BBB)                 ->  J3-01 nCS  (ADS1x98ECG) NOTE depende del JP21 de la placa RevC posición 1-2

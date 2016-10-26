@@ -155,7 +155,7 @@ J4 Pin        | J4 Pin
  RESETB        | 8  (P9-25)  | 7           | CS           
  GND           | 10          | 9           | NC           
  GPIO2         | 12          | 11 (P9-30)  | DIN          
- NC/**START**  | 14 (P9-27)  | 13 (P9-23)  | DOUT         
+ NC/**START**  | 14 (P9-27)  | 13 (P9-29)  | DOUT         
  NC            | 16          | 15 (P9-23)  | DRDYB        
  GND           | 18          | 17          | NC           
  NC            | 20          | 19          | NC          

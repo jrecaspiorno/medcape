@@ -1,0 +1,26 @@
+Fuente: 
+http://kilobaser.com/blog/2014-07-15-beaglebone-black-gpios
+
+Ejemplo: P8_3 = GPIO1[6] = GPIO1_6 = GPIO38 porque (38=1*32+6)
+
+Explicación:
+Find out which GPIO corresponds to which pin.
+
+The AM335x has four built-in GPIO controllers, named gpio0[], gpio1[], gpio2[] 
+and gpio3[]. For each controller, there is one page of memory which controls each 
+gpio controller. Each controller is responsible for 32 GPIOs. Each 32bit word has
+ a specific function. Like pin configuration, controlling or setting a specific 
+pin-state. Each bit in each of these words controls a GPIO pin.
+
+Choose function by choosing the word, choose GPIO by choosing the bit. This is basically what the 
+Linux Kernel does for you, when you use the SysFS interface. This is also how the 
+different GPIOs are numbered in Linux. Linux gpio/gpi0/ is gpio0[0] (bit 0 on gpio
+ chip 0), Linux gpio/gpio1/ is bit1 on chip 0 and so on, till we get to 
+Linux gpio/gpio32/ which is bit0 on chip1 (gpio1[0]).
+
+So, when you now take a look at Table 12 and 13 of the BeagleBoneBlack SRM and
+ read that e.g. Pin P8_3 on the expansion header is routed to gpio1[6] inside
+ the chip, it's easy to calculate that in Linux you see this as gpio/gpio38/ 
+since 38=1*32+6.
+
+

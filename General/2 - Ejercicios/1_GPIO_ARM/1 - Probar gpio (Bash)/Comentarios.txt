@@ -1,0 +1,45 @@
+Modo digital para GPIO:
+
+Página 210 de Exploring BBB
+Cada pin tiene 7 modos, a nosotros nos interesa el mode 7, que es el GPIO.
+
+Página 213 de Exploring BBB
+Nombre = Mode7 en las imágenes de los header de P8 y P9 significa que ya ese pin ya
+está directamente en el Mode7 (o sea GPIO), de no ser así. Podemos hacerlo
+funcionar para GPIO, pero ya sería necesario crear un overlay.
+
+SIN OVERLAY:
+En nuestro ejemplo se ha usado sobre todo el primer link como referencia:
+http://www.allaboutcircuits.com/projects/how-to-use-the-digital-i-o-on-a-beaglebone/
+http://kilobaser.com/blog/2014-07-15-beaglebone-black-gpios
+
+Vamos a usar el pin P8_26, que corresponde al GPIO1_29, el cual ya tiene por defecto
+el mode7 (GPIO).
+Nota: Algunos pins pueden funcionar directamente con GPIO aunque no esté el mode7
+por defecto, seguramente sea porque internamente comparten algún circuito con otros
+modos. Este sería el caso por ejemplo del P8_8, que tiene de modo por defecto el
+mode2 (en su caso timer7 realiza ese modo). Sin embargo sin necesidad de cambiarle
+el modo, también funciona directamente con GPIO.
+
+Ver página 54 en adelante para ver los modos por defecto de cada pin:
+http://beagleboard.org/static/Docs/Hardware/BONE_SRM.pdf
+
+
+//=============================
+
+CON OVERLAY: 
+generador automático del overlay:
+http://kilobaser.com/blog/2014-07-28-beaglebone-black-devicetreeoverlay-generator#1gpiodto
+
+Vamos a usar un pin que no tenga por defecto el mode7, para así poder comprobar que
+en efecto somos capaces de cambiar el mode a un pin.
+
+
+--------------------------------------------------------------------------------
+
+Modo "Analógico" para GPIO:
+Entre comillas porque no es analógico real, es PWM, es decir se simula la señal
+analógica mediante activar/desactivar la señal digital a velocidades muy rápidas.
+En nuestro caso por ahora no es necesario:
+http://www.toptechboy.com/tutorial/beaglebone-black-lesson-6-control-pwm-signals-on-gpio-pins-from-python/
+

@@ -1,0 +1,5 @@
+Principal referencia en la que se basa nuestro ejemplo:
+Fichero bbb_gpio.c y ads.c (donde se ejecutan las llamadas al código de bbb_gpio.c)
+del software Medcape.
+
+

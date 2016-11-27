@@ -1,0 +1,39 @@
+0 - Añadir el parámetro -lprussdrv al final de la línea del gcc en el makefile
+
+0' - Tener creado el device tree overlay:
+Es una mezcla del de medcape(los gpio de start, reset, etc que aún se usan) y el de Derek(toda la parte de pru)
+
+1 - Load device tree overlay:
+
+cat /sys/devices/bone_capemgr.?/slots
+
+Si no sale el EBB-PRU-ADC hay que cargarlo:
+
+cp EBB-PRU-ADC-00A0.dtbo /lib/firmware/
+cd /lib/firmware/
+echo EBB-PRU-ADC > /sys/devices/bone_capemgr.?/slots
+cat /sys/devices/bone_capemgr.?/slots
+
+(Para cargarlo automáticamente cuando arranque, suponiendo que al menos una vez se haya hecho todo lo de arriba):
+vim /home/debian
+añadir al final(no en una nueva línea): capemgr.enable_partno=EBB-PRU-ADC
+vim /etc/default/capemgr
+añadir CAPE=EBB-PRU-ADC
+
+--------------------------------------------
+2 - Crear espacio de memoria compartida (para compartir entre las PRU y nuestro programa host en userspace):
+
+(Para comprobar que está cargado el módulo uio_pruss)
+lsmod
+
+(Para asignar el size de la external RAM pool):
+rmmod uio_pruss
+modprobe uio_pruss extram_pool_sz=0x1E8480
+
+(Para comprobar si se ha hecho bien, this modification can be tested using sysfs)
+cd /sys/class/uio/uio0/maps/map1
+cat addr
+cat size
+
+3 - Compilar los ficheros en ensamblador para las pru(ficheros con extensión .p) (Posible mejora: Incluir esta compilación en el makefile principal):
+pasm -b PRUClock.p

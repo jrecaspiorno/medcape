@@ -44,7 +44,7 @@ DELAYON:
 
 ENDOFLOOP:                       // is the clock running? 
 	LBBO	r3, r1, 4, 4	 // loaded the state into r3 -- is running? 4 bytes total
-	CLR	r3.t0           //TRUCO: Para que el reloj nunca pare independientemente de lo que haga pru0
+	SET	r3.t0           //TRUCO: Para que el reloj nunca pare independientemente de lo que haga pru0
 	QBBS	RESETCLK, r3.t1	 // If r3 bit 1 is high then reload the clock period
 	QBBS	MAINLOOP, r3.t0  // If r3 bit 0 is high then the clock is running
 	QBA	ENDOFLOOP        // otherwise loop without toggling the clock -- i.e. clock off

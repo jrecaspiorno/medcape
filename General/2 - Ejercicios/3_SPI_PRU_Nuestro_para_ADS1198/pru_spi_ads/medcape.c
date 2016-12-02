@@ -198,7 +198,7 @@ int main() {
 	//prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin");
 	prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
 
-	/*
+	
     //Create thread
     if (pthread_create(&thid, NULL, &load_mem2file_thread, NULL)) {
         perror("Failed to create the toggle thread");
@@ -210,7 +210,7 @@ int main() {
    int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
    printf("EBBADC PRU0 program completed, event number %d.\n", n);
    
-	*/
+	
 	// Disable PRU and close memory mappings 
    prussdrv_pru_disable(ADC_PRU_NUM);
    prussdrv_pru_disable(CLK_PRU_NUM);

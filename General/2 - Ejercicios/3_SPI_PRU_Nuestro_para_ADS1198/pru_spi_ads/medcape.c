@@ -195,8 +195,8 @@ int main() {
 	// Load and execute the PRU program on the PRU
 	printf("Main sleep... executing pru programs... (%d)\n", timerData[0]);
 
-	//prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin");
-	prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
+	prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin");
+	//prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
 
 	
     //Create thread

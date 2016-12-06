@@ -107,28 +107,88 @@ int main() {
       printf("You must run this program as root. Exiting.\n");
       exit(EXIT_FAILURE);
    }
-   
-/* //Descomentar cuando se tenga hecho el dts que también los configure
-    printf("Init GPIOs\n");
+
+
+//======================TODOS COMANDOS EN C===========================================
+//=======================================================================================
+//=======================================================================================
+/*
+printf("Init GPIOs\n");
     if ( ads_init_gpios() == -1 ) {
         printf("can't init GPIOs\n");
         return -1;
     }
-	
+
+    printf("Conf SPI\n");
+    init_spi(ADS_SPI_HZ>>5);
+//    init_spi(ADS_SPI_HZ);
+    sleep(1);
+
     printf("Reset cycle\n");
     if ( ads_reset() == -1 ) {
         printf("can't reset ADS\n");
         return -1;
     }
-	
+
+
+    printf("Stop Read Data Continuously mode (just in case)\n");
+    if ( ads_sdatac() == -1 ) {
+        printf("can't stop read data continuously\n");
+        return -1;
+    }
+    sleep(1);
+
+    printf("POR registers\n");
+    //ads_print_registers();
+
+    printf("Set sample rate\n");
+    if ( ads_set_rate(SRATE_1K) == -1 ) {
+        //if( ads_set_rate(SRATE_125) == -1 ){
+        printf("can't set sample rate!!\n");
+        return -1;
+    }
+    sleep(1);
+
+    printf("Enable internal reference\n");
+    if ( ads_enable_intref() == -1 ) {
+        printf("Error enabling internal reference!!\n");
+        return -1;
+    }
+    sleep(2);
+
+    //Just in case...
+    printf("Checl ID\n");
+    if ( ads_check_id() == -1 ) {
+        printf("can't read IDReg\n");
+        return -1;
+    }
+
+    ads_print_registers();
+
+
     printf("START: start continuous reading\n");
     if ( ads_start() == -1 ) {
         printf("can't start conversion\n");
         return -1;
     }
-	
-*/
 
+    printf("RDATAC: read data continuously\n");
+    if ( ads_command(RDATAC) == -1 ) {
+        printf("can't read data continuously\n");
+        return -1;
+    }
+
+    close_spi();
+*/
+//=======================================================================================
+//=======================================================================================
+//=======================================================================================
+	/*Speeds Medcape original:
+	SPI speed = 3 MHz
+	ADS_Sample_rate = 4KHz //SRATE_1K pero luego en realidad al hacer los cálculos, es 4KHz
+	*/
+	
+	
    // Initialize structure used by prussdrv_pruintc_intc
    // PRUSS_INTC_INITDATA is found in pruss_intc_mapping.h
    tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
@@ -144,7 +204,7 @@ int main() {
    printf("-> the PRUClock on/off state is mapped at address: %x\n", (PRU_data_addr + 0x10000));
 
    // data for PRU0 based on the MCPXXXX datasheet
-   unsigned int spiData[6];
+   unsigned int spiData[7];
    	//May we store the initial spi speed in shared memory:
 	//(ADS_SPI_HZ>>5)
     //printf("initial spi speed in memory \n");
@@ -154,7 +214,7 @@ int main() {
 	spiData[1] = RDATAC; 
     printf("Loading ads_rdatac command\n");
 	spiData[2] = SRATE_1K; 
-	printf("Loading final spi speed\n");
+	printf("Loading sample rate speed\n");
 	#ifdef ADS1198
 		spiData[3] = CONFIG3; 
 	#endif
@@ -165,9 +225,9 @@ int main() {
 	//May we check ids...?
    spiData[4] = readFileValue_sysfs(MMAP1_LOC "addr");
    spiData[5] = readFileValue_sysfs(MMAP1_LOC "size");
+   printf("Loading spi speed\n");
+   spiData[6] = FREQ_6_25MHz;
    
-   
-   printf("Sending the SPI Control Data: 0x%x\n", spiData[0]);
    printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes\n", spiData[4], spiData[5]);
    int numberSamples = spiData[5];
    printf("-> this space has capacity to store %d 8-bit samples (max)\n", numberSamples);
@@ -177,8 +237,8 @@ int main() {
    prussdrv_open (PRU_EVTOUT_0);
 
    // Write the spiData into PRU0 Data RAM0.
-   prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, spiData, 24);  // spi data
-   printf("spi_data stored in pru0 memory\n");
+   prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, spiData, 28);  // spi data
+   printf("spi_control_data stored in pru0 memory\n");
    prussdrv_pru_write_memory(PRUSS0_PRU1_DATARAM, 0, timerData, 8); // sample clock
    printf("clock_data stored in pru1 memory\n");
 
@@ -197,15 +257,16 @@ int main() {
 
 	prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin");
 	//prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
-
 	
+	printf("Before mem2file thread \n");
+	/*
     //Create thread
     if (pthread_create(&thid, NULL, &load_mem2file_thread, NULL)) {
         perror("Failed to create the toggle thread");
         return -1;
     }
-  
-  
+  */
+	
    // Wait for event completion from PRU, returns the PRU_EVTOUT_0 number
    int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
    printf("EBBADC PRU0 program completed, event number %d.\n", n);

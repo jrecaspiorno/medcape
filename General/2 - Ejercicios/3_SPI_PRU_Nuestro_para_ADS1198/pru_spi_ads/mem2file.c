@@ -66,13 +66,13 @@ unsigned int readFileValue(char filename[]){
    return value;
 }
 
-int main_mem2file(int argc, char **argv) {
+int main(int argc, char **argv) {
     int fd;
     void *map_base, *virt_addr;
     unsigned long read_result, writeval;
     unsigned int addr = readFileValue(MMAP_LOC "addr");
     unsigned int dataSize = readFileValue(MMAP_LOC "size");
-    unsigned int numberOutputSamples = dataSize * 2;
+    unsigned int numberOutputSamples = dataSize;
     off_t target = addr;
 
     if(argc>1){     // There is an argument -- lists number of samples to dump
@@ -93,34 +93,13 @@ int main_mem2file(int argc, char **argv) {
     }
     fflush(stdout);
 
-	//----Medcape--------------------
-	time_t current_time;
-    struct tm *time_info;
-    char time_string[30];  // space for "YYYY-MM-DD_HH-MM-SS\0"
-    FILE *pf_data;
-	
-    time(&current_time);
-    time_info=localtime(&current_time);
-    strftime(time_string, sizeof(time_string), "%F_%H-%M-%S.dat", time_info);
-
-
-    if ( (pf_data=fopen(time_string, "w")) == NULL ) {
-        perror("Error al fichero de datos");
-       return -1;
-    }
-	//-------------------------------
-	
     int i=0;
     for(i=0; i<numberOutputSamples; i++){
 	virt_addr = map_base + (target & MAP_MASK);
-        read_result = *((uint16_t *) virt_addr);
+        read_result = *((uint32_t *) virt_addr);
         //printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
-        printf("%d %d\n",i, read_result);
-		//---Medcape-----------------------
-		fwrite(read_result, sizeof(uint16_t), 1, pf_data);
-		//---------------------------------
-		
-        target+=2;                   // 2 bytes per sample
+        printf("%d %x\n",i, read_result);
+        target+=4;                   // 18 bytes per sample
     }
     fflush(stdout);
 
@@ -128,8 +107,6 @@ int main_mem2file(int argc, char **argv) {
        printf("Failed to unmap memory");
        return -1;
     }
-	
-	close(pf_data);
     close(fd);
     return 0;
 }

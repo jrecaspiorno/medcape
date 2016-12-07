@@ -66,7 +66,7 @@ unsigned int readFileValue(char filename[]){
    return value;
 }
 
-int main(int argc, char **argv) {
+int main_mem2file(int argc, char **argv) {
     int fd;
     void *map_base, *virt_addr;
     unsigned long read_result, writeval;
@@ -116,9 +116,8 @@ int main(int argc, char **argv) {
         read_result = *((uint16_t *) virt_addr);
         //printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
         printf("%d %d\n",i, read_result);
-		
 		//---Medcape-----------------------
-		fwrite(read_result, uint16_t, 1, pf_data);
+		fwrite(read_result, sizeof(uint16_t), 1, pf_data);
 		//---------------------------------
 		
         target+=2;                   // 2 bytes per sample

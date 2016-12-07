@@ -1,3 +1,5 @@
+NOTA: Si se quiere hacer make(del medcape.c) -> Hay que mover mem2file.c a otra carpeta porque si no da problemas de compilación al haber un main en los 2 archivos
+
 0 - Añadir el parámetro -lprussdrv al final de la línea del gcc en el makefile
 
 0' - Tener creado el device tree overlay:
@@ -33,8 +35,9 @@ lsmod
 rmmod uio_pruss
 modprobe uio_pruss extram_pool_sz=0x1E8480
 
-//Solo 170 bytes (para testing):
-modprobe uio_pruss extram_pool_sz=0x0000AA 
+//Solo 36 bytes (2 muestras de 18 bytes) (para testing):
+modprobe uio_pruss extram_pool_sz=0x000024
+
 (Para comprobar si se ha hecho bien, this modification can be tested using sysfs)
 cat /sys/class/uio/uio0/maps/map1/size
 cat addr

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Building the memory to file utility"
+gcc mem2file.c -o mem2file

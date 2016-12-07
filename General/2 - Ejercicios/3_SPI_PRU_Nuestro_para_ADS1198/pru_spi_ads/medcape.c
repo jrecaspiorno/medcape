@@ -228,9 +228,9 @@ printf("Init GPIOs\n");
    printf("Loading spi speed\n");
    spiData[6] = FREQ_6_25MHz;
    
-   printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes\n", spiData[4], spiData[5]);
    int numberSamples = spiData[5];
-   printf("-> this space has capacity to store %d 8-bit samples (max)\n", numberSamples);
+   printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes = %d bytes\n", spiData[4], spiData[5], numberSamples);
+   printf("-> this space has capacity to store %d 18-bytes samples (max)\n", numberSamples/N_DATA);
 
    // Allocate and initialize memory
    prussdrv_init ();

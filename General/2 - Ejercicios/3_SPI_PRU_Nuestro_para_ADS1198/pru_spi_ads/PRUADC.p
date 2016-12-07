@@ -54,7 +54,22 @@ START:
 	LBBO	r9, r1, 20, 24	 // load the size that is passed into r9 -- the number of samples to take
 	LBBO	r11, r1, 24, 28	 // spi speed
 
-	MOV	r3, 0x00000000	 // clear r3 to receive the response from the MCP3XXX
+	// clear registers to receive the response from the ADS
+	MOV	r3, 0x00000000
+	MOV	r17, 0x00000000	 
+	MOV	r18, 0x00000000	
+	MOV	r19, 0x00000000	 
+	MOV	r20, 0x00000000	
+	
+	//Counter of bits written into register of their comment:
+	MOV	r22, 0 //r3
+	MOV	r23, 0 //r17 
+	MOV	r24, 0	//r18
+	MOV	r25, 0	 //r19
+	MOV	r26, 0	//r20
+	
+	MOV r27, 0
+	
 	MOV r14, 32 //Size of 1 PRU register
 	
 	
@@ -193,29 +208,33 @@ MOV	r12, DELAYCOUNT
 CALL DELAY_FUNCTION
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-
+	MOV r16, 0  //Counter of bits received
+	MOV r21, 0x00000000 //Auxiliary register, to store 32 bits: it's stored in a register and then set to 0 every 32 bits
+	
 // Need to wait at this point until it is ready to take a sample
 POLLING_DATA_READY_LOW:
 	QBBC	POLLING_DATA_READY_LOW, r31.t16
+		MOV r21, 0x00000000 //Auxiliary register, to store 32 bits: it's stored in a register and then set to 0 every 32 bits
+
 	//Para evitar coger el 1er byte (FF) que nos llega de la muestra,
 	//supuestamente es problema de que el data_ready hace un pico a 1 antes de ponerse a 1 definitivamente
 		MOV	r12, 35 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 		CALL DELAY_FUNCTION
 	//--------------------------------------------------------------------------------------
-GET_SAMPLE:			 // load the send value on each sample, allows sampling re-configuration
-	//LBBO	r2, r1, 0, 4	 // the MCP3XXX states are now stored in r2 -- need the 16 MSBs	
+GET_SAMPLE: //Receive 1 sample (18 bytes)
 	CLR	r30.t5		 // set the CS line low (active low)
 	// Para evitar coger el 1er byte (FF) que nos llega de la muestra, no sabemos por qué
 		MOV	r12, 200 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 		CALL DELAY_FUNCTION
 		
 	//--------------------------------------------------------------------------------------
+
 	MOV r15, 18 //Number of bytes/sample -- 18 Bytes/Sample (basandose en el SPI original por hardware)
 	GET_BYTE:
 		SUB	r15, r15, 1     // decrement loop counter
 		
-		MOV	r4, 8		 // going to write/read 24 bits (3 bytes)
-		MOV r2, 0x00000000 
+		MOV	r4, 8		 // going to write/read 1 byte (8 bits)
+		MOV r2, 0x00000000 				//What we want to write (i.e 0)
 		CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read		
 	
 		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
@@ -232,15 +251,77 @@ GET_SAMPLE:			 // load the send value on each sample, allows sampling re-configu
 	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET	r30.t1 //MOSI: 1 (before start taking the sample)
+	
+	
 	LSR	r3, r3, 1        // SPICLK shifts left too many times left, shift right once
-
+	LSR	r17, r17, 1        // SPICLK shifts left too many times left, shift right once
+	LSR	r18, r18, 1        // SPICLK shifts left too many times left, shift right once
+	LSR	r19, r19, 1        // SPICLK shifts left too many times left, shift right once
+	LSR	r20, r20, 1        // SPICLK shifts left too many times left, shift right once
+	
 STORE_DATA:                      // store the sample value in memory
-	SUB	r9, r9, 2	 // reducing the number of samples - 2 bytes per sample
-	SBBO	r3.w0, r8, 0, 2	 // store the value r3 in memory
-	ADD	r8, r8, 2	 // shifting by 2 bytes - 2 bytes per sample
-	QBEQ	END, r9, 0       // have taken the full set of samples
+	SUB	r9, r9, 18	 // reducing the number of bytes - 18 bytes per sample (1 sample = int size)
+	
+	//Reset Counter of bits written(They need to be clear for next sample to take) into register of their comment:
+	MOV	r22, 0 //r3
+	MOV	r23, 0 //r17 
+	MOV	r24, 0	//r18
+	MOV	r25, 0	 //r19
+	MOV	r26, 0	//r20
+	
+	
+	/*
+	//-----TESTING ONLY (REMOVE)------
+	MOV r3, 0x11111111
+	MOV r17, 0x11111111
+	MOV r18, 0x11111111
+	MOV r19, 0x11111111
+	MOV r20, 32
+	//-------------------------------
+	*/
 
-	POLLING_DATA_READY_HIGH:
+	
+	//-----Store in RAM the whole sample (18 bytes)------
+	SBBO	r20, r8, 0, 2	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 2	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	
+	SBBO	r19, r8, 0, 4	 
+	ADD		r8, r8, 4	 
+	
+		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	
+	SBBO	r18, r8, 0, 4	 
+	ADD		r8, r8, 4	 
+	
+		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	
+	SBBO	r17, r8, 0, 4	
+	ADD		r8, r8, 4	 
+	
+		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	
+	SBBO	r3, r8, 0, 4	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
+	ADD		r8, r8, 4	 	// shifting RAM addres by 2 bytes (1 register = 4bytes, but this one only needs 2 bytes)
+	//------------------------------------------------------
+		// clear registers to receive the response from the ADS
+	MOV	r3, 0x00000000
+	MOV	r17, 0x00000000	 
+	MOV	r18, 0x00000000	
+	MOV	r19, 0x00000000	 
+	MOV	r20, 0x00000000	
+	
+	
+	
+	QBGE	END, r9, 0       //Have taken the full set of samples
+	//It's QBGE( r9 <= 0 ) and not QBEQ (r0 == 0),  just in case we receive more samples than we expect
+	
+	POLLING_DATA_READY_HIGH: //We have already taken the sample(SPI speed faster than sample rate) so we've plenty of time here...
 	QBBS	POLLING_DATA_READY_HIGH, r31.t16
 		
 	QBA	POLLING_DATA_READY_LOW
@@ -266,8 +347,19 @@ END:
 // The input and output data is shifted left on each clock cycle
 
 SPICLK_LOOP: //LOOP through the X bits (read and write)
-		SUB	r4, r4, 1        // count down through the bits
-
+	SUB	r4, r4, 1        // count down through the bits
+	/*
+	1 sample = 18 bytes(size of int in C + status bytes), so it doesn't fit in 1 register (4 bytes).
+	We need to use at least 5 registers (The first 4 will be full, and the last one will be 2 bytes)
+	We use r16 to count how many bits are received, and r20 as auxiliary register
+	Registers to store 1 sample
+	r3: 1st register (4 bytes)
+	r17: 2nd register (4 bytes)
+	r18: 3rd register (4 bytes)
+	r19: 4th register (4 bytes)
+	r20: 5th register (2 bytes)
+	*/
+	
 	SPI_CLK_BIT:
 			MOV	r0, r11	 // time for clock low -- assuming clock low before cycle
 		CLKLOW:	
@@ -289,10 +381,88 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			LSL	r2, r2, 1 //Permorm logical shif left to take the next bit we want to write
 						 // clock goes low now -- read the response on MISO
 			CLR	r30.t2		 // set the clock low
+			
+			//----Store 1 received bit in a register (r21)-----
 			QBBC	DATAINLOW, r31.t3 //Take the MISO bit we receive from ADS
-			OR	r3, r3, 0x00000001 //bit received=1,so we set the LSB to 1
-		DATAINLOW:	 //bit received=0,so we have nothing to do because we had already set all bits of the register to 0
-			LSL	r3, r3, 1  
+				OR	r21, r21, 0x00000001 //bit received=1,so we set the LSB to 1
+			DATAINLOW:	 //bit received=0,so we have nothing to do because we had already set all bits of the register to 0
+				LSL	r21, r21, 1 
+			//-----------------------------------------		
+			
+			
+
+			QBLE COUNT_1ST_REGISTER, r22, 31 //Brach if r22 >= 31
+				ADD r22, r22, 1	//Entra aqui si r22 < 31
+				QBA BREAK_IF
+				COUNT_1ST_REGISTER: //Entra aqui si r22 >= 31
+					ADD r22, r22, 1	//Entra aqui si r22 < 31
+					QBEQ STORE_1ST_REGISTER, r22, 32
+					
+					QBLE COUNT_2ND_REGISTER, r23, 31
+						ADD r23, r23, 1
+						QBA BREAK_IF
+						COUNT_2ND_REGISTER:
+							ADD r23, r23, 1
+							QBEQ STORE_2ND_REGISTER, r23, 32
+						
+							QBLE COUNT_3RD_REGISTER, r24, 31
+								ADD r24, r24, 1
+								QBA BREAK_IF
+								COUNT_3RD_REGISTER:
+									ADD r24, r24, 1
+									QBEQ STORE_3RD_REGISTER, r24, 32
+							
+									QBLE COUNT_4TH_REGISTER, r25, 31
+										ADD r25, r25, 1
+										QBA BREAK_IF
+										COUNT_4TH_REGISTER:
+											ADD r25, r25, 1
+											QBEQ STORE_4TH_REGISTER, r25, 32
+											
+											QBLE COUNT_5TH_REGISTER, r26, 15
+												ADD r26, r26, 1
+												QBA BREAK_IF
+												COUNT_5TH_REGISTER:
+													ADD r26, r26, 1
+													QBEQ STORE_5TH_REGISTER, r26, 16
+							
+			
+			
+			//----Store MISO in registers-----------
+				 //If we have receive 32 bits -> Time to store all 0 to 32 bits in 1nd register
+			STORE_1ST_REGISTER:
+				MOV r3, r21
+				MOV r21, 0x00000000
+				QBA BREAK_IF
+
+			//If we have receive 64 bits -> Time to store all 32 to 64 bits in 2nd register
+			STORE_2ND_REGISTER:
+				MOV r17, r21
+				MOV r21, 0x00000000
+				QBA BREAK_IF
+				
+			STORE_3RD_REGISTER:
+				MOV r18, r21
+				MOV r21, 0x00000000
+				QBA BREAK_IF
+			
+			STORE_4TH_REGISTER:
+				MOV r19, r21	
+				MOV r21, 0x00000000
+				QBA BREAK_IF
+				
+			STORE_5TH_REGISTER:
+				MOV r27, 0x0000FFFF // the bit mask to use on the returned data (i.e., keep 16 LSBs only) 
+				AND r21, r21, r27 // AND the data with mask to give only the 16 LSBs
+				MOV r20, r21
+				MOV r21, 0x00000000
+				QBA BREAK_IF
+
+				
+			BREAK_IF:
+
+
+
 //--------------------------------	
 		QBNE	SPICLK_LOOP, r4, 0		
 	RET	

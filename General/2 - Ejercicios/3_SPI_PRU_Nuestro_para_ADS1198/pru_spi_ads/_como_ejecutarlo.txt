@@ -8,7 +8,7 @@ lsmod
 
 (Para asignar el size de la external RAM pool):
 rmmod uio_pruss
-//Solo 36 bytes (2 muestras de 18 bytes) (para testing):
+//Solo 36 bytes (2 muestras de 18 bytes) (para debugging):
 modprobe uio_pruss extram_pool_sz=0x000024
 
 (Para comprobar si se ha hecho bien (al poner el siguiente comando, debe poner 0x24), this modification can be tested using sysfs)

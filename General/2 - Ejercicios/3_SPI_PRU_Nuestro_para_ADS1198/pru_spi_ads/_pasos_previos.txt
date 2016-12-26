@@ -1,4 +1,5 @@
 NOTA: Si se quiere hacer make(del medcape.c) -> Hay que mover mem2file.c a otra carpeta porque si no da problemas de compilación al haber un main en los 2 archivos
+NOTA: Todo esto ya está configurado en la BBB, ahora cada vez que se enciende la BBB, solo hay que hacer el punto 2.
 
 0 - Añadir el parámetro -lprussdrv al final de la línea del gcc en el makefile
 

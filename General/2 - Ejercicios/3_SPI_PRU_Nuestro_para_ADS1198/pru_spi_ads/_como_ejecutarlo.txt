@@ -1,0 +1,31 @@
+0 - Login con superuser
+sudo su
+
+1 - Crear espacio de memoria compartida (para compartir entre las PRU y nuestro programa host en userspace):
+
+(Para comprobar que está cargado el módulo uio_pruss)
+lsmod
+
+(Para asignar el size de la external RAM pool):
+rmmod uio_pruss
+//Solo 36 bytes (2 muestras de 18 bytes) (para testing):
+modprobe uio_pruss extram_pool_sz=0x000024
+
+(Para comprobar si se ha hecho bien (al poner el siguiente comando, debe poner 0x24), this modification can be tested using sysfs)
+cat /sys/class/uio/uio0/maps/map1/size
+
+2 - Compilar todo (make para los ficheros en C (medcape.c) y pasm para compilar los ficheros en ensamblador(PRUADC.p)
+Nota: (mem2file.c y medcape.c no pueden estar en la misma carpeta al hacer el make, por problemas de compilación ya que ambos tienen Main) 
+make
+pasm -p PRUADC.p
+
+3 - Ejecutar comunicación SPI:
+./medcape
+
+4 - Compilar y ejecutar mem2file para ver las muestras tomadas (y pasarla de RAM a fichero):
+gcc mem2file.c -o mem2file
+#Para mostrarlo por la salida estandar:
+./mem2file
+
+O si queremos guardarlo en un fichero:
+./mem2file > capture.dat

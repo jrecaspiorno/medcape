@@ -41,8 +41,7 @@ START:
 	SET r30.t5 //CS is active low
 	SET r30.t1 //MOSI is active in original hardware SPI
 	CLR r30.t2
-
-
+	
  // Enable the OCP master port -- allows transfer of data to Linux userspace
 	LBCO    r0, C4, 4, 4     // load SYSCFG reg into r0 (use c4 const addr)
 	CLR     r0, r0, 4        // clear bit 4 (STANDBY_INIT)
@@ -109,6 +108,7 @@ SEND_SDATAC:
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
 //---------------------SET_ADS_SAMPLE_RATE	(i.e. data_ready rate)----------------------
+/*
 SET_ADS_SAMPLE_RATE:
 	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
 //1st bit=============
@@ -144,6 +144,7 @@ SET_ADS_SAMPLE_RATE:
 //------------------SLEEP 2 SECONDS---------------------------
 MOV	r12, DELAYCOUNT
 CALL DELAY_FUNCTION
+*/
 //---------------------SET_INTERNAL_REFERENCE_ADS(i.e. data_ready rate)----------------------
 SET_INTERNAL_REFERENCE_ADS:
 //1st bit=============	
@@ -188,8 +189,10 @@ CALL DELAY_FUNCTION
 //------------------START--------------------------
 		SET 	r30.t7 //Start
 //------------------SLEEP 2 SECONDS---------------------------
+/*
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
+*/
 //---------------------RDATAC----------------------
 SEND_RDATAC:
 	LBBO	r2, r1, 4, 8	 // Load rdatac command
@@ -204,22 +207,26 @@ SEND_RDATAC:
 
 	SET	r30.t5		 // pull the CS line high (end of sample)
 //------------------SLEEP 2 SECONDS---------------------------
+/*
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
+*/
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
 	MOV r16, 0  //Counter of bits received
 	MOV r21, 0x00000000 //Auxiliary register, to store 32 bits: it's stored in a register and then set to 0 every 32 bits
 	
 // Need to wait at this point until it is ready to take a sample
-POLLING_DATA_READY_LOW:
-	QBBC	POLLING_DATA_READY_LOW, r31.t16
-		MOV r21, 0x00000000 //Auxiliary register, to store 32 bits: it's stored in a register and then set to 0 every 32 bits
-
+	POLLING_DATA_READY_HIGH: 
+		QBBS	POLLING_DATA_READY_HIGH, r31.t16
+	
+	MOV r21, 0x00000000 //Auxiliary register, to store 32 bits: it's stored in a register and then set to 0 every 32 bits
+		/*
 	//Para evitar coger el 1er byte (FF) que nos llega de la muestra,
 	//supuestamente es problema de que el data_ready hace un pico a 1 antes de ponerse a 1 definitivamente
 		MOV	r12, 35 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 		CALL DELAY_FUNCTION
+		*/
 	//--------------------------------------------------------------------------------------
 GET_SAMPLE: //Receive 1 sample (18 bytes)
 	CLR	r30.t5		 // set the CS line low (active low)
@@ -237,12 +244,12 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 		MOV r2, 0x00000000 				//What we want to write (i.e 0)
 		CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read		
 	
-		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+		MOV	r12, 800 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 		CALL DELAY_FUNCTION
 				
 		SET	r30.t1 //MOSI: 1 (before start taking the sample)
 		
-		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+		MOV	r12, 800 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 		CALL DELAY_FUNCTION
 			
 		CLR	r30.t1 //MOSI: 0 (before start taking the sample)
@@ -253,7 +260,7 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 	SET	r30.t1 //MOSI: 1 (before start taking the sample)
 	
 	
-	LSR	r3, r3, 1        // SPICLK shifts left too many times left, shift right once
+	//LSR	r3, r3, 1        // SPICLK shifts left too many times left, shift right once
 	LSR	r17, r17, 1        // SPICLK shifts left too many times left, shift right once
 	LSR	r18, r18, 1        // SPICLK shifts left too many times left, shift right once
 	LSR	r19, r19, 1        // SPICLK shifts left too many times left, shift right once
@@ -270,47 +277,51 @@ STORE_DATA:                      // store the sample value in memory
 	MOV	r26, 0	//r20
 	
 	
-	/*
+/*
 	//-----TESTING ONLY (REMOVE)------
-	MOV r3, 0x11111111
-	MOV r17, 0x11111111
-	MOV r18, 0x11111111
-	MOV r19, 0x11111111
-	MOV r20, 32
+	MOV r3,  0x52345678
+*/
+	MOV r17, 0x14123698
+	MOV r18, 0x27654321
+	MOV r19, 0x33572468
+	MOV r20, 0x48945612
 	//-------------------------------
-	*/
+
 
 	
 	//-----Store in RAM the whole sample (18 bytes)------
-	SBBO	r20, r8, 0, 2	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
-	ADD		r8, r8, 2	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	SBBO	r3, r8, 0, 4	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
+	ADD		r8, r8, 4	 	// shifting RAM addres by 2 bytes (1 register = 4bytes, but this one only needs 2 bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r19, r8, 0, 4	 
-	ADD		r8, r8, 4	 
-	
-		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	SBBO	r17, r8, 0, 4	
+	ADD		r8, r8, 4	
+
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
 	SBBO	r18, r8, 0, 4	 
 	ADD		r8, r8, 4	 
 	
-		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r17, r8, 0, 4	
-	ADD		r8, r8, 4	 
+	SBBO	r19, r8, 0, 4	 
+	ADD		r8, r8, 4	
 	
-		MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r3, r8, 0, 4	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
-	ADD		r8, r8, 4	 	// shifting RAM addres by 2 bytes (1 register = 4bytes, but this one only needs 2 bytes)
+	SBBO	r20, r8, 0, 4	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 4	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
 	//------------------------------------------------------
 		// clear registers to receive the response from the ADS
-	MOV	r3, 0x00000000
+	MOV	r3,  0x00000000
 	MOV	r17, 0x00000000	 
 	MOV	r18, 0x00000000	
 	MOV	r19, 0x00000000	 
@@ -321,10 +332,11 @@ STORE_DATA:                      // store the sample value in memory
 	QBGE	END, r9, 0       //Have taken the full set of samples
 	//It's QBGE( r9 <= 0 ) and not QBEQ (r0 == 0),  just in case we receive more samples than we expect
 	
-	POLLING_DATA_READY_HIGH: //We have already taken the sample(SPI speed faster than sample rate) so we've plenty of time here...
-	QBBS	POLLING_DATA_READY_HIGH, r31.t16
+	POLLING_DATA_READY_LOW: //We have already taken the sample(SPI speed faster than sample rate) so we've plenty of time here...
+	QBBC	POLLING_DATA_READY_LOW, r31.t16 
+	
 		
-	QBA	POLLING_DATA_READY_LOW
+	QBA	POLLING_DATA_READY_HIGH
 
 
 END:
@@ -364,7 +376,7 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			MOV	r0, r11	 // time for clock low -- assuming clock low before cycle
 		CLKLOW:	
 			SUB	r0, r0, 1	 // decrement the counter by 1 and loop (next line)
-			QBNE	CLKLOW, r0, 0	 // check if the count is still low		
+		QBNE	CLKLOW, r0, 0	 // check if the count is still low		
 			// Take bit 31 (in the next loop bit 31 will be bit 30 because we do a LSL each loop)
 			//So this way we take every bit we want
 			QBBC	DATALOW, r2.t31  //QBC = Quick branch if bit clear (if bit=0)
@@ -377,7 +389,7 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			MOV	r0, r11	 // time for clock high
 		CLKHIGH:
 			SUB	r0, r0, 1	 // decrement the counter by 1 and loop (next line)
-			QBNE	CLKHIGH, r0, 0	 // check the count
+		QBNE	CLKHIGH, r0, 0	 // check the count
 			LSL	r2, r2, 1 //Permorm logical shif left to take the next bit we want to write
 						 // clock goes low now -- read the response on MISO
 			CLR	r30.t2		 // set the clock low
@@ -385,83 +397,26 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			//----Store 1 received bit in a register (r21)-----
 			QBBC	DATAINLOW, r31.t3 //Take the MISO bit we receive from ADS
 				OR	r21, r21, 0x00000001 //bit received=1,so we set the LSB to 1
+				ADD r23, r23, 1 //Counter of how many bits are 1 (just for debugging)
 			DATAINLOW:	 //bit received=0,so we have nothing to do because we had already set all bits of the register to 0
 				LSL	r21, r21, 1 
-			//-----------------------------------------		
-			
+			//-----------------------------------------	
 			
 
-			QBLE COUNT_1ST_REGISTER, r22, 31 //Brach if r22 >= 31
+			QBLE STORE_1ST_REGISTER, r22, 7
 				ADD r22, r22, 1	//Entra aqui si r22 < 31
 				QBA BREAK_IF
-				COUNT_1ST_REGISTER: //Entra aqui si r22 >= 31
-					ADD r22, r22, 1	//Entra aqui si r22 < 31
-					QBEQ STORE_1ST_REGISTER, r22, 32
 					
-					QBLE COUNT_2ND_REGISTER, r23, 31
-						ADD r23, r23, 1
-						QBA BREAK_IF
-						COUNT_2ND_REGISTER:
-							ADD r23, r23, 1
-							QBEQ STORE_2ND_REGISTER, r23, 32
-						
-							QBLE COUNT_3RD_REGISTER, r24, 31
-								ADD r24, r24, 1
-								QBA BREAK_IF
-								COUNT_3RD_REGISTER:
-									ADD r24, r24, 1
-									QBEQ STORE_3RD_REGISTER, r24, 32
-							
-									QBLE COUNT_4TH_REGISTER, r25, 31
-										ADD r25, r25, 1
-										QBA BREAK_IF
-										COUNT_4TH_REGISTER:
-											ADD r25, r25, 1
-											QBEQ STORE_4TH_REGISTER, r25, 32
-											
-											QBLE COUNT_5TH_REGISTER, r26, 15
-												ADD r26, r26, 1
-												QBA BREAK_IF
-												COUNT_5TH_REGISTER:
-													ADD r26, r26, 1
-													QBEQ STORE_5TH_REGISTER, r26, 16
-							
-			
-			
-			//----Store MISO in registers-----------
-				 //If we have receive 32 bits -> Time to store all 0 to 32 bits in 1nd register
-			STORE_1ST_REGISTER:
-				MOV r3, r21
-				MOV r21, 0x00000000
-				QBA BREAK_IF
-
-			//If we have receive 64 bits -> Time to store all 32 to 64 bits in 2nd register
-			STORE_2ND_REGISTER:
-				MOV r17, r21
-				MOV r21, 0x00000000
-				QBA BREAK_IF
+			STORE_1ST_REGISTER: //Entra aqui si r22 >= 31
+				MOV r3, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
+				LSR	r3, r3, 1
 				
-			STORE_3RD_REGISTER:
-				MOV r18, r21
 				MOV r21, 0x00000000
-				QBA BREAK_IF
-			
-			STORE_4TH_REGISTER:
-				MOV r19, r21	
-				MOV r21, 0x00000000
-				QBA BREAK_IF
-				
-			STORE_5TH_REGISTER:
-				MOV r27, 0x0000FFFF // the bit mask to use on the returned data (i.e., keep 16 LSBs only) 
-				AND r21, r21, r27 // AND the data with mask to give only the 16 LSBs
-				MOV r20, r21
-				MOV r21, 0x00000000
-				QBA BREAK_IF
+				MOV r22, 0
+				MOV r23, 0
 
 				
 			BREAK_IF:
-
-
 
 //--------------------------------	
 		QBNE	SPICLK_LOOP, r4, 0		

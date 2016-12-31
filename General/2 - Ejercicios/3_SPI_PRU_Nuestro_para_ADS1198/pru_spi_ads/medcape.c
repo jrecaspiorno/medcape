@@ -1,3 +1,5 @@
+//NOTA: Ver el comentario de encima de int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
+
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -9,6 +11,7 @@
 #include "bbb_gpio.h"
 #include "bbb_spi.h"
 #include "ads.h"
+#include "mem2file.h"
 
 #define COMPILER_BARRIER() asm volatile("" ::: "memory")
 
@@ -57,13 +60,29 @@ unsigned int readFileValue_sysfs(char filename[]){
 //----------------------------------------------------------------------
 
 volatile uint32_t ints=0;
+int number_of_samples=-1;
 
 static void *load_mem2file_thread(void *arg) {
-    printf("load_mem2file_thread Thread\n");
-
-	while(1) {
-		//mem2file();
+    printf("load_mem2file_thread running...\n");
+	number_of_samples = (readFileValue_sysfs(MMAP1_LOC "size")) / 18;
+	printf("\n Number of samples spi %d \n", number_of_samples);
+	int number_chunk = 1; //We have 2 chunks, each one contains 100 samples
+	int samples_taken = 0;
+	int size_chunk = 10;
+	
+	//while(1) {
+	while(number_of_samples!=0){
+		prussdrv_pru_wait_event (PRU_EVTOUT_1); //Every times it enters to execute the pru, it adds 1 to the counter
+		if(number_chunk==3){
+			number_chunk = 1;
+		}
+		mem2file_main(number_chunk, samples_taken);
+		number_chunk++;
+		number_of_samples -= size_chunk;
+		samples_taken += size_chunk;
+		prussdrv_pru_clear_event (PRU_EVTOUT_1, PRU0_ARM_INTERRUPT);
 	}
+	//}
 	
 }
 
@@ -228,6 +247,14 @@ printf("Init GPIOs\n");
    printf("Loading spi speed\n");
    //La velocidad del spi tiene que ser 500 veces la velocidad del sample rate,para que la lectura de los 18 bytes quepan 
    //en 1 ciclo de data_ready
+   /*
+   Ejemplos de combinaciones posibles:
+   Data_ready: 500Hz
+   SPI: 100KHz
+   
+   Data_ready: 8KHz
+   SPI: 5MHz
+   */
    spiData[6] = FREQ_100kHz; 
    
    int numberSamples = spiData[5];
@@ -237,6 +264,8 @@ printf("Init GPIOs\n");
    // Allocate and initialize memory
    prussdrv_init ();
    prussdrv_open (PRU_EVTOUT_0);
+   prussdrv_open (PRU_EVTOUT_1);
+
 
    // Write the spiData into PRU0 Data RAM0.
    prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, spiData, 28);  // spi data
@@ -261,18 +290,23 @@ printf("Init GPIOs\n");
 	//prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
 	
 	printf("Before mem2file thread. Executing pru spi code... \n");
-	/*
+	
     //Create thread
     if (pthread_create(&thid, NULL, &load_mem2file_thread, NULL)) {
         perror("Failed to create the toggle thread");
         return -1;
     }
-  */
+	printf("Taking samples: main thread sleeping...\n");
 	
+	//Importante
+	//Que hacer si el PRU termina antes que el programa host(este), y al programa host aún le faltan datos de RAM por leer.
    // Wait for event completion from PRU, returns the PRU_EVTOUT_0 number
+
    int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
    printf("EBBADC PRU0 program completed, event number %d.\n", n);
-   
+   while(number_of_samples!=0){
+	   
+   }
 	
 	// Disable PRU and close memory mappings 
    prussdrv_pru_disable(ADC_PRU_NUM);

@@ -226,7 +226,9 @@ printf("Init GPIOs\n");
    spiData[4] = readFileValue_sysfs(MMAP1_LOC "addr");
    spiData[5] = readFileValue_sysfs(MMAP1_LOC "size");
    printf("Loading spi speed\n");
-   spiData[6] = FREQ_6_25MHz;
+   //La velocidad del spi tiene que ser 500 veces la velocidad del sample rate,para que la lectura de los 18 bytes quepan 
+   //en 1 ciclo de data_ready
+   spiData[6] = FREQ_100kHz; 
    
    int numberSamples = spiData[5];
    printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes = %d bytes\n", spiData[4], spiData[5], numberSamples);

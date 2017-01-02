@@ -1,3 +1,5 @@
+0 - cd /home/debian/workspace2016/pru_spi_ads
+
 0 - Login con superuser
 sudo su
 
@@ -8,7 +10,12 @@ lsmod
 
 (Para asignar el size de la external RAM pool):
 rmmod uio_pruss
-//Solo 36 bytes (2 muestras de 18 bytes) (para testing):
+modprobe uio_pruss extram_pool_sz=0x0002D0
+//Para modo infinito (while(1)), establecemos 720 bytes, más o menos el tamaño de RAM que sea lo más reducido posible,
+algo más que el tamaño del buffer circular(720 bytes en total) para que quepan los datos en el buffer más los comandos 
+de control del SPI, tal vez se pudiera apurar más pero por ahora no parece que haga falta.
+
+//Para solo 36 bytes (2 muestras de 18 bytes) (para testing, hay que cambiar el código en C y ensamblador para que funcione con tamaño limitado de muestras):
 modprobe uio_pruss extram_pool_sz=0x000024
 
 (Para comprobar si se ha hecho bien (al poner el siguiente comando, debe poner 0x24), this modification can be tested using sysfs)

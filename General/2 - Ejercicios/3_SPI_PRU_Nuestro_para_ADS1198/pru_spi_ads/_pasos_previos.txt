@@ -27,22 +27,4 @@ vim /etc/default/capemgr
 añadir CAPE=EBB-PRU-ADC
 
 --------------------------------------------
-2 - Crear espacio de memoria compartida (para compartir entre las PRU y nuestro programa host en userspace):
-
-(Para comprobar que está cargado el módulo uio_pruss)
-lsmod
-
-(Para asignar el size de la external RAM pool):
-rmmod uio_pruss
-modprobe uio_pruss extram_pool_sz=0x1E8480
-
-//Solo 36 bytes (2 muestras de 18 bytes) (para testing):
-modprobe uio_pruss extram_pool_sz=0x000024
-
-(Para comprobar si se ha hecho bien, this modification can be tested using sysfs)
-cat /sys/class/uio/uio0/maps/map1/size
-cat addr
-cat size
-
-3 - Compilar los ficheros en ensamblador para las pru(ficheros con extensión .p) (Posible mejora: Incluir esta compilación en el makefile principal):
-pasm -b PRUADC.p
+2 - Leer el fichero _como_ejecutarlo.txt

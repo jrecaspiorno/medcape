@@ -110,12 +110,13 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	int a = 0;
 	int x=0;
 	for(x=0; x<samples_per_chunk; x++){
+		printf("Muestra %d \n", a);
 		//sleep(1);
 		int i=0;
 		for(i=0; i<numberBufferFull; i++){
 			virt_addr = map_base + (target & MAP_MASK);
 			read_result = *((uint32_t *) virt_addr);
-			printf("%X\n", target, virt_addr, read_result);
+			printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
 			//printf("%d %x\n",i, read_result);
 			target+=4;                   // 18 bytes per sample
 		}

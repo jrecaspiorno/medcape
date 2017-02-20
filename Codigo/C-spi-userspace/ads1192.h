@@ -56,13 +56,13 @@
 #define NUM_REGS GPIO+1
 
 
-#define SRATE_125  000
-#define SRATE_250  001
-#define SRATE_500  010                  //Default
-#define SRATE_1K   011
-#define SRATE_2K   100
-#define SRATE_4K   101
-#define SRATE_8K   110
+#define SRATE_125    0
+#define SRATE_250    1
+#define SRATE_500    2                  //Default
+#define SRATE_1K     3
+#define SRATE_2K     4
+#define SRATE_4K     5
+#define SRATE_8K     6
 
 
 #endif

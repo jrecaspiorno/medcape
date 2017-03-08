@@ -16,7 +16,6 @@ int ads_init_gpios(void) {
         return -1;
     }
 
-#ifdef ADS1198
     if ( init_gpio(GPIO_RESET) ||
          set_gpio_direction(GPIO_RESET, "out") ) {
         return -1;
@@ -28,47 +27,41 @@ int ads_init_gpios(void) {
     }
     set_gpio_value(GPIO_START, 0);
     usleep(10000);
-#endif
+
     return 0;
 }
 
 int ads_reset(void) {
 
-#ifdef ADS1192
+	/*
     if ( ads_command(RESET) == -1 ) {
         printf("can't send SDATAC\n");
         return -1;
     }
-    return 0;
-#endif
 
-#ifdef ADS1198
-    set_gpio_value(GPIO_RESET, 1);
+    return 0;
+	*/
+
+	set_gpio_value(GPIO_RESET, 1);
     sleep(1);
     set_gpio_value(GPIO_RESET, 0);
     sleep(1);
     set_gpio_value(GPIO_RESET, 1);
     sleep(1);
     return 0;
-#endif
-    return -1;
 }
 
 int ads_start(void) {
-
-#ifdef ADS1192
+	/*
     if ( ads_command(START) == -1 ) {
         printf("can't send START\n");
         return -1;
     }
     return 0;
-#endif
+	*/
 
-#ifdef ADS1198
-    set_gpio_value(GPIO_START, 1);
+	set_gpio_value(GPIO_START, 1);
     return 0;
-#endif
-    return -1;
 }
 
 int ads_rdatac(void) {

@@ -3,10 +3,9 @@
 
 
 // The number of the definitions are referenced to the GPIO in BBB
-//#define GPIO_DATA_READY (32*1+17)       // ~DRDY -> GPIO1_17
-#define GPIO_DATA_READY (32*3+19)       // ~DRDY -> GPIO3_19        ÑAPA!!
-//#define GPIO_RESET      VDD           // En MedCape está a VDD!!
-//#define GPIO_START      GND           // En MedCape está a GND!!
+#define GPIO_DATA_READY (32*3+19)       // ~DRDY -> GPIO3_19
+#define GPIO_RESET      (32*3+21)       // Antes estaba a VDD!!
+#define GPIO_START      (32*0+20)       // Antes estaba a GND!!
 //#define GPIO_CLKSEL     VDD           // En MedCape está a VDD!! -> reloj interno
 
 
@@ -16,8 +15,8 @@
 
 
 //#define ADS_SPI_HZ        300000        // Conservador
-//#define ADS_SPI_HZ       1000000        // Máximo teórico SCLK=2*CLK=2*512=1024KHz
-#define ADS_SPI_HZ       3000000        // Parece funcionar...
+#define ADS_SPI_HZ       1000000        // Máximo teórico SCLK=2*CLK=2*512=1024KHz
+//#define ADS_SPI_HZ       3000000        // Parece funcionar...
 //#define ADS_SPI_HZ      10000000        // Peta un poco...
 
 #define ID_VALUE     0x51                   // ID value for ADS1192

@@ -126,6 +126,7 @@ int main() {
     //ads_print_registers();
 
     printf("Set sample rate\n");
+    //if ( ads_set_rate(SRATE_500) == -1 ) {
     if ( ads_set_rate(SRATE_1K) == -1 ) {
         //if( ads_set_rate(SRATE_125) == -1 ){
         printf("can't set sample rate!!\n");
@@ -147,7 +148,7 @@ int main() {
         return -1;
     }
 
-    /*
+   /* 
     printf("Set test signals\n");
     if( ads_set_test() == -1 ){
         printf("can't read IDReg\n");
@@ -176,7 +177,7 @@ int main() {
 
     //NOTE no muevas esto de aquí, siempre se genera una interrupción inicial
     //y podemos estar jodiendo la comunicación SPI!!!
-    system("cat /proc/interrupts | grep 177 | echo Initial interrupts: $(awk '{print $2}')");
+    system("cat /proc/interrupts | grep gpiolib | echo Initial interrupts: $(awk '{print $2}')");
     //Create thread
     if (pthread_create(&thid, NULL, &thread_spidata, NULL)) {
         perror("Failed to create the toggle thread");
@@ -198,7 +199,7 @@ int main() {
     sleep(1);
 
     printf("Ints: %u\n", ints);
-    system("cat /proc/interrupts | grep 177 | echo final interrupts: $(awk '{print $2}')");
+    system("cat /proc/interrupts | grep gpiolib | echo final interrupts: $(awk '{print $2}')");
 
     return 0;
 

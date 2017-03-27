@@ -1,16 +1,31 @@
 #ifndef _ADS_H_
 #define _ADS_H_
 
-#define ADS1198
-//#define ADS1192
+//#define ADS1198
 
-#ifdef ADS1198
+#define ADS1192
+#define MEDCAPE_DD1             // Old
+//#define MEDCAPE_E1              // New
+
+#if defined ADS1198
+    #pragma message ("ADS1198")
     #include "ads1198.h"
+#elif defined ADS1192
+
+    #pragma message ("ADS1192")
+    #include "ads1192.h"
+
+    #if defined MEDCAPE_DD1
+        #pragma message ("MEDCAPE_DD1 (old version)")
+    #elif defined MEDCAPE_E1
+        #pragma message ("MEDCAPE_E1 (new version)")
+    #else
+        #error "No ADS defined"
+    #endif
+#else 
+    #error "No ADS defined"
 #endif
 
-#ifdef ADS1192
-    #include "ads1192.h"
-#endif
 
 int ads_init_gpios(void);
 int ads_reset(void);

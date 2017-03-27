@@ -56,47 +56,58 @@ static void *thread_spidata(void *arg) {
     }
 }
 
-
-unsigned long int get_gpio_ints() {
-    int line_num;
-    unsigned long ints=-1;
-    char line[256];
-    char tmp_char[256];
-    FILE *pf_int;
-
-    if ( (pf_int=fopen("/proc/interrupts", "r"))==NULL ) {
-        perror("Error abriendo fichero de interrupciones");
-        return -1;
-    }
-
-    while (fgets(line, sizeof(line), pf_int)) {
-        /* note that fgets don't strip the terminating \n, checking its
-         presen*ce would allow to handle lines longer that sizeof(line) */
-        printf("%s", line);
-        if (line_num==177) {
-            sscanf(line, "%d: %lu, %s", &line_num, &ints, tmp_char);
-            printf("Ints: %lu\n", ints);
-        }
-
-    }
-    /* may check feof here to make a difference between eof and io failure -- network
-     timeout fo*r instance */
-
-    fclose(pf_int);
-
-    return ints;
-}
-
-
-int main() {
+int main(int argc, char *argv[]) {
     int i;
     pthread_t thid;
+    int opt, spi_hz=ADS_SPI_HZ, test_signal=0, tmp_srate=1000, sample_rate=SRATE_1K, secs=20;
 
 
-    //get_gpio_ints();
-    //return 0;
-
-
+    //Parse command-line options
+    while((opt = getopt(argc, argv, "ts:r:hl:")) != -1) {
+        switch(opt) {
+            case 'h':
+                printf("%s [-t] [-s SPI_HZ] [-r SAMPLE_RATE]\n", argv[0]);
+                printf("-t:\t\t\ttest signal enabled\n");
+                printf("-s SPI_HZ:\t\t300000 to 3000000 [Baud]\n");
+                printf("-r SAMPLE_RATE:\t\t125, 250, 500, 1000, 2000, 4000, 8000 [Hz]\n");
+                exit(0);
+            case 't':
+                test_signal=1;
+                break;
+            case 's':
+                spi_hz=atoi(optarg);
+                break;
+            case 'r':
+                tmp_srate=atoi(optarg);
+                switch(tmp_srate) {
+                    case 125:
+                        sample_rate=SRATE_125; break;
+                    case 250:
+                        sample_rate=SRATE_250; break;
+                    case 500:
+                        sample_rate=SRATE_500; break;
+                    case 1000:
+                        sample_rate=SRATE_1K; break;
+                    case 2000:
+                        sample_rate=SRATE_2K; break;
+                    case 4000:
+                        sample_rate=SRATE_4K; break;
+                    case 8000:
+                        sample_rate=SRATE_8K; break;
+                    default:
+                    printf("Sample Rate not supported\n");
+                    exit(-1);
+                }
+                break;
+            case 'l':
+                secs=atoi(optarg);
+                break;
+            default:
+                printf("Error parsing: %c\n", (char)opt);
+                exit(-1);
+        }
+    }
+ 
     printf("Init GPIOs\n");
     if ( ads_init_gpios() == -1 ) {
         printf("can't init GPIOs\n");
@@ -104,8 +115,8 @@ int main() {
     }
 
     printf("Conf SPI\n");
-    init_spi(ADS_SPI_HZ>>5);
-//    init_spi(ADS_SPI_HZ);
+    init_spi(spi_hz>>5);
+    //init_spi(ADS_SPI_HZ);
     sleep(1);
 
     printf("Reset cycle\n");
@@ -113,7 +124,6 @@ int main() {
         printf("can't reset ADS\n");
         return -1;
     }
-
 
     printf("Stop Read Data Continuously mode (just in case)\n");
     if ( ads_sdatac() == -1 ) {
@@ -125,9 +135,9 @@ int main() {
     printf("POR registers\n");
     //ads_print_registers();
 
-    printf("Set sample rate\n");
+    printf("Set sample rate %d\n", tmp_srate);
     //if ( ads_set_rate(SRATE_500) == -1 ) {
-    if ( ads_set_rate(SRATE_1K) == -1 ) {
+    if ( ads_set_rate(sample_rate) == -1 ) {
         //if( ads_set_rate(SRATE_125) == -1 ){
         printf("can't set sample rate!!\n");
         return -1;
@@ -148,16 +158,15 @@ int main() {
         return -1;
     }
 
-   /* 
-    printf("Set test signals\n");
-    if( ads_set_test() == -1 ){
-        printf("can't read IDReg\n");
-        return -1;
+    if(test_signal){
+        printf("Set test signals\n");
+        if( ads_set_test() == -1 ){
+            printf("can't read IDReg\n");
+            return -1;
+        }
     }
-    */
 
     ads_print_registers();
-
 
     printf("START: start continuous reading\n");
     if ( ads_start() == -1 ) {
@@ -172,7 +181,7 @@ int main() {
     }
 
     close_spi();
-    init_spi(ADS_SPI_HZ);
+    init_spi(spi_hz);
 
 
     //NOTE no muevas esto de aquí, siempre se genera una interrupción inicial
@@ -184,11 +193,10 @@ int main() {
         return -1;
     }
     //while(1){
-    for (i=0; i<10; i++) {
+    for (i=0; i<secs; i++) {
         printf("Main sleep...\n");
         printf("Ints: %u\n", ints);
-
-        sleep(5);
+        sleep(1);
     }
 
     printf("Stop Read Data Continuously mode (just in case)\n");

@@ -4,8 +4,10 @@
 
 // The number of the definitions are referenced to the GPIO in BBB
 #define GPIO_DATA_READY (32*3+19)       // ~DRDY -> GPIO3_19
-#define GPIO_RESET      (32*3+21)       // Antes estaba a VDD!!
-#define GPIO_START      (32*0+20)       // Antes estaba a GND!!
+#ifdef MEDCAPE_E1
+    #define GPIO_RESET      (32*3+21)       // Antes estaba a VDD!!
+    #define GPIO_START      (32*0+20)       // Antes estaba a GND!!
+#endif
 //#define GPIO_CLKSEL     VDD           // En MedCape está a VDD!! -> reloj interno
 
 

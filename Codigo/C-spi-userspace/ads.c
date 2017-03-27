@@ -15,17 +15,20 @@ int ads_init_gpios(void) {
          set_gpio_direction(GPIO_DATA_READY, "in") ) {
         return -1;
     }
-
+#ifdef GPIO_RESET
     if ( init_gpio(GPIO_RESET) ||
          set_gpio_direction(GPIO_RESET, "out") ) {
         return -1;
     }
+#endif
 
+#ifdef GPIO_START
     if ( init_gpio(GPIO_START) ||
          set_gpio_direction(GPIO_START, "out") ) {
         return -1;
     }
     set_gpio_value(GPIO_START, 0);
+#endif
     usleep(10000);
 
     return 0;
@@ -33,34 +36,32 @@ int ads_init_gpios(void) {
 
 int ads_reset(void) {
 
-	/*
-    if ( ads_command(RESET) == -1 ) {
-        printf("can't send SDATAC\n");
-        return -1;
-    }
-
-    return 0;
-	*/
-
+#ifdef GPIO_RESET
 	set_gpio_value(GPIO_RESET, 1);
     sleep(1);
     set_gpio_value(GPIO_RESET, 0);
     sleep(1);
     set_gpio_value(GPIO_RESET, 1);
     sleep(1);
+#else
+    if ( ads_command(RESET) == -1 ) {
+        printf("can't send SDATAC\n");
+        return -1;
+    }
+#endif    
     return 0;
 }
 
 int ads_start(void) {
-	/*
+#ifdef GPIO_START
+    set_gpio_value(GPIO_START, 1);
+#else
     if ( ads_command(START) == -1 ) {
         printf("can't send START\n");
         return -1;
     }
     return 0;
-	*/
-
-	set_gpio_value(GPIO_START, 1);
+#endif
     return 0;
 }
 
@@ -138,10 +139,6 @@ int ads_print_registers(void) {
     return 0;
 }
 
-//int ads_write_register(uint8_t reg, uint8_t data){
-//    return(ads_write_registers(reg, reg, &data));
-//}
-
 int ads_command(uint8_t command) {
 
     tx[0] = command;
@@ -175,7 +172,7 @@ int ads_read_registers(uint8_t reg_inic, uint8_t reg_fin, uint8_t *data) {
 
     return 0;
     int ads_print_registers(void);
-}                        //int ads_write_register(uint8_t reg, uint8_t data);
+}                        
 
 
 int ads_write_registers(uint8_t reg_inic, uint8_t reg_fin, uint8_t *data) {

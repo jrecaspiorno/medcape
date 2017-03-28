@@ -67,7 +67,7 @@ unsigned int readFileValue(char filename[]){
    return value;
 }
 
-int mem2file_main(int number_chunk, int samples_taken) {
+int mem2file_main(int number_chunk, int samples_taken, FILE* fp) {
     int fd;
     void *map_base, *virt_addr;
     unsigned long read_result, writeval;
@@ -76,12 +76,12 @@ int mem2file_main(int number_chunk, int samples_taken) {
     unsigned int number_total_samples = dataSize  / 18;
     unsigned int samples_per_chunk = 10;
     off_t target = addr;
-	printf("\n Number_chunk: %d \n", number_chunk);
+	//printf("\n Number_chunk: %d \n", number_chunk);
 	
 	int samples_left = number_total_samples - samples_taken;
-	printf("\n \n Samples left: %d", samples_left);
-	printf("\n  number_total_samples: %d", number_total_samples);
-	printf("\n \n samples_taken %d \n \n", samples_taken);
+	//printf("\n \n Samples left: %d", samples_left);
+	//printf("\n  number_total_samples: %d", number_total_samples);
+	//printf("\n \n samples_taken %d \n \n", samples_taken);
 	if(samples_left < samples_per_chunk) {
 		samples_per_chunk = samples_left;
 	}
@@ -104,7 +104,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
        printf("Failed to map base address");
        return -1;
     }
-    fflush(stdout);
+    //fflush(stdout);
 
 	unsigned int numberBufferFull = 6;
 	int a = 0;
@@ -116,8 +116,10 @@ int mem2file_main(int number_chunk, int samples_taken) {
 			virt_addr = map_base + (target & MAP_MASK);
 			read_result = *((uint32_t *) virt_addr);
 			printf("%X\n", target, virt_addr, read_result);
+			//printf("%X", read_result);
 			//printf("%d %x\n",i, read_result);
 			target+=4;                   // 18 bytes per sample
+			//fwrite(&read_result, sizeof(uint32_t *), 1, fp);
 		}
 		fflush(stdout);
 		a++;

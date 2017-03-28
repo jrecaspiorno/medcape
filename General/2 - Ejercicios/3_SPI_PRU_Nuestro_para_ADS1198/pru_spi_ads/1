@@ -52,10 +52,82 @@
 #include <termios.h>
 #include <sys/types.h>
 #include <sys/mman.h>
+#include "mem2file.h"
 
 #define MAP_SIZE 0x0FFFFFFF
 #define MAP_MASK (MAP_SIZE - 1)
 #define MMAP_LOC   "/sys/class/uio/uio0/maps/map1/"
 
-unsigned int readFileValue(char filename[]);
-int mem2file_main(int number_chunk, int samples_taken, FILE* fp);
+unsigned int readFileValue(char filename[]){
+   FILE* fp;
+   unsigned int value = 0;
+   fp = fopen(filename, "rt");
+   fscanf(fp, "%x", &value);
+   fclose(fp);
+   return value;
+}
+
+int mem2file_main(int number_chunk, int samples_taken) {
+    int fd;
+    void *map_base, *virt_addr;
+    unsigned long read_result, writeval;
+    unsigned int addr = readFileValue(MMAP_LOC "addr");
+    unsigned int dataSize = readFileValue(MMAP_LOC "size");
+    unsigned int number_total_samples = dataSize  / 18;
+    unsigned int samples_per_chunk = 10;
+    off_t target = addr;
+	printf("\n Number_chunk: %d \n", number_chunk);
+	
+	int samples_left = number_total_samples - samples_taken;
+	printf("\n \n Samples left: %d", samples_left);
+	printf("\n  number_total_samples: %d", number_total_samples);
+	printf("\n \n samples_taken %d \n \n", samples_taken);
+	if(samples_left < samples_per_chunk) {
+		samples_per_chunk = samples_left;
+	}
+	
+	
+	if(number_chunk==2){
+		target = addr+((6*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+	}
+
+
+
+    if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
+	printf("Failed to open memory!");
+	return -1;
+    }
+    fflush(stdout);
+
+    map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
+    if(map_base == (void *) -1) {
+       printf("Failed to map base address");
+       return -1;
+    }
+    fflush(stdout);
+
+	unsigned int numberBufferFull = 6;
+	int a = 0;
+	int x=0;
+	for(x=0; x<samples_per_chunk; x++){
+		//sleep(1);
+		int i=0;
+		for(i=0; i<numberBufferFull; i++){
+			virt_addr = map_base + (target & MAP_MASK);
+			read_result = *((uint32_t *) virt_addr);
+			//printf("%X\n", target, virt_addr, read_result);
+			printf("%X\n", read_result);
+			//printf("%d %x\n",i, read_result);
+			target+=4;                   // 18 bytes per sample
+		}
+		fflush(stdout);
+		a++;
+	}
+
+    if(munmap(map_base, MAP_SIZE) == -1) {
+       printf("Failed to unmap memory");
+       return -1;
+    }
+    close(fd);
+    return 0;
+}

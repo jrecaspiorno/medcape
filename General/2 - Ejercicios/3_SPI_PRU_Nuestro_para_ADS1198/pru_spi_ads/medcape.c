@@ -70,13 +70,21 @@ static void *load_mem2file_thread(void *arg) {
 	int samples_taken = 0;
 	int size_chunk = 10;
 	
+   FILE* fp;
+	char filename[] = "ztest.data";
+	if ( (fp = fopen(filename, "w+b")) == NULL ) {
+        perror("Error al abrir el fichero de datos");
+    }
+	
+
+	
 	while(1) {
 	//while(number_of_samples!=0){
 		prussdrv_pru_wait_event (PRU_EVTOUT_1); //Every times it enters to execute the pru, it adds 1 to the counter
 		if(number_chunk==3){
 			number_chunk = 1;
 		}
-		mem2file_main(number_chunk, samples_taken);
+		mem2file_main(number_chunk, samples_taken, fp);
 		number_chunk++;
 		//number_of_samples -= size_chunk; //Comment if we want while(1)
 		samples_taken += size_chunk;

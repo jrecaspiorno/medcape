@@ -58,4 +58,4 @@
 #define MMAP_LOC   "/sys/class/uio/uio0/maps/map1/"
 
 unsigned int readFileValue(char filename[]);
-int mem2file_main(int number_chunk, int samples_taken, FILE* fp);
+int mem2file_main(int number_chunk, int samples_taken);

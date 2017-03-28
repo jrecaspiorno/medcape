@@ -24,7 +24,7 @@ cat /sys/class/uio/uio0/maps/map1/size
 2 - Compilar todo (make para los ficheros en C (medcape.c) y pasm para compilar los ficheros en ensamblador(PRUADC.p)
 Nota: (mem2file.c y medcape.c no pueden estar en la misma carpeta al hacer el make, por problemas de compilación ya que ambos tienen Main) 
 make
-pasm -b PRUADC.p
+pasm -p PRUADC.p
 
 3 - Ejecutar comunicación SPI:
 ./medcape

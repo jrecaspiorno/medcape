@@ -148,7 +148,6 @@ MOV	r12, DELAYCOUNT
 CALL DELAY_FUNCTION
 */
 //---------------------SET_INTERNAL_REFERENCE_ADS(i.e. data_ready rate)----------------------
-
 SET_INTERNAL_REFERENCE_ADS:
 //1st bit=============	
 	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
@@ -187,7 +186,6 @@ SET_INTERNAL_REFERENCE_ADS:
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET r30.t1 //MOSI is active in original hardware SPI
 //------------------SLEEP 2 SECONDS---------------------------
-
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
 //------------------START--------------------------

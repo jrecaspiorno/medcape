@@ -58,6 +58,40 @@
 #define MAP_MASK (MAP_SIZE - 1)
 #define MMAP_LOC   "/sys/class/uio/uio0/maps/map1/"
 
+int fd;
+void *map_base, *virt_addr;
+unsigned long read_result, writeval;
+unsigned int addr;
+unsigned int dataSize;
+unsigned int number_total_samples;
+unsigned int samples_per_chunk;
+off_t target;
+
+int mem2file_initialize(){
+    read_result, writeval;
+    addr = readFileValue(MMAP_LOC "addr");
+    dataSize = readFileValue(MMAP_LOC "size");
+    number_total_samples = dataSize  / 18;
+    samples_per_chunk = 10;
+    target = addr;
+	
+	if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
+		printf("Failed to open memory!");
+		return -1;
+    }
+
+	/*
+    map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
+    if(map_base == (void *) -1) {
+       printf("Failed to map base address");
+       return -1;
+    }
+	*/
+   printf("mem2file succesfully initialized!! \n\n");
+
+	return 0;
+}
+
 unsigned int readFileValue(char filename[]){
    FILE* fp;
    unsigned int value = 0;
@@ -68,6 +102,8 @@ unsigned int readFileValue(char filename[]){
 }
 
 int mem2file_main(int number_chunk, int samples_taken) {
+	//===========================================================
+	/*
     int fd;
     void *map_base, *virt_addr;
     unsigned long read_result, writeval;
@@ -76,35 +112,43 @@ int mem2file_main(int number_chunk, int samples_taken) {
     unsigned int number_total_samples = dataSize  / 18;
     unsigned int samples_per_chunk = 10;
     off_t target = addr;
+	*/
+	//===========================================================
+    target = addr;
+
 	printf("\n Number_chunk: %d \n", number_chunk);
-	
+		
 	int samples_left = number_total_samples - samples_taken;
 	printf("\n \n Samples left: %d", samples_left);
 	printf("\n  number_total_samples: %d", number_total_samples);
 	printf("\n \n samples_taken %d \n \n", samples_taken);
+	/*
 	if(samples_left < samples_per_chunk) {
 		samples_per_chunk = samples_left;
 	}
-	
+	*/
 	
 	if(number_chunk==2){
 		target = addr+((6*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 	}
 
 
-
+	//====================================================
+	/*
     if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
 	printf("Failed to open memory!");
 	return -1;
     }
     fflush(stdout);
-
+	*/
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
        printf("Failed to map base address");
        return -1;
     }
-    fflush(stdout);
+    //fflush(stdout);
+	
+	//====================================================
 
 	unsigned int numberBufferFull = 6;
 	int a = 0;
@@ -124,10 +168,13 @@ int mem2file_main(int number_chunk, int samples_taken) {
 		a++;
 	}
 
+	
     if(munmap(map_base, MAP_SIZE) == -1) {
        printf("Failed to unmap memory");
        return -1;
     }
-    close(fd);
+	
+    //close(fd);
+	
     return 0;
 }

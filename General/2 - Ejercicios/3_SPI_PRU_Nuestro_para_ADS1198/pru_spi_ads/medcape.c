@@ -261,6 +261,10 @@ printf("Init GPIOs\n");
    printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes = %d bytes\n", spiData[4], spiData[5], numberSamples);
    printf("-> this space has capacity to store %d 18-bytes samples (max)\n", numberSamples/N_DATA);
 
+   
+   printf("\nInitializing mem2file...\n");
+   mem2file_initialize(); //Initialize mem2file parameters before the execution of the PRU (to be prepared when we need to get any data stored in RAM)
+	
    // Allocate and initialize memory
    prussdrv_init ();
    prussdrv_open (PRU_EVTOUT_0);
@@ -286,7 +290,10 @@ printf("Init GPIOs\n");
 	// Load and execute the PRU program on the PRU
 	printf("Main sleep... executing pru programs... (%d)\n", timerData[0]);
 
-	prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin");
+	prussdrv_exec_program (ADC_PRU_NUM, "./PRUADC.bin"); 
+	//A partir de esta línea se ejecuta ya el PRU, por tanto desde esta linea hasta la línea de código que lee los datos
+	//pueden leerse algunas muestras que no se recojan
+	
 	//prussdrv_exec_program (CLK_PRU_NUM, "./PRUClock.bin");
 	
 	printf("Before mem2file thread. Executing pru spi code... \n");

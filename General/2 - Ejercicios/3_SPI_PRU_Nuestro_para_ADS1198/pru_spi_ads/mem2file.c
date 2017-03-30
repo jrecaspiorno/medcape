@@ -66,6 +66,7 @@ unsigned int dataSize;
 unsigned int number_total_samples;
 unsigned int samples_per_chunk;
 off_t target;
+FILE* fd_output;
 
 int mem2file_initialize(){
     read_result, writeval;
@@ -80,13 +81,22 @@ int mem2file_initialize(){
 		return -1;
     }
 
-	/*
+	//We establish the target like if we were in the last chunk(hence we cover all the data available to map)
+	target = addr+((6*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
        printf("Failed to map base address");
        return -1;
     }
-	*/
+	
+		
+	char filename[] = "ztest.data";
+	if ( (fd_output = fopen(filename, "w+b")) == NULL ) {
+		perror("Error al abrir el fichero de datos");
+	}
+		
+	
    printf("mem2file succesfully initialized!! \n\n");
 
 	return 0;
@@ -141,11 +151,13 @@ int mem2file_main(int number_chunk, int samples_taken) {
     }
     fflush(stdout);
 	*/
+	/*
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
        printf("Failed to map base address");
        return -1;
     }
+	*/
     //fflush(stdout);
 	
 	//====================================================
@@ -163,17 +175,18 @@ int mem2file_main(int number_chunk, int samples_taken) {
 			printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
 			//printf("%d %x\n",i, read_result);
 			target+=4;                   // 18 bytes per sample
+			fwrite(&read_result, 4, 1, fd_output);
 		}
 		fflush(stdout);
 		a++;
 	}
 
-	
+	/*
     if(munmap(map_base, MAP_SIZE) == -1) {
        printf("Failed to unmap memory");
        return -1;
     }
-	
+	*/
     //close(fd);
 	
     return 0;

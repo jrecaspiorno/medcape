@@ -161,7 +161,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
     //fflush(stdout);
 	
 	//====================================================
-
+	/*
 	unsigned int numberBufferFull = 6;
 	int a = 0;
 	int x=0;
@@ -178,7 +178,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
 			//printf("%d %x\n",i, read_result);
 			target+=3;                   // 18 bytes per sample
 			//fwrite(virt_addr, 3, 1, fd_output);
-			/*
+			
 			if(i!=0 && i<5){
                 uint32_t tmp = (read_result>>16)&0xff + (read_result&0xff00)+ (read_result<<16)&0xff0000; 
                 tmp=read_result;
@@ -189,20 +189,22 @@ int mem2file_main(int number_chunk, int samples_taken) {
                 tmp=(read_result>>8);
                 fwrite(&read_result, 2, 1, fd_output);
             }
-            */
+            
             
         }
-        
-        target=(number_chunk==1)?addr:addr+((6*3)*samples_per_chunk);
-        virt_addr = map_base + (target & MAP_MASK);
-        fwrite(virt_addr, 18, 10, fd_output);
+	
+
+      
         
         
         
 		fflush(stdout);
 		a++;
 	}
-
+	*/
+	  target=(number_chunk==1)?addr:addr+((6*3)*samples_per_chunk);
+        virt_addr = map_base + (target & MAP_MASK);
+        fwrite(virt_addr, 18, 10, fd_output);
 	/*
     if(munmap(map_base, MAP_SIZE) == -1) {
        printf("Failed to unmap memory");

@@ -293,38 +293,38 @@ STORE_DATA:                      // store the sample value in memory
 
 	
 	//-----Store in RAM the whole sample (18 bytes)------
-	SBBO	r3, r8, 0, 4	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
-	ADD		r8, r8, 4	 	// shifting RAM addres by 2 bytes (1 register = 4bytes, but this one only needs 2 bytes)
+	SBBO	r3, r8, 0, 3	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
+	ADD		r8, r8, 3	 	// shifting RAM addres by 2 bytes (1 register = 3bytes, but this one only needs 2 bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r17, r8, 0, 4	
-	ADD		r8, r8, 4	
+	SBBO	r17, r8, 0, 3	
+	ADD		r8, r8, 3	
 
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r18, r8, 0, 4	 
-	ADD		r8, r8, 4	 
+	SBBO	r18, r8, 0, 3	 
+	ADD		r8, r8, 3	 
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r19, r8, 0, 4	 
-	ADD		r8, r8, 4	
+	SBBO	r19, r8, 0, 3	 
+	ADD		r8, r8, 3	
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r20, r8, 0, 4	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
-	ADD		r8, r8, 4	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	SBBO	r20, r8, 0, 3	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 3	 // shifting RAM addres by 3 bytes (1 register = 3bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r23, r8, 0, 4	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
-	ADD		r8, r8, 4	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	SBBO	r23, r8, 0, 3	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 3	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION

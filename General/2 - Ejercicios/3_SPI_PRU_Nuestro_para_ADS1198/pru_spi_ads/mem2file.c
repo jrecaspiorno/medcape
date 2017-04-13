@@ -82,7 +82,7 @@ int mem2file_initialize(){
     }
 
 	//We establish the target like if we were in the last chunk(hence we cover all the data available to map)
-	target = addr+((6*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+	target = addr+((6*3)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
@@ -139,7 +139,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	*/
 	
 	if(number_chunk==2){
-		target = addr+((6*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+		target = addr+((6*3)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 	}
 
 
@@ -172,11 +172,12 @@ int mem2file_main(int number_chunk, int samples_taken) {
 		for(i=0; i<numberBufferFull; i++){
 			virt_addr = map_base + (target & MAP_MASK);
 			read_result = *((uint32_t *) virt_addr);
-			printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
-			//printf("Value at address 0x%X (%p): 0x%08X\n", target, virt_addr, read_result);
+			//printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
+			printf("Value at address 0x%X (%p): 0x%08X\n", target, virt_addr, read_result);
 
 			//printf("%d %x\n",i, read_result);
-			target+=4;                   // 18 bytes per sample
+			target+=3;                   // 18 bytes per sample
+			fwrite(virt_addr, 3, 1, fd_output);
 			/*
 			if(i!=0 && i<5){
                 uint32_t tmp = (read_result>>16)&0xff + (read_result&0xff00)+ (read_result<<16)&0xff0000; 

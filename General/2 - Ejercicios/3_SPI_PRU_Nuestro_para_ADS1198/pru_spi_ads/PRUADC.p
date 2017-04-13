@@ -241,7 +241,6 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 
 	MOV r15, 18 //Number of bytes/sample -- 18 Bytes/Sample (basandose en el SPI original por hardware)
 	GET_BYTE:
-		SUB	r15, r15, 1     // decrement loop counter
 		
 		MOV	r4, 8		 // going to write/read 1 byte (8 bits)
 		MOV r2, 0x00000000 				//What we want to write (i.e 0)
@@ -256,7 +255,9 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 		CALL DELAY_FUNCTION
 			
 		CLR	r30.t1 //MOSI: 0 (before start taking the sample)
-	
+
+		SUB	r15, r15, 1     // decrement loop counter
+
 	QBNE	GET_BYTE, r15, 0  // repeat loop unless zero
 	
 	SET	r30.t5		 // pull the CS line high (end of sample)
@@ -394,7 +395,6 @@ END:
 // The input and output data is shifted left on each clock cycle
 
 SPICLK_LOOP: //LOOP through the X bits (read and write)
-	SUB	r4, r4, 1        // count down through the bits
 	/*
 	1 sample = 18 bytes(size of int in C + status bytes), so it doesn't fit in 1 register (4 bytes).
 	We need to use at least 6 registers 
@@ -500,6 +500,7 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 		
 		END_TAKING_MISO:
 		
+		SUB	r4, r4, 1        // count down through the bits
 //--------------------------------	
 		QBNE	SPICLK_LOOP, r4, 0		
 	RET	

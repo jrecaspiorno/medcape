@@ -62,14 +62,14 @@ START:
 	MOV	r18, 0x00000000	
 	MOV	r19, 0x00000000	 
 	MOV	r20, 0x00000000	
-	
+	MOV	r23, 0x00000000	 
+	MOV r27, 0x00000000	
+
 	//Counter of bits written into register of their comment:
 	MOV	r22, 0 //r3
-	MOV	r23, 0 //r17 
 	MOV	r25, r8	 //backup register of initial cell of RAM memory
 	MOV	r26, 0	//r20
 	
-	MOV r27, 0
 	
 	MOV r14, 32 //Size of 1 PRU register
 	MOV	r24, 0	//Counter of samples taken(it resets every loop of the circular buffer)
@@ -239,7 +239,7 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 		
 	//--------------------------------------------------------------------------------------
 
-	MOV r15, 18 //Number of bytes/sample -- 18 Bytes/Sample (basandose en el SPI original por hardware)
+	MOV r15, 20 //Number of bytes/sample -- 19 Bytes/Sample (basandose en el SPI original por hardware)
 	GET_BYTE:
 		
 		MOV	r4, 8		 // going to write/read 1 byte (8 bits)
@@ -269,10 +269,11 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 	LSR	r18, r18, 1        // SPICLK shifts left too many times left, shift right once
 	LSR	r19, r19, 1        // SPICLK shifts left too many times left, shift right once
 	LSR	r20, r20, 1        // SPICLK shifts left too many times left, shift right once
-	LSR	r23, r23, 1        // SPICLK shifts left too many times left, shift right once
-	
+	//LSR	r23, r23, 1        // SPICLK shifts left too many times left, shift right once
+	//LSR	r27, r27, 1        // SPICLK shifts left too many times left, shift right once
+
 STORE_DATA:                      // store the sample value in memory
-	SUB	r9, r9, 18	 // reducing the number of bytes - 18 bytes per sample (1 sample = int size)
+	SUB	r9, r9, 20	 // reducing the number of bytes - 18 bytes per sample (1 sample = int size)
 	
 	//Reset Counter of bits written(They need to be clear for next sample to take) into register of their comment:
 	MOV	r22, 0 //r3
@@ -294,42 +295,48 @@ STORE_DATA:                      // store the sample value in memory
 
 	
 	//-----Store in RAM the whole sample (18 bytes)------
-	SBBO	r3, r8, 0, 3	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
-	ADD		r8, r8, 3	 	// shifting RAM addres by 2 bytes (1 register = 3bytes, but this one only needs 2 bytes)
+	SBBO	r3, r8, 0, 4	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
+	ADD		r8, r8, 4	 	// shifting RAM addres by 2 bytes (1 register = 3bytes, but this one only needs 2 bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r17, r8, 0, 3	
-	ADD		r8, r8, 3	
+	SBBO	r17, r8, 0, 4	
+	ADD		r8, r8, 4	
 
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r18, r8, 0, 3	 
-	ADD		r8, r8, 3	 
+	SBBO	r18, r8, 0, 4	 
+	ADD		r8, r8, 4	 
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r19, r8, 0, 3	 
-	ADD		r8, r8, 3	
+	SBBO	r19, r8, 0, 4	 
+	ADD		r8, r8, 4	
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
-	SBBO	r20, r8, 0, 3	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
-	ADD		r8, r8, 3	 // shifting RAM addres by 3 bytes (1 register = 3bytes)
+	SBBO	r20, r8, 0, 4	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 4	 // shifting RAM addres by 3 bytes (1 register = 3bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
-	
+	/*
 	SBBO	r23, r8, 0, 3	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
 	ADD		r8, r8, 3	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
-
+	
+	SBBO	r27, r8, 0, 2	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 2	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	*/
 	//============================================= //Comment this section to store everything without limit in RAM(without storing->removin->storing->removing), it'll cause kernel exceptions when full
 	/*
 	QBLE NOT_REDUCE_SIZE_CHUNK_RAM, SIZE_CHUNK_RAM, r9/18 //samples_left <= size_chunk_ram
@@ -362,7 +369,8 @@ STORE_DATA:                      // store the sample value in memory
 	MOV	r19, 0x00000000	 
 	MOV	r20, 0x00000000	
 	MOV	r23, 0x00000000	
-	
+	MOV	r27, 0x00000000	
+
 	
 	
 	//QBGE	END, r9, 0       //Have taken the full set of samples. Comment if we want while(1)
@@ -433,68 +441,78 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			
 			//----Store 1 received bit in a register (r21)-----
 			QBBC	DATAINLOW, r31.t3 //Take the MISO bit we receive from ADS
-				OR	r21, r21, 0x000001 //bit received=1,so we set the LSB to 1
+				OR	r21, r21, 0x00000001 //bit received=1,so we set the LSB to 1
 			DATAINLOW:	 //bit received=0,so we have nothing to do because we had already set all bits of the register to 0
 				LSL	r21, r21, 1 
 			//-----------------------------------------	
 			
 		QBNE END_TAKING_MISO, r26, 1 //Flag para detectar que empieza la toma de datos(antes solo era para congigurar el SPI)
-			QBLE STORE_1ST_REGISTER, r22, 23
+			QBLE STORE_1ST_REGISTER, r22, 31
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_1ST_REGISTER: //Entra aqui si 23 <= r22
-				QBNE STORE_2ND_REGISTER, r22, 23 //23 < r22
+				QBNE STORE_2ND_REGISTER, r22, 31 //23 < r22
 				MOV r3, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
-				MOV r21, 0x000000
+				MOV r21, 0x00000000
 			//============================================================================================
-			QBLE STORE_2ND_REGISTER, r22, (23*2)+1
+			QBLE STORE_2ND_REGISTER, r22, (31*2)+1
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_2ND_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
-				QBNE STORE_3RD_REGISTER, r22, (23*2)+1 //23 < r22
+				QBNE STORE_3RD_REGISTER, r22, (31*2)+1 //23 < r22
 				MOV r17, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
-				MOV r21, 0x000000
+				MOV r21, 0x00000000
 			//============================================================================================
-			QBLE STORE_3RD_REGISTER, r22, (23*3)+2
+			QBLE STORE_3RD_REGISTER, r22, (31*3)+2
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_3RD_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
-				QBNE STORE_4TH_REGISTER, r22, (23*3)+2 //23 < r22
+				QBNE STORE_4TH_REGISTER, r22, (31*3)+2 //23 < r22
 				MOV r18, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
-				MOV r21, 0x000000
+				MOV r21, 0x00000000
 	
 	//============================================================================================
-			QBLE STORE_4TH_REGISTER, r22, (23*4)+3
+			QBLE STORE_4TH_REGISTER, r22, (31*4)+3
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_4TH_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
-				QBNE STORE_5TH_REGISTER, r22, (23*4)+3 //23 < r22
+				QBNE STORE_5TH_REGISTER, r22, (31*4)+3 //23 < r22
 				MOV r19, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
-				MOV r21, 0x000000
+				MOV r21, 0x00000000
 			//============================================================================================
-			QBLE STORE_5TH_REGISTER, r22, (23*5)+4
+			QBLE STORE_5TH_REGISTER, r22, (31*5)+4
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_5TH_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
-				QBNE STORE_6TH_REGISTER, r22, (23*5)+4 //23 < r22
+				QBNE BREAK_IF, r22, (31*5)+4 //23 < r22
 				MOV r20, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
-				MOV r21, 0x000000
+				MOV r21, 0x00000000
+			/*
 			//============================================================================================
 			QBLE STORE_6TH_REGISTER, r22, (23*6)+5
 				QBA BREAK_IF //r22 > 23
 					
 			STORE_6TH_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
-				QBNE BREAK_IF, r22, (23*6)+5 //23 < r22
+				QBNE STORE_7TH_REGISTER, r22, (23*6)+5 //23 < r22
 				MOV r23, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
 				
 				MOV r21, 0x000000
 			//============================================================================================
-		
+			QBLE STORE_7TH_REGISTER, r22, (23*6)+5+13
+				QBA BREAK_IF //r22 > 23
+					
+			STORE_7TH_REGISTER: //Entra aqui si r22 >= 31             23 <= r22
+				QBNE BREAK_IF, r22, (23*6)+5+13 //23 < r22
+				MOV r27, r21 //If we wan to check how many bits have been 1, we put here: MOV r3, 23
+				
+				MOV r21, 0x000000
+			//============================================================================================
+			*/
 			BREAK_IF:
 				ADD r22, r22, 1	//Entra aqui si r22 < 31
 		

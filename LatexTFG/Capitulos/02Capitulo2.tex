@@ -1,0 +1,59 @@
+%---------------------------------------------------------------------
+%
+%                          Capítulo 1
+%
+%---------------------------------------------------------------------
+
+\chapter{Introducción}
+
+\begin{FraseCelebre}
+\begin{Frase}
+Un comienzo no desaparece nunca, \\
+ni siquiera con un final.
+\end{Frase}
+\begin{Fuente}
+Harry Mulisch
+\end{Fuente}
+\end{FraseCelebre}
+
+\begin{resumen}
+
+\end{resumen}
+
+
+%-------------------------------------------------------------------
+\section{Introducción}
+%-------------------------------------------------------------------
+\label{cap1:sec:introduccion}
+
+...
+
+%-------------------------------------------------------------------
+\section*{\NotasBibliograficas}
+%-------------------------------------------------------------------
+\TocNotasBibliograficas
+
+Citamos algo para que aparezca en la bibliografía\ldots
+\citep{ldesc2e}
+
+\medskip
+
+Y también ponemos el acrónimo \ac{CVS} para que no cruja.
+
+Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+
+
+%-------------------------------------------------------------------
+\section*{\ProximoCapitulo}
+%-------------------------------------------------------------------
+\TocProximoCapitulo
+
+...
+
+% Variable local para emacs, para  que encuentre el fichero maestro de
+% compilación y funcionen mejor algunas teclas rápidas de AucTeX
+%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Tesis.tex"
+%%% End:

@@ -255,8 +255,9 @@ printf("Init GPIOs\n");
    Data_ready: 8KHz
    SPI: 5MHz
    */
-   spiData[6] = FREQ_100kHz; 
-   
+   //spiData[6] = FREQ_100kHz; 
+   spiData[6] = FREQ_250kHz; 
+
    int numberSamples = spiData[5];
    printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes = %d bytes\n", spiData[4], spiData[5], numberSamples);
    printf("-> this space has capacity to store %d 18-bytes samples (max)\n", numberSamples/N_DATA);

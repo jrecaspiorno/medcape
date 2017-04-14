@@ -82,7 +82,7 @@ int mem2file_initialize(){
     }
 
 	//We establish the target like if we were in the last chunk(hence we cover all the data available to map)
-	target = addr+((5*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+	target = addr+((7*3)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
@@ -139,7 +139,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	*/
 	
 	if(number_chunk==2){
-		target = addr+((5*4)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+		target = addr+((7*3)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 	}
 
 
@@ -202,9 +202,9 @@ int mem2file_main(int number_chunk, int samples_taken) {
 		a++;
 	}
 	*/
-	  target=(number_chunk==1)?addr:addr+((5*4)*samples_per_chunk);
+	  target=(number_chunk==1)?addr:addr+((7*3)*samples_per_chunk);
         virt_addr = map_base + (target & MAP_MASK);
-        fwrite(virt_addr, 20, 10, fd_output);
+        fwrite(virt_addr, 21, 10, fd_output);
 	/*
     if(munmap(map_base, MAP_SIZE) == -1) {
        printf("Failed to unmap memory");

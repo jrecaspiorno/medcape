@@ -5,6 +5,7 @@
 \contentsline {chapter}{\numberline {1}Introducci\'on}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivaci\'on}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Estructura de cap\IeC {\'\i }tulos}{2}{section.1.2}
-\contentsline {chapter}{\numberline {A}As\IeC {\'\i } se hizo...}{3}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}Introducci\'on}{3}{section.Alph1.1}
-\contentsline {chapter}{Lista de acr\'onimos}{5}{section.Alph1.1}
+\contentsline {chapter}{\numberline {2}Antecedentes}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Electrocardiograma}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Estructura de un ECG}{4}{section.2.2}
+\contentsline {chapter}{Lista de acr\'onimos}{5}{figure.caption.7}

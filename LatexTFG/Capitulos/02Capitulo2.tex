@@ -1,54 +1,84 @@
 %---------------------------------------------------------------------
 %
-%                          Capítulo 1
+%                          Capítulo 2
 %
 %---------------------------------------------------------------------
 
-\chapter{Introducción}
+\chapter{Antecedentes}
 
 \begin{FraseCelebre}
 \begin{Frase}
-Un comienzo no desaparece nunca, \\
-ni siquiera con un final.
+Cada día sabemos más \\
+y entendemos menos. 
 \end{Frase}
 \begin{Fuente}
-Harry Mulisch
+Albert Einstein
 \end{Fuente}
 \end{FraseCelebre}
 
 \begin{resumen}
-
+\todo Aqui va el resumen de este capítulo una vez este terminado.
 \end{resumen}
 
 
 %-------------------------------------------------------------------
-\section{Introducción}
+\section{Electrocardiograma}
 %-------------------------------------------------------------------
-\label{cap1:sec:introduccion}
+\label{cap2:sec:electro}
 
-...
+Un electrocardiograma (más popularmente conocido como ECG) es un proceso por el cual se registran las actividades eléctricas que emite el corazón durante un tiempo determinado.
 
-%-------------------------------------------------------------------
-\section*{\NotasBibliograficas}
-%-------------------------------------------------------------------
-\TocNotasBibliograficas
+El registro de esta actividad cardiaca es posible gracias a las diferencias de potencial existentes producidas por la contractilidad del corazón. El estudio de la información ilustrada por un ECG puede ser de gran utilidad a la hora de detectar multitud de enfermedades cardiovasculares, así como prevenir problemas cardiacos de forma precoz.
 
-Citamos algo para que aparezca en la bibliografía\ldots
-\citep{ldesc2e}
+La ventaja de un ECG frente a otros métodos de medición para comprobar el estado del corazón, es que el ECG aporta mucha más información que los métodos más habituales como pueden ser simplemente medir el pulso o utilizar un estetoscopio.
 
-\medskip
-
-Y también ponemos el acrónimo \ac{CVS} para que no cruja.
-
-Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
-
+Entre la información extra que puede obtenerse recurriendo al ECG, cabe destacar desde la medición continua durante un tiempo prolongado (días incluso si se utiliza un ECG portátil) hasta la obtención del movimiento de los músculos del corazón (los electrodos conectados al paciente registran esos movimientos en \textit{mV}), lo cual permite saber cuando entra la sangre, cuando sale, cuanto dura cada movimiento, etc. Sin esa información sería imposible detectar ciertos tipos de arritmias y/o otras alteraciones del corazón.
 
 %-------------------------------------------------------------------
-\section*{\ProximoCapitulo}
+\section{Estructura de un ECG}
 %-------------------------------------------------------------------
-\TocProximoCapitulo
+\label{cap2:sec:estructura}
 
-...
+La estructura habitual de un ECG [Fig \ref{fig:ondaecg}] habitualmente está formada por un conjunto de ondas y complejos determinados:
+
+\begin{itemize}  
+\item Onda P 
+\item Onda Q 
+\item Complejo QRS
+\item Onda T
+\item Onda U
+\end{itemize}
+
+\figura{Vectorial/ecg}{width=.7\textwidth}{fig:ondaecg}%
+{Estructura habitual de la señal ECG durante un ciclo cardiaco.}
+
+Habitualmente este tipo de señales se encuentran dentro de un rango determinado de amplitudes, que generalmente abarca desde los 0.5\textit{mV} hasta los 5\textit{mV}, existiendo además una componente continua causada por el contacto existente entre los electrodos y la piel. 
+
+Mayormente este tipo de señales suele ilustrarse en los libros de forma muy clara y reconocible, aunque no siempre es posible disponer de un entorno con las características propicias para eliminar toda existencia de ruido en la señal. Generalmente el ruido que se recoge al analizar este tipo de señales es despreciado, aunque en ciertas ocasiones puede llegar a ser tan difuso, que nos impida reconocer hasta las pautas más características de una señal ECG.
+
+Puede presentarse ruido en la señal simplemente debido a la luz tanto natural como artificial que incida indirectamente en los electrodos, así como debido a la corriente que reciben los dispositivos que nos permiten llevar a cabo la medición de la señal.
+
+%-------------------------------------------------------------------
+%\section*{\NotasBibliograficas}
+%-------------------------------------------------------------------
+%\TocNotasBibliograficas
+
+%Citamos algo para que aparezca en la bibliografía\ldots
+%\citep{ldesc2e}
+
+%\medskip
+
+%Y también ponemos el acrónimo \ac{CVS} para que no cruja.
+
+%Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+
+
+%-------------------------------------------------------------------
+%\section*{\ProximoCapitulo}
+%-------------------------------------------------------------------
+%\TocProximoCapitulo
+
+%...
 
 % Variable local para emacs, para  que encuentre el fichero maestro de
 % compilación y funcionen mejor algunas teclas rápidas de AucTeX

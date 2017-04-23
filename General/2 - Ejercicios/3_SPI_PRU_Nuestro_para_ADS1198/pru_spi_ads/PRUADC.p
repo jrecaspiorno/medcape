@@ -148,6 +148,7 @@ MOV	r12, DELAYCOUNT
 CALL DELAY_FUNCTION
 */
 //---------------------SET_INTERNAL_REFERENCE_ADS(i.e. data_ready rate)----------------------
+
 SET_INTERNAL_REFERENCE_ADS:
 //1st bit=============	
 	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
@@ -185,6 +186,30 @@ SET_INTERNAL_REFERENCE_ADS:
 	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET r30.t1 //MOSI is active in original hardware SPI
+
+//------------------SLEEP 2 SECONDS---------------------------
+MOV	r12, DELAYCOUNT	
+CALL DELAY_FUNCTION
+//---------------------SET_INTERNAL_SIGNAL_ADS(test internal signal)----------------------
+
+SET_INTERNAL_SIGNAL_ADS:
+//1st byte=============	
+MOV r2, 0x30
+//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+SUB r13, r14, 8
+CALL TRUNCATE
+
+CLR	r30.t5		 // set the CS line low (active low)
+MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+
+MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+CALL DELAY_FUNCTION	
+
+SET	r30.t5		 // pull the CS line high (end of sample)
+SET r30.t1 //MOSI is active in original hardware SPI
+
 //------------------SLEEP 2 SECONDS---------------------------
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
@@ -298,8 +323,8 @@ STORE_DATA:                      // store the sample value in memory
 	MOV r5, r3
 	CALL REVERSE_ENDIANNESS
 	//-----Store in RAM the whole sample (18 bytes)------
-	SBBO	r1, r8, 0, 3	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
-	ADD		r8, r8, 3	 	// shifting RAM addres by 2 bytes (1 register = 3bytes, but this one only needs 2 bytes)
+	SBBO	r1, r8, 0, 2	//Last register only needs 2 bytes (It has byte 16 and byte 17) 
+	ADD		r8, r8, 2	 	// shifting RAM addres by 2 bytes (1 register = 3bytes, but this one only needs 2 bytes)
 	
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
@@ -359,8 +384,8 @@ STORE_DATA:                      // store the sample value in memory
 	MOV r5, r27
 	CALL REVERSE_ENDIANNESS
 	//---------------
-	SBBO	r1, r8, 0, 3	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
-	ADD		r8, r8, 3	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+	SBBO	r1, r8, 0, 1	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+	ADD		r8, r8, 1	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
 	
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION

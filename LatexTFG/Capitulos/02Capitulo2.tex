@@ -14,6 +14,7 @@ y entendemos menos.
 \begin{Fuente}
 Albert Einstein
 \end{Fuente}
+\
 \end{FraseCelebre}
 
 \begin{resumen}
@@ -35,9 +36,9 @@ La ventaja de un ECG frente a otros métodos de medición para comprobar el estado
 Entre la información extra que puede obtenerse recurriendo al ECG, cabe destacar desde la medición continua durante un tiempo prolongado (días incluso si se utiliza un ECG portátil) hasta la obtención del movimiento de los músculos del corazón (los electrodos conectados al paciente registran esos movimientos en \textit{mV}), lo cual permite saber cuando entra la sangre, cuando sale, cuanto dura cada movimiento, etc. Sin esa información sería imposible detectar ciertos tipos de arritmias y/o otras alteraciones del corazón.
 
 %-------------------------------------------------------------------
-\section{Estructura de un ECG}
+\subsection{Estructura de un ECG}
 %-------------------------------------------------------------------
-\label{cap2:sec:estructura}
+\label{cap2:subsec:estructura}
 
 La estructura habitual de un ECG [Fig \ref{fig:ondaecg}] habitualmente está formada por un conjunto de ondas y complejos determinados:
 
@@ -58,6 +59,59 @@ Mayormente este tipo de señales suele ilustrarse en los libros de forma muy clar
 
 Puede presentarse ruido en la señal simplemente debido a la luz tanto natural como artificial que incida indirectamente en los electrodos, así como debido a la corriente que reciben los dispositivos que nos permiten llevar a cabo la medición de la señal.
 
+
+%-------------------------------------------------------------------
+\subsection{Funcionamiento interno del corazón}
+%-------------------------------------------------------------------
+\label{cap2:subsec:func}
+
+\figura{Vectorial/corazon}{width=.7\textwidth}{fig:corazon}%
+{Estructura anatómica del corazón humano}
+
+El corazón está constituido por cuatro cámaras diferenciadas: dos aurículas (izquierda y derecha) y dos ventrículos (izquierdo y derecho) como puede apreciarse en la [Fig \ref{fig:corazon}]
+
+
+Su funcionamiento sigue siempre un mismo ciclo que se repite una y otra vez: la aurícula derecha recibe la sangre venosa del cuerpo a través de la vena cava superior y la envía al ventrículo derecho. Para que dicha sangre pueda oxigenarse, el ventrículo derecho la envía a través de la arteria pulmonar a los pulmones, retornando al corazón, a través de la vena pulmonar, a la aurícula izquierda. Para finalizar con el ciclo, la sangre pasa de dicha aurícula al ventrículo izquierdo, el cual la distribuye por todo el cuerpo gracias a la arteria aorta, para volver posteriormente a la aurícula derecha y así cerrar el ciclo.
+
+Para que este ciclo periódico funcione de manera correcta, síncrona y con total ausencia de errores, el corazón dispone de un sistema de conducción eléctrica constituido por fibras de músculo cardiaco cuya finaludad es la transmisión de impulsos eléctricos. El motivo por el cual no tenemos ningún tipo de control sobre los latidos del corazón es porque este sistema es autoexcitable.
+
+%-------------------------------------------------------------------
+\subsection{Obtención del ECG}
+%-------------------------------------------------------------------
+\label{cap2:subsec:obtención}
+
+El proceso físico a traves del cual se realiza el procedimiento de registro y se obtiene el ECG consiste en la medición de la actividad eléctrica del corazón entre distintos puntos corporales, ya que, mientras que el corazón pasa por los estados de polarización y despolarización, el cuerpo en su conjunto se comporta como un volumen conductor, propagando la corriente eléctrica.
+
+El equipo de registro consta de una serie de electrodos, que se conectan a la piel del paciente y a un equipo de registro. Estos electrodos se colocan en unas posiciones predeterminadas y universales, lo que permite obtener el registro del sistema de la forma más precisa y exacta posible.
+
+
+%-------------------------------------------------------------------
+\subsection{Utilidades del ECG}
+%-------------------------------------------------------------------
+\label{cap2:subsec:utilidades}
+
+Tras la obtención de un ECG completo, se tendrá un registro completo acerca del tamaño, la cadencia, y la naturaleza de los impulsos eléctricos emitidos por el corazón. Gracias a esta información, es posible definir tanto el ritmo como la frecuencia cardiaca. Este tipo de información puede ser crucial a la hora de detectar ciertos problemas cardiacos. A continuación se detallan posibles utilidades que puede tener la obtención de un ECG:
+
+\begin{itemize}
+  \item Obtener información sobre el estado físico del corazón.
+  \item Detectar problemas cardiacos de forma precoz, o alteraciones elecctróliticas de potasio, sodio, calcio, magnesio, u otros elementos químicos.
+   \item Determinar si el corazón funciona correctamente, en caso de no encontrar ninguna anomalía.
+   \item Adquirir información acerca de la repercusión miocárdica de diversas enfermedades cardiacas.
+    \item Detección de anormalidades conductivas.
+    \item Indicar bloqueos coronarios arteriales.
+\end{itemize}
+
+%-------------------------------------------------------------------
+\section{Tecnologías}
+%-------------------------------------------------------------------
+\label{cap2:sec:tecnologias}
+
+\figura{Vectorial/bbb}{width=.9\textwidth}{fig:bbb}%
+{Vista general de una BeagleBone Black}
+
+Para llevar a cabo el correcto desarrollo del trabajo que se expone en la presente memoria, ha sido necesaria la investigación y el desarrollo de diversas tecnologías que se expondrán a continuación, así como el estudio y la asimilación de tecnologías ya existentes con el fin de adaptarlas y modificarlas para el proyecto desarrollado.
+
+Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico USB que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha utilizado una interfaz SPI, ya que era la única opcion posible de conexión compartida entre los dispositivos.
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}
 %-------------------------------------------------------------------

@@ -193,22 +193,88 @@ CALL DELAY_FUNCTION
 //---------------------SET_INTERNAL_SIGNAL_ADS(test internal signal)----------------------
 
 SET_INTERNAL_SIGNAL_ADS:
-//1st byte=============	
-MOV r2, 0x30
-//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
-//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
-SUB r13, r14, 8
-CALL TRUNCATE
+	//1st byte=============	Write config2 register
+	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
+	MOV r2, 0x42
+	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+	SUB r13, r14, 8
+	CALL TRUNCATE
+	
+	CLR	r30.t5		 // set the CS line low (active low)
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+	
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
+	
+	//2nd byte=============	 0x00000000 means write on the ADS register
+	MOV r2, 0x00000000
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+	
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
+	
+	//3rd	byte============= Write config2 register value	
+	MOV r2, 0x30
+	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+	SUB r13, r14, 8
+	CALL TRUNCATE
 
-CLR	r30.t5		 // set the CS line low (active low)
-MOV	r4, 8		 // going to write/read 8 bits (1 byte)
-CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
 
-MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
-CALL DELAY_FUNCTION	
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
 
-SET	r30.t5		 // pull the CS line high (end of sample)
-SET r30.t1 //MOSI is active in original hardware SPI
+	SET	r30.t5		 // pull the CS line high (end of sample)
+	SET r30.t1 //MOSI is active in original hardware SPI
+	
+	//------------------SLEEP 2 SECONDS---------------------------
+MOV	r12, DELAYCOUNT	
+CALL DELAY_FUNCTION
+//--------------Set ChnSet test signal---------------------------------------------------
+	//1st	byte============= Set channel 1 to set the test signal
+	MOV r2, 0x45
+	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+	SUB r13, r14, 8
+	CALL TRUNCATE
+
+	CLR	r30.t5		 // set the CS line low (active low)
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
+
+	//2nd	byte============= Set channel 1 to set the test signal
+	MOV r2, 0x00000000
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+	
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
+	
+
+	//3rd	byte============= Set channel 1 to set the test signal
+	MOV r2, 0x05
+	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+	SUB r13, r14, 8
+	CALL TRUNCATE
+
+	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
+	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
+
+	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION	
+	
+
+	SET	r30.t5		 // pull the CS line high (end of sample)
+	SET r30.t1 //MOSI is active in original hardware SPI
 
 //------------------SLEEP 2 SECONDS---------------------------
 MOV	r12, DELAYCOUNT	

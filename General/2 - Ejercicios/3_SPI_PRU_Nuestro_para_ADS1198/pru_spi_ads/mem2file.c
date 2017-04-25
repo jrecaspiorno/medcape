@@ -73,7 +73,7 @@ int mem2file_initialize(){
     addr = readFileValue(MMAP_LOC "addr");
     dataSize = readFileValue(MMAP_LOC "size");
     number_total_samples = dataSize  / 18;
-    samples_per_chunk = 10;
+    samples_per_chunk = 100;
     target = addr;
 	
 	if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
@@ -204,7 +204,7 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	*/
 	  target=(number_chunk==1)?addr:addr+((2*8+2)*samples_per_chunk);
         virt_addr = map_base + (target & MAP_MASK);
-        fwrite(virt_addr, 2*8+2, 10, fd_output);
+        fwrite(virt_addr, 2*8+2, samples_per_chunk, fd_output);
 	/*
     if(munmap(map_base, MAP_SIZE) == -1) {
        printf("Failed to unmap memory");

@@ -1,6 +1,6 @@
 close all
 % Read the contents back into an array
-fid = fopen('ztest.data');
+fid = fopen('ztest3.data');
 %Status(2B) Ch0(2B) Ch1(2B)
 %The data format for each channel data are twos complement and MSB first
 %data = fread(fid, [3, inf], 'int16', 'ieee-be');
@@ -20,6 +20,6 @@ adc2v=Vref/((2^24)-1);
 
 figure; hold on;
 t=(1:length(data(2,:)))*(1/1000);
-plot(t, data(4,:)*adc2v, 'r.-');
-plot(t, data(5,:)*adc2v, 'k.-');
+plot(t, data(2,:)*adc2v, 'r.-');
+%plot(t, data(8,:)*adc2v, 'k.-');
 grid on;

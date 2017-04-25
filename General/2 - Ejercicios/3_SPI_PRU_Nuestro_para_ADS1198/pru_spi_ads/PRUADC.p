@@ -25,7 +25,7 @@
 #define PRU_EVTOUT_0    3        // the event number that is sent back
 #define PRU_EVTOUT_1	4        //allows notification of sample ready in RAM to be given to host program(in C)
 
-#define SIZE_CHUNK_RAM 10 //Size of chunks(1chunk=1sample, we could change this) of the circular buffer to store values in RAM
+#define SIZE_CHUNK_RAM 100 //Size of chunks(1chunk=1sample, we could change this) of the circular buffer to store values in RAM
 						  //E.g when we write the 2nd chunk(here in the pru), at the same time we are reading the 1st chunk(in host program)
 
 // Constants from the MCP3004/3008 datasheet 

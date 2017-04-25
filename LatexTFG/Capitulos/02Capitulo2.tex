@@ -111,7 +111,21 @@ Tras la obtención de un ECG completo, se tendrá un registro completo acerca del 
 
 Para llevar a cabo el correcto desarrollo del trabajo que se expone en la presente memoria, ha sido necesaria la investigación y el desarrollo de diversas tecnologías que se expondrán a continuación, así como el estudio y la asimilación de tecnologías ya existentes con el fin de adaptarlas y modificarlas para el proyecto desarrollado.
 
-Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico USB que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha utilizado una interfaz SPI, ya que era la única opcion posible de conexión compartida entre los dispositivos.
+Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico USB que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha recurrido a una interfaz SPI.
+
+%-------------------------------------------------------------------
+\subsection{Bus SPI}
+%-------------------------------------------------------------------
+\label{cap2:subsec:bus}
+
+El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dipositivos en una distancia corta \citep{exploringBBB}.
+
+
+%\medskip
+
+%Y también ponemos el acrónimo \ac{CVS} para que no cruja.
+
+
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}
 %-------------------------------------------------------------------

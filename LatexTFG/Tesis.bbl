@@ -1,0 +1,11 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Molloy(Enero, 2014)}]{exploringBBB}
+{\sc Molloy, D.}
+\newblock {\em Exploring BeagleBone\/}.
+\newblock Versión electrónica, Enero, 2014.
+\newblock Disponible en \url{http://exploringbeaglebone.com/} (último acceso,
+  Mayo, 2017).
+
+\end{thebibliography}

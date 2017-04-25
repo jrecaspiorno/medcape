@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.3.16)  23 APR 2017 13:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.3.16)  25 APR 2017 14:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -550,7 +550,7 @@ Package babel Info: Redefining spanish shorthand "?
 \oddsidemarginOriginal=\skip73
 \longTitulo=\skip74
 
-<Imagenes/Vectorial/escudoUCM.pdf, id=88, 597.23125pt x 844.15375pt>
+<Imagenes/Vectorial/escudoUCM.pdf, id=95, 597.23125pt x 844.15375pt>
 File: Imagenes/Vectorial/escudoUCM.pdf Graphic file (type pdf)
 
 <use Imagenes/Vectorial/escudoUCM.pdf>
@@ -1412,7 +1412,7 @@ Package babel Info: Redefining spanish shorthand "?
 
 
 
-] <Imagenes/Vectorial/ecg.jpg, id=229, 471.7625pt x 277.035pt>
+] <Imagenes/Vectorial/ecg.jpg, id=239, 471.7625pt x 277.035pt>
 File: Imagenes/Vectorial/ecg.jpg Graphic file (type jpg)
 
 <use Imagenes/Vectorial/ecg.jpg>
@@ -1431,7 +1431,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 64.
 
-<Imagenes/Vectorial/corazon.jpg, id=230, 722.7pt x 570.13pt>
+<Imagenes/Vectorial/corazon.jpg, id=240, 722.7pt x 570.13pt>
 File: Imagenes/Vectorial/corazon.jpg Graphic file (type jpg)
 
 <use Imagenes/Vectorial/corazon.jpg>
@@ -1529,39 +1529,52 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 105.
 
-<Imagenes/Vectorial/bbb.jpg, id=241, 325.215pt x 211.7511pt>
+<Imagenes/Vectorial/bbb.jpg, id=251, 325.215pt x 211.7511pt>
 File: Imagenes/Vectorial/bbb.jpg Graphic file (type jpg)
 
 <use Imagenes/Vectorial/bbb.jpg>
 Package pdftex.def Info: Imagenes/Vectorial/bbb.jpg used on input line 110.
 (pdftex.def)             Requested size: 323.9978pt x 210.9751pt.
-LaTeX Info: Redefining \. on input line 119.
-LaTeX Info: Redefining \% on input line 119.
+LaTeX Info: Redefining \. on input line 115.
+LaTeX Info: Redefining \% on input line 115.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 119.
+(babel)             in language append on input line 115.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 119.
- [6])
+(babel)             in language append on input line 115.
+ [6]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 117.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 117.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 117.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 117.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 117.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 117.
+)
 LaTeX Info: Redefining \. on input line 137.
 LaTeX Info: Redefining \% on input line 137.
 Package babel Info: Redefining spanish shorthand <<
@@ -1620,9 +1633,48 @@ Package babel Info: Redefining spanish shorthand "?
 ]
 \openout2 = `Cascaras/bibliografia.aux'.
 
- (./Cascaras/bibliografia.tex
-No file Tesis.bbl.
-)
+ (./Cascaras/bibliografia.tex (./Tesis.bbl
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 1.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 1.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 1.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 1.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 1.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 1.
+))
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 157.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 157.
+ [9
+
+
+]
 \openout2 = `TeXiS/TeXiS_acron.aux'.
 
  (./TeXiS/TeXiS_acron.tex
@@ -1638,7 +1690,36 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language append on input line 60.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 60.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language append on input line 68.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language append on input line 68.
 
+[10
+
+
+
+]
 No file Tesis.glx
 )
 Package babel Info: Redefining spanish shorthand <<
@@ -1665,12 +1746,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language append on input line 186.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 186.
- [9
-
-
-
-
-]
+ [11]
 \openout2 = `Cascaras/fin.aux'.
 
  (./Cascaras/fin.tex
@@ -1710,7 +1786,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language append on input line 83.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 83.
- [10
+ [12
 
 
 ]
@@ -1738,7 +1814,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language append on input line 86.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 86.
- [11])
+ [13])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 194.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 194.
  (./Tesis.aux (./Cascaras/cover.aux)
@@ -1752,17 +1828,17 @@ LaTeX Info: Redefining \% on input line 25.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 194.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 194.
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: D5476B2DA0268B6CBBBD8FEA7AB01931;1278.
+(rerunfilecheck)             Checksum: DB7ED73C648FA184307EC623A12B2DB8;1389.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 194.
  ) 
 Here is how much of TeX's memory you used:
- 10541 strings out of 493013
- 153553 string characters out of 6135682
- 258104 words of memory out of 5000000
- 13542 multiletter control sequences out of 15000+600000
+ 10554 strings out of 493013
+ 153737 string characters out of 6135682
+ 258225 words of memory out of 5000000
+ 13548 multiletter control sequences out of 15000+600000
  20841 words of font info for 43 fonts, out of 8000000 for 9000
  1379 hyphenation exceptions out of 8191
- 55i,11n,47p,1088b,434s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,11n,47p,1008b,434s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/
 type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-supe
@@ -1777,10 +1853,10 @@ hare/texmf/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf/fonts/typ
 e1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
 ftt1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfxc1000.pfb></usr/sh
 are/texmf/fonts/type1/public/cm-super/sfxc1095.pfb>
-Output written on Tesis.pdf (31 pages, 906277 bytes).
+Output written on Tesis.pdf (33 pages, 916379 bytes).
 PDF statistics:
- 340 PDF objects out of 1000 (max. 8388607)
- 282 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
- 189 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 365 PDF objects out of 1000 (max. 8388607)
+ 304 compressed objects within 4 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 205 words of extra memory for PDF output out of 10000 (max. 10000000)
 

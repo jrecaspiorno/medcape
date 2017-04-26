@@ -18,7 +18,7 @@ Albert Einstein
 \end{FraseCelebre}
 
 \begin{resumen}
-\todo Aqui va el resumen de este capítulo una vez este terminado.
+Para la realización del presente proyecto ha sido necesario realizar una investigación que cubre desde aspectos médicos hasta aspectos técnicos propios de una ingeniería compleja. En este capítulo se expone un breve resumen de cada antecedente investigado.
 \end{resumen}
 
 
@@ -114,12 +114,142 @@ Para llevar a cabo el correcto desarrollo del trabajo que se expone en la presen
 Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico USB que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha recurrido a una interfaz SPI.
 
 %-------------------------------------------------------------------
+\subsection{BeagleBone Black}
+%-------------------------------------------------------------------
+\label{cap2:subsec:bbb}
+
+La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nostros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, BeagleBone Black (BBB), ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
+\begin{itemize}
+  \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo.
+  \item tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
+  \item Es compatible con muchos estandares de interfaces para dispotivos electronicos.
+  \item Es muy eficiente, ya que requiere únicamente entre 1 y 2.3 W, según este inactivo, o funcionando a máxima potencia.
+  \item Es fácilmente ampliable a través de otro tipo de placas de expansión opcionales y de dispositivos USB.
+  \item Tiene una gran comunidad de desarrolladores innovadores y entusiastas que respaldan y dan soporte a los usuarios de la plataforma.
+  \item Es hardware libre, y es compatible con multitud de herramientas y de aplicaciones de software libre.
+\end{itemize}
+
+La plataforma BeagleBone lleva el sistema operativo Linux, lo que significa que es posible usar todo tipo de librerías de software libre, y aplicaciones. La posibilidad de usar software libre, brinda también la oportunidad de conectar esta plataforma con todo tipo de perifericos como pueden ser cámaras USB, teclados, adaptadores Wi-Fi \ldots
+
+%-------------------------------------------------------------------
+\subsubsection{Versiones BeagleBoneBlack}
+%-------------------------------------------------------------------
+\label{cap2:subsec:versiones}
+
+La plataforma BeagleBone y sus placas computadoras han evolucionado progresivamente con el paso de lo años, tanto en prestaciones, como en reducción del coste final. A continuación se muestra el progreso de la plataforma en orden histórico.
+
+\begin{itemize}
+  \item \textbf{(2008) BeagleBoard (125\$)} La original placa de desarrollo de hardware libre basada en ARM que tiene soporte para video HD. Tiene un Procesador ARM A8 a 720MHz pero no tiene conexión Ethernet.
+  \item \textbf{(2010) BeagleBoard xM (149\$)} Similar a la BeagleBoard, solo que tiene un procesador ARM AM37x a 1Ghz, 512MB de memoria, cuatro puertos USB, y soporte para Ethernet. Es una placa muy popular por su núcleo C64+TMDSP para procesamiento de señales digitales.
+  \item \textbf{(2011) BeagleBone (89\$)} Más compacta que su antecesora la BeagleBoard. Tiene un procesador a 720Mhz y 256MB de memoria, soporta Ethernet y conexiones de salida de bajo nivel, pero no tiene soporte nativo de video.
+  \item \textbf{(2013) BeagleBone Black (45\$-55\$)} Esta placa mejora la BeagleBone con un procesador a 1GHz, 512MB de memoria DDR3, conexión Ethernet, almacenamietno eMMC y soporte para conexión de video HDMI.
+\end{itemize}
+
+\figura{Vectorial/Features}{width=1\textwidth}{fig:feat}
+{Especificación hardware BeagleBone Black}
+
+La especificación completa de las carácteristicas de la BBB se muestran con más detalle en la [Fig. \ref{fig:feat}] \citep{BBBsite}
+
+
+%-------------------------------------------------------------------
 \subsection{Bus SPI}
 %-------------------------------------------------------------------
 \label{cap2:subsec:bus}
 
-El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dipositivos en una distancia corta \citep{exploringBBB}.
+El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dipositivos en una distancia corta \citep{exploringBBB}. Es posible que la comunicación sea bidireccional, ya que tanto la transmisión como la recepción de datos se realizan en buses separados. 
 
+En la transferencia de datos se implican distintos dispositivos que desempeñan diferentes funciones. Existe un dispositivo principal, más conocido como maestro, y otro  dispositivo denominado esclavo (como mínimo debe existir uno). El maestro es responsable de enviar las señales de reloj y de seleccionar  al esclavo activo en cada instante de la comunicación. 
+
+\figura{Vectorial/spi}{width=0.7\textwidth}{fig:spi}
+{Estándar de comunicación SPI}
+
+Las diferentes líneas existentes en este estándar de comunicación son las siguientes [Fig \ref{fig:spi}]:
+
+\begin{itemize}
+  \item \textbf{MISO} (Master Input Slave Output): Bus de salida de datos de los dispositivos esclavos y de entrada al maestro.
+  \item \textbf{MOSI} (Master Output Slave Input): Bus de salida de datos del maestro y entrada a los esclavos.
+   \item \textbf{SCK} (Clock o señal de reloj): Pulso de reloj generado por el maestro.
+   \item \textbf{SS/Select} (Chip Select): Bus de salida del maestro y entrada a los esclavos, encargado de seleccionar el dispositivo esclavo activo en la comunicación.
+\end{itemize}
+
+Con el fin de procesar una lectura desde un dispositivo esclavo, el maestro debe realizar una escritura en el bus, forzando de esta forma la generación de una señal del reloj que tendrá como consecuencia la escritura de datos por parte del dispositivo deseado.
+
+El dispositivo maestro debe conocer las características de cada esclavo implicado en la comunación, entre las cuales, es posible destacar las siguientes:
+
+\begin{itemize}
+  \item \textbf{Frecuencia máxima de transferencia}: La velocidad de comunicación  con cada dispositivo etará limitada por este valor, haciendo imposible enviar o recibir datos a mayor velocidad.
+   \item \textbf{Polaridad} (CPOL): Determina la polaridad del reloj [Fig \ref{fig:spi3}].
+   \item \textbf{Fase} (CPHA): Determina el flanco de reloj en el que se desencadenará la escritura [Fig \ref{fig:spi3}].
+\end{itemize}
+
+\figura{Vectorial/spi3}{width=1\textwidth}{fig:spi3}
+{Configuraciónes posibles de fase y polaridad en el estándar SPI}
+
+%-------------------------------------------------------------------
+\subsection{Chip ADS1198}
+%-------------------------------------------------------------------
+\label{cap2:subsec:ads}
+
+El ADS1198 es un chip de Texas Instruments de bajo consumo para mediciones de señales ECG, que se caracteriza por tener ocho canales de 16 bits cada uno, una frecuencia de muestreo de hasta 8KHz, un amplificados de ganancia programable, referencia interna, y un oscilador integrado. \citep{ads1198} Cada canal consta de un multiplexor que permite la lectura desde ocho entradas diferentes, siendo las más relevantes las entradas de temperatura, electrodos, y señal de test generada internamente.
+
+El chip consta de una interfaz SPI para permitir la comunicación con otros sipositivos. Además de las líneas típicas de SPI se proporciona una línea adicional, \textbf{DRDY} (Data ready), que índica cuando se tienen nuevos datos válidos preparados para enviar. La lectura de datos se realiza siempre para los 8 canales, devolviendo adicionalmente una cabecera con información de la configuración del chip.
+
+El chip permite obtener la alimentación de manera unipolar o bipolar:
+
+\begin{itemize}
+  \item \textbf{Unipolar}: La alimentación unipolar se realiza mediante una entrada de 5V y otra de 3V.
+   \item \textbf{Bipolar}: El modo bipolar requiere entradas desde -2.5V hasta 2.5V.
+\end{itemize}
+
+La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más facilmente adaptable a los pines que proporciona la BBB.
+
+Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectors propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia.
+
+Para el propósito del presente proyecto, se ha utilizado un kit de desarrollo, en el que se incluye el chip integrado en una placa que permite configurar la forma de alimentación o tener acceso a las entradas de datos de forma más cómoda y sencilla.
+
+\figura{Vectorial/ads}{width=1\textwidth}{fig:ads}
+{Diagrama de funcionamiento interno ADS1198}
+
+%-------------------------------------------------------------------
+\subsubsection{Características técnicas}
+%-------------------------------------------------------------------
+\label{cap2:subsec:caracteristicas}
+
+Dado su elevado rendimiento, alto nivel de integración y bajo consumo, el ADS1198 permite el desarrollo de instrumentación médica de prestaciones elevadas, tamaño reducido y bajo coste. Entre las características técnicas más destacables, podemos encontrar las siguientes:
+
+\begin{itemize}
+  \item 8 canales de alta resolución.
+  \item Bajo consumo: 0.55mW/canal.
+  \item Frecuencia de muestreo: desde 125Hz hasta 8KHz.
+  \item Ganancia programable.
+  \item Alimentación Unipolar o Bipolar.
+  \item Oscilador y referencia internos.
+  \item Señales de test integradas.
+  \item Comunicación mediante interfaz SPI.
+  \item Rango de temperatura operativo: 0 ºC a 70 ºC.
+\end{itemize}
+
+%-------------------------------------------------------------------
+\subsection{Analizador lógico Saleae}
+%-------------------------------------------------------------------
+\label{cap2:subsec:saleae}
+
+Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depuración durante el desarrollo del proyecto. Gracias al uso de este dispositivo ha sido posible detectar fallos muy concretos en periódos de tiempo relativamente pequeños, ya que de otra forma, en caso de no haberlo utilizado hubiese sido muy complicado el desarrollo, o al menos, hubiese llevado muchisimo más tiempo del esperado. 
+
+La idea de funcionamiento de este dispositivo es muy sencilla. Cuenta con 8 canales que actuan como analizadores lógicos, por lo que basta con conectar cada analizador al canal que se desee analizar. 
+
+Una vez conectado cada canal, entra en juego en software que proporciona el propio Saleae, que en este caso es multiplataforma \footnote{software disponible en \href{https://www.saleae.com/downloads}{https://www.saleae.com/downloads}}. Tras descargarlo e instalarlo bastará con conectar el analizador lógico por usb y configurarlo para comenzar a analizar cada una de las señales.
+
+Entre sus principales características, cabe destacar als siguientes:
+\begin{itemize}
+  \item Flexible, software fácil de usar.
+  \item Grandes buffers de muestras.
+  \item Muy portable, conexión USB disponible.
+  \item Analiza 24 protocolos de automatización.
+  \item Decodificación de protocolos personalizada.
+  \item Formatos de exportación de datos: CSV, Binario, VCD y Matlab. internos.
+  \item Marcadores de medidas, señaladores y temporizadores.
+\end{itemize}
 
 %\medskip
 

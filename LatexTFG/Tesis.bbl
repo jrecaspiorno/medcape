@@ -1,5 +1,19 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{3}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{elinux.org(2017)}]{BBBsite}
+{\sc elinux.org}.
+\newblock {\em BeagleBone Black\/}.
+\newblock Versión electrónica, 2017.
+\newblock Disponible en \url{http://elinux.org/Beagleboard:BeagleBoneBlack}
+  (último acceso,  Mayo, 2017).
+
+\bibitem[{Instruments(2017)}]{ads1198}
+{\sc Instruments, T.}
+\newblock {\em ADS1198\/}.
+\newblock Versión electrónica, 2017.
+\newblock Disponible en \url{http://www.ti.com/product/ADS1198} (último acceso,
+   Mayo, 2017).
 
 \bibitem[{Molloy(Enero, 2014)}]{exploringBBB}
 {\sc Molloy, D.}

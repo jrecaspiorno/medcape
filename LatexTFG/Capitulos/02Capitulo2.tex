@@ -120,9 +120,9 @@ Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede a
 
 La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nostros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, BeagleBone Black (BBB), ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
 \begin{itemize}
-  \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo.
-  \item tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
-  \item Es compatible con muchos estandares de interfaces para dispotivos electronicos.
+  \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo (2000 MIPS).
+  \item Tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
+  \item Es compatible con muchos estandares de interfaces para dispotivos electronicos (SPI entre otros).
   \item Es muy eficiente, ya que requiere únicamente entre 1 y 2.3 W, según este inactivo, o funcionando a máxima potencia.
   \item Es fácilmente ampliable a través de otro tipo de placas de expansión opcionales y de dispositivos USB.
   \item Tiene una gran comunidad de desarrolladores innovadores y entusiastas que respaldan y dan soporte a los usuarios de la plataforma.
@@ -203,7 +203,7 @@ El chip permite obtener la alimentación de manera unipolar o bipolar:
 
 La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más facilmente adaptable a los pines que proporciona la BBB.
 
-Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectors propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia.
+Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia.
 
 Para el propósito del presente proyecto, se ha utilizado un kit de desarrollo, en el que se incluye el chip integrado en una placa que permite configurar la forma de alimentación o tener acceso a las entradas de datos de forma más cómoda y sencilla.
 
@@ -238,16 +238,17 @@ Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depura
 
 La idea de funcionamiento de este dispositivo es muy sencilla. Cuenta con 8 canales que actuan como analizadores lógicos, por lo que basta con conectar cada analizador al canal que se desee analizar. 
 
-Una vez conectado cada canal, entra en juego en software que proporciona el propio Saleae, que en este caso es multiplataforma \footnote{software disponible en \href{https://www.saleae.com/downloads}{https://www.saleae.com/downloads}}. Tras descargarlo e instalarlo bastará con conectar el analizador lógico por usb y configurarlo para comenzar a analizar cada una de las señales.
+Una vez conectado cada canal, entra en juego el software que proporciona el propio Saleae, que en este caso es multiplataforma \footnote{software disponible en \href{https://www.saleae.com/downloads}{https://www.saleae.com/downloads}}. Tras descargarlo e instalarlo bastará con conectar el analizador lógico por usb y configurarlo para comenzar a analizar cada una de las señales.
 
 Entre sus principales características, cabe destacar als siguientes:
+
 \begin{itemize}
   \item Flexible, software fácil de usar.
   \item Grandes buffers de muestras.
   \item Muy portable, conexión USB disponible.
-  \item Analiza 24 protocolos de automatización.
+  \item Analiza 24 protocolos distintos de comunicación.
   \item Decodificación de protocolos personalizada.
-  \item Formatos de exportación de datos: CSV, Binario, VCD y Matlab. internos.
+  \item Formatos de exportación de datos: CSV, Binario, VCD y Matlab.
   \item Marcadores de medidas, señaladores y temporizadores.
 \end{itemize}
 

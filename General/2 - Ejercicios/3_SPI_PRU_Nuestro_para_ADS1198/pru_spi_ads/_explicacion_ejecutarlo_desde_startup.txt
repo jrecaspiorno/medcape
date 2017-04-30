@@ -1,0 +1,22 @@
+-Se siguió este tutorial:
+http://mybeagleboneblackfindings.blogspot.com.es/2013/10/running-script-on-beaglebone-black-boot.html
+
+Cambiando estos pasos:
+- in point 3. there was missing "system" in path. Correct command:
+nano /lib/systemd/system/<scriptname>.service
+
+- same in point 5. Correctly shall be:
+ln /lib/systemd/system/<scriptname>.service <scriptname>.service
+
+
+------------------------------------------------------------------------
+Nuestro script se llama medcape_script. Se puede ver su contenido haciendo esto: nano /usr/bin/medcape_script.sh
+
+Se puede desactivar haciendo esto:
+systemctl disable <scriptname>.service
+
+Y activar haciendo esto:
+systemctl enable <scriptname>.service
+
+Cuidado al activarlo porque se empezará a generar el .data y el log y si no se detienen ocuparán un tamaño
+excesivo y se llenará la memoria de la BBB

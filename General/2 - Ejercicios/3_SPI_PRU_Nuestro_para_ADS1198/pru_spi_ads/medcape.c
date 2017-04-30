@@ -221,7 +221,7 @@ printf("Init GPIOs\n");
    unsigned int PRU_data_addr = readFileValue_sysfs(MMAP0_LOC "addr");
    printf("-> the PRUClock memory is mapped at the base address: %x\n", (PRU_data_addr + 0x2000));
    printf("-> the PRUClock on/off state is mapped at address: %x\n", (PRU_data_addr + 0x10000));
-
+	fflush(stdout);
    // data for PRU0 based on the MCPXXXX datasheet
    unsigned int spiData[7];
    	//May we store the initial spi speed in shared memory:
@@ -284,7 +284,7 @@ printf("Init GPIOs\n");
 
     //NOTE no muevas esto de aquí, siempre se genera una interrupción inicial
     //y podemos estar jodiendo la comunicación SPI!!!
-    system("cat /proc/interrupts | grep 177 | echo Initial interrupts: $(awk '{print $2}')");
+    //system("cat /proc/interrupts | grep 177 | echo Initial interrupts: $(awk '{print $2}')");
    
 	//Pru0 must loop polling the value of data_ready (until data_ready=0 i.e. falling, i.e. waiting for edge to get data)
 	//We don't need to count the interruptions in pru(because we shouldn't have any)	
@@ -309,7 +309,7 @@ printf("Init GPIOs\n");
 	//Importante
 	//Que hacer si el PRU termina antes que el programa host(este), y al programa host aún le faltan datos de RAM por leer.
    // Wait for event completion from PRU, returns the PRU_EVTOUT_0 number
-
+	fflush(stdout);
    int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);
    printf("EBBADC PRU0 program completed, event number %d.\n", n);
    while(number_of_samples!=0){
@@ -325,7 +325,7 @@ printf("Init GPIOs\n");
 	//execute sdatac command(this is already done in pru0)
 
     printf("Ints: %u\n", ints);
-    system("cat /proc/interrupts | grep 177 | echo final interrupts: $(awk '{print $2}')");
+    //system("cat /proc/interrupts | grep 177 | echo final interrupts: $(awk '{print $2}')");
 	
    return 0;
 }

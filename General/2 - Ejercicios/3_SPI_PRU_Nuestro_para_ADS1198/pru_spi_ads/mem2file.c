@@ -91,7 +91,7 @@ int mem2file_initialize(){
     }
 	
 		
-	char filename[] = "ztest.data";
+	char filename[] = "/home/debian/workspace2016/pru_spi_ads/ztest.data";
 	if ( (fd_output = fopen(filename, "w+b")) == NULL ) {
 		perror("Error al abrir el fichero de datos");
 	}

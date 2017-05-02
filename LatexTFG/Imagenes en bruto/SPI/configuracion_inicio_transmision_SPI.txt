@@ -1,0 +1,11 @@
+﻿Señales que se le mandan al ADS desde la BBB(código ensamblador en PRU) 
+para configurar el inicio de la transmisión de datos por SPI:
+
+RESET
+SDATAC (Stop reading data continuously)
+SET_ADS_SAMPLE_RATE
+SET_ADS_INTERNAL_REFERENCE
+SET_ADS_INTERNAL_TEST_SIGNAL
+SET_ADS ChnSet test signal (Solo pusimos chn1 para probar)
+START
+RDATAC (Read data continuously)

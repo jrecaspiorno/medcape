@@ -1,6 +1,7 @@
 #ifndef _ADS1192_H_
 #define _ADS1192_H_
 
+#include "ads.h"
 
 // The number of the definitions are referenced to the GPIO in BBB
 #define GPIO_DATA_READY (32*3+19)       // ~DRDY -> GPIO3_19

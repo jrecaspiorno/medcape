@@ -20,6 +20,7 @@ int ads_init_gpios(void) {
          set_gpio_direction(GPIO_RESET, "out") ) {
         return -1;
     }
+    set_gpio_value(GPIO_START, 1);
 #endif
 
 #ifdef GPIO_START
@@ -37,7 +38,7 @@ int ads_init_gpios(void) {
 int ads_reset(void) {
 
 #ifdef GPIO_RESET
-	set_gpio_value(GPIO_RESET, 1);
+    set_gpio_value(GPIO_RESET, 1);
     sleep(1);
     set_gpio_value(GPIO_RESET, 0);
     sleep(1);
@@ -45,7 +46,7 @@ int ads_reset(void) {
     sleep(1);
 #else
     if ( ads_command(RESET) == -1 ) {
-        printf("can't send SDATAC\n");
+        printf("can't send RESET\n");
         return -1;
     }
 #endif    
@@ -327,7 +328,7 @@ int ads_set_test(void) {
 #endif
 
 #ifdef ADS1198
-    uint8_t buff[9];
+    uint8_t buff[8];
 
     buff[0] = 0x10;           // INT_TEST:1, TEST_AMP:0, TEST_FREQ:00
     if ( ads_write_registers(CONFIG2, CONFIG2, buff) == -1 ) {
@@ -344,7 +345,6 @@ int ads_set_test(void) {
     buff[5] = 0x05;
     buff[6] = 0x05;
     buff[7] = 0x05;
-    buff[8] = 0x05;
     if ( ads_write_registers(CH1SET, CH8SET, buff) == -1 ) {
         printf("Write error!!\n");
         return -1;

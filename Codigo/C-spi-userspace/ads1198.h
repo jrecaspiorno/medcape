@@ -96,12 +96,12 @@
 #define NUM_REGS ((WCT2)+1)
 
 
-#define SRATE_8K    000     // Demasiado para la BBB
-#define SRATE_4K    001     // T=500us, máximo funcionando. Desde DRDY hasta ads_read_sample pasan 180us, en recoger los datos tarda 84us (SCLK3MHz), sobran 230us para procesamiento...
-#define SRATE_2K    010     
-#define SRATE_1K    011     
-#define SRATE_500   100     // Default
-#define SRATE_250   101     
-#define SRATE_125   110     
+#define SRATE_8K    0     // Demasiado para la BBB
+#define SRATE_4K    1     // T=500us, máximo funcionando. Desde DRDY hasta ads_read_sample pasan 180us, en recoger los datos tarda 84us (SCLK3MHz), sobran 230us para procesamiento...
+#define SRATE_2K    2     
+#define SRATE_1K    3     
+#define SRATE_500   4     // Default
+#define SRATE_250   5     
+#define SRATE_125   6     
 
 #endif

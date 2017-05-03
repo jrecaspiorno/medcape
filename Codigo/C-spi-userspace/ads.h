@@ -4,8 +4,8 @@
 //#define ADS1198
 
 #define ADS1192
-#define MEDCAPE_DD1             // Old
-//#define MEDCAPE_E1              // New
+//#define MEDCAPE_DD1             // Old
+#define MEDCAPE_E1              // New
 
 #if defined ADS1198
     #pragma message ("ADS1198")

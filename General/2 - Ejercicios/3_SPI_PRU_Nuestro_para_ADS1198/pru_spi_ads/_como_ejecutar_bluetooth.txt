@@ -1,5 +1,34 @@
+//==========Solo hay que hacer estos pasos para que funcione una vez encendemos la BB========
+(El resto de cosas en este fichero solo se hicieron la primera vez que se configuró)
+
+-Reset bluetooth del dongle:
+hciconfig hci0 reset
+
+-Hacer visible el bluetooth del dongle:
+hciconfig hci0 piscan
+
+-Reset bluetooth service
+rfkill block bluetooth
+sudo service bluetooth stop
+rfkill unblock bluetooth
+
+-Iniciar bluetooth en modo salida del Debug del servicio bluetooth
+bluetoothd -n -d
+
+-El Dongle es el servidor, por lo tanto se debe mantener a la escucha de conexiones:
+ejecutar el código Python:
+cd /home/debian/workspace2016/pru_spi_ads
+python BTConnection.py
+//===========================================
+
 -Habilitar por defecto dbus para bluetooth
 update-rc.d -f dbus defaults
+
+-Reset bluetooth del dongle:
+hciconfig hci0 reset
+
+-Reset bluetooth service:
+service bluetooth restart
 
 -Hacer visible el bluetooth del dongle:
 hciconfig hci0 piscan
@@ -44,7 +73,7 @@ In /etc/bluetooth/rfcomm.conf file make the following entry
 1
 rfcomm0 {
 2
-        bind no;
+        bind yest;
 3
         device 98:D3:31:30:1A:BA;
 4
@@ -55,18 +84,44 @@ rfcomm0 {
         }
 7
         
-98:D3:31:30:1A:BA is the mac address of our device.
+98:D3:31:30:1A:BA is the mac address of our mobile.
 
-The "bind no" is important, otherwise it will try to automatically bind to device and not when the user wants.
 
-Start the connection
-Type the command sudo rfcomm connect 0 to start the communication
 
-view sourceprint?
-1
-#sudo rfcomm connect 0
-2
-Connected /dev/rfcomm0 to 98:D3:31:30:1A:BA on channel 1
-3
-Press CTRL-C for hangup
 
+-El Dongle es el servidor, por lo tanto se debe mantener a la escucha de conexiones:
+ejecutar el código Python:
+cd /home/debian/workspace2016/pru_spi_ads
+python BTConnection.py
+
+O si no hacerlo sin el código python:
+
+-Crear canal para serial port (poner el 22 por ejemplo)
+sdptool add --channel=22 SP
+
+-Ver si se ha hecho el comando anterior:
+sdptool browse local
+
+-Limpiar la conexión de ese canal:
+rfcomm release 0
+rfcomm release 1
+
+-Mantenerse a la escucha en el canal que queramos:
+rfcomm watch 0 1
+
+//===========================================================================================================
+rfkill block bluetooth
+sudo service bluetooth stop
+rfkill unblock bluetooth
+
+-Iniciar bluetooth en modo salida del Debug del servicio bluetooth
+bluetoothd -n -d
+
+//=====================================0//
+Si da este error, probar esto:
+ Unable to spawn pnatd: Failed to execute child process "/usr/bin/phonet-at" (No such file or directory)
+
+configuración del bluetooth ‘/etc/bluetooth/main.conf’ la línea:
+
+DisablePlugins=pnat
+^

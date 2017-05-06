@@ -29,7 +29,8 @@ bluetooth.advertise_service(serverSocket, "BeagleBoneService",
 # Pipe
 #
 
-pipeName = "fifo.tmp"
+#pipeName = "fifo.tmp"
+pipeName = "ztest.data"
 #outputFileName = "data.dat"
 
 #

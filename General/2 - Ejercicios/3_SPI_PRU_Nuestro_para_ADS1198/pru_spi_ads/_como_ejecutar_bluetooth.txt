@@ -1,0 +1,72 @@
+-Habilitar por defecto dbus para bluetooth
+update-rc.d -f dbus defaults
+
+-Hacer visible el bluetooth del dongle:
+hciconfig hci0 piscan
+
+-Encontrar MAC del móvil:
+hcitool scan
+
+-Para ponerle pass al emparejamiento:
+sudo bluetooth-agent <pass> &
+
+-Emparejar desde BBB a móvil 
+(porque desde móvil a BBB también se podría, que sería pinchando en el nombre 
+del bluetooth de la BBB  en la interfaz gráfica de Android)
+bluez-simple-agent hci0 <MAC_del_movil>
+
+-Si ya está emparejado y lo queremos borrar, hay que hacer esto:
+ bluez-simple-agent hci0 <MAC_del_movil> remove
+
+ 
+(
+	Y si da error  Authentication Rejected hay que hacer esto:
+	
+	You need to change an occurrence of “KeyboardDisplay” with “DisplayYesNo” in a bluez python script.
+
+	sudo vi /usr/bin/bluez-simple-agent
+)
+
+
+-Make the device trusted.
+bluez-test-device trusted <MAC_del_movil> yes
+
+-Connect the device. After a few seconds, your device will be usable.
+bluez-test-input connect <MAC_del_movil>
+
+-Nota: When you will reboot, the devices will reconnected automatically after a few seconds.
+
+//===============================================================================================//
+
+-Si se quiere conectar por serial port, hay que seguir los siguientes pasos:
+In /etc/bluetooth/rfcomm.conf file make the following entry
+
+1
+rfcomm0 {
+2
+        bind no;
+3
+        device 98:D3:31:30:1A:BA;
+4
+        channel 1;
+5
+        comment "Serial Port";
+6
+        }
+7
+        
+98:D3:31:30:1A:BA is the mac address of our device.
+
+The "bind no" is important, otherwise it will try to automatically bind to device and not when the user wants.
+
+Start the connection
+Type the command sudo rfcomm connect 0 to start the communication
+
+view sourceprint?
+1
+#sudo rfcomm connect 0
+2
+Connected /dev/rfcomm0 to 98:D3:31:30:1A:BA on channel 1
+3
+Press CTRL-C for hangup
+

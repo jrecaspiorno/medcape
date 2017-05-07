@@ -31,7 +31,9 @@ bluetooth.advertise_service(serverSocket, "BeagleBoneService",
 #
 
 #pipeName = "fifo.tmp"
-pipeName = "ztest.data"
+pipeName = "z_cuadrada_chn1.data"
+#pipeName = "ztest.data"
+
 #outputFileName = "data.dat"
 
 #
@@ -71,11 +73,12 @@ while True:
 		#print outputFileName, "opened"
 
 		while True:
+			"""
 			statinfo = os.stat(pipeName)  
 			size_file = statinfo.st_size  
 			if size_file >= size_file_max:
 				pipeFile = open(pipeName, "rb")
-
+			"""
 			try:
 				while True:
 					chunk = pipeFile.read(chunkSize)

@@ -48,8 +48,8 @@ ADC_PACKET_SIZE   = 2 * (ADC_CHANNELS * ADC_SAMP_CHANNEL) / 2.0
 NONIN_PACKET_SIZE = 6
 
 #chunkSize = int(TAG_SIZE + ADC_PACKET_SIZE + NONIN_PACKET_SIZE)
-chunkSize = 18
-
+chunkSize = 18 #18 bytes per sample (2 status + 16 data). Each channel has 2 bytes
+size_file_max = 18*100 #18 bytes per sample * 100 samples per file
 #
 # Combining Bluetooth module with the pipe
 #
@@ -73,7 +73,7 @@ while True:
 		while True:
 			statinfo = os.stat(pipeName)  
 			size_file = statinfo.st_size  
-			if size_file >= 1800:
+			if size_file >= size_file_max:
 				pipeFile = open(pipeName, "rb")
 
 			try:

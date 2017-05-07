@@ -1,6 +1,7 @@
 import bluetooth
 import time
 import sys
+import os
 
 print "Starting programm"
 
@@ -46,7 +47,8 @@ ADC_SAMP_CHANNEL  = 12
 ADC_PACKET_SIZE   = 2 * (ADC_CHANNELS * ADC_SAMP_CHANNEL) / 2.0
 NONIN_PACKET_SIZE = 6
 
-chunkSize = int(TAG_SIZE + ADC_PACKET_SIZE + NONIN_PACKET_SIZE)
+#chunkSize = int(TAG_SIZE + ADC_PACKET_SIZE + NONIN_PACKET_SIZE)
+chunkSize = 18
 
 #
 # Combining Bluetooth module with the pipe
@@ -69,6 +71,11 @@ while True:
 		#print outputFileName, "opened"
 
 		while True:
+			statinfo = os.stat(pipeName)  
+			size_file = statinfo.st_size  
+			if size_file >= 1800:
+				pipeFile = open(pipeName, "rb")
+
 			try:
 				while True:
 					chunk = pipeFile.read(chunkSize)

@@ -66,6 +66,7 @@ unsigned int dataSize;
 unsigned int number_total_samples;
 unsigned int samples_per_chunk;
 off_t target;
+char filename[] = "/home/debian/workspace2016/pru_spi_ads/ztest.data";
 FILE* fd_output;
 
 int mem2file_initialize(){
@@ -91,7 +92,6 @@ int mem2file_initialize(){
     }
 	
 		
-	char filename[] = "/home/debian/workspace2016/pru_spi_ads/ztest.data";
 	if ( (fd_output = fopen(filename, "w+b")) == NULL ) {
 		perror("Error al abrir el fichero de datos");
 	}
@@ -132,86 +132,27 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	printf("\n \n Samples left: %d", samples_left);
 	printf("\n  number_total_samples: %d", number_total_samples);
 	printf("\n \n samples_taken %d \n \n", samples_taken);
-	/*
-	if(samples_left < samples_per_chunk) {
-		samples_per_chunk = samples_left;
-	}
-	*/
+
 	
 	if(number_chunk==2){
 		target = addr+((2*8+2)*samples_per_chunk); //2*8+2=1chunk (2 bytes per channel, and 3 status bytes (but we only take 2 to have a pair number), we have 100 samples for each chunk
 	}
 
 
-	//====================================================
-	/*
-    if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
-	printf("Failed to open memory!");
-	return -1;
-    }
-    fflush(stdout);
-	*/
-	/*
-    map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
-    if(map_base == (void *) -1) {
-       printf("Failed to map base address");
-       return -1;
-    }
-	*/
-    //fflush(stdout);
 	
-	//====================================================
+	if ( (fd_output = freopen(filename, "w+b", fd_output)) == NULL ) {
+		perror("Error al abrir el fichero de datos");
+	}
 	/*
-	unsigned int numberBufferFull = 6;
-	int a = 0;
-	int x=0;
-	for(x=0; x<samples_per_chunk; x++){
-		printf("Muestra %d \n", a);
-		//sleep(1);
-		int i=0;
-		for(i=0; i<numberBufferFull; i++){
-			virt_addr = map_base + (target & MAP_MASK);
-			read_result = *((uint32_t *) virt_addr);
-			//printf("Value at address 0x%X (%p): 0x%X\n", target, virt_addr, read_result);
-			printf("Value at address 0x%X (%p): 0x%08X\n", target, virt_addr, read_result);
-
-			//printf("%d %x\n",i, read_result);
-			target+=3;                   // 18 bytes per sample
-			//fwrite(virt_addr, 3, 1, fd_output);
-			
-			if(i!=0 && i<5){
-                uint32_t tmp = (read_result>>16)&0xff + (read_result&0xff00)+ (read_result<<16)&0xff0000; 
-                tmp=read_result;
-                fwrite(&read_result, 3, 1, fd_output);
-            }
-            if(i==5){
-                uint32_t tmp = (read_result>>16)&0xff + (read_result&0xff00); 
-                tmp=(read_result>>8);
-                fwrite(&read_result, 2, 1, fd_output);
-            }
-            
-            
-        }
-	
-
-      
-        
-        
-        
-		fflush(stdout);
-		a++;
+	int new_length = 0;
+	if (ftruncate(fileno(fd_output), new_length) != 0) {
+		perror("Error al truncar el fichero de datos");
 	}
 	*/
-	  target=(number_chunk==1)?addr:addr+((2*8+2)*samples_per_chunk);
-        virt_addr = map_base + (target & MAP_MASK);
-        fwrite(virt_addr, 2*8+2, samples_per_chunk, fd_output);
-	/*
-    if(munmap(map_base, MAP_SIZE) == -1) {
-       printf("Failed to unmap memory");
-       return -1;
-    }
-	*/
-    //close(fd);
-	
+
+	target=(number_chunk==1)?addr:addr+((2*8+2)*samples_per_chunk);
+	virt_addr = map_base + (target & MAP_MASK);
+	fwrite(virt_addr, 2*8+2, samples_per_chunk, fd_output);
+
     return 0;
 }

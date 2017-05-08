@@ -39,7 +39,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -52,7 +52,11 @@
 #include <termios.h>
 #include <sys/types.h>
 #include <sys/mman.h>
+#include <fcntl.h>
+#include <limits.h>
+
 #include "mem2file.h"
+#include "pipeFile.h"
 
 #define MAP_SIZE 0x0FFFFFFF
 #define MAP_MASK (MAP_SIZE - 1)
@@ -63,11 +67,19 @@ void *map_base, *virt_addr;
 unsigned long read_result, writeval;
 unsigned int addr;
 unsigned int dataSize;
+unsigned int size_packet;
 unsigned int number_total_samples;
 unsigned int samples_per_chunk;
 off_t target;
 char filename[] = "/home/debian/workspace2016/pru_spi_ads/ztest.data";
 FILE* fd_output;
+
+// Pipe to Python program (Bluetooth module)
+pipeFile pipePython = {
+		.name = "pipe_medcape.data",
+		//.stat,
+		.fid = -1
+};
 
 int mem2file_initialize(){
     read_result, writeval;
@@ -76,14 +88,14 @@ int mem2file_initialize(){
     number_total_samples = dataSize  / 18;
     samples_per_chunk = 100;
     target = addr;
-	
+	size_packet = 2*8+2;
 	if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){
 		printf("Failed to open memory!");
 		return -1;
     }
 
 	//We establish the target like if we were in the last chunk(hence we cover all the data available to map)
-	target = addr+((2*8+2)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
+	target = addr+((size_packet)*samples_per_chunk); //6*4=1chunk, we have 100 samples for each chunk
 
     map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~MAP_MASK);
     if(map_base == (void *) -1) {
@@ -96,6 +108,13 @@ int mem2file_initialize(){
 		perror("Error al abrir el fichero de datos");
 	}
 		
+	
+	// Configure pruIo driver, the nonin sensor and the pipe to Python
+	printf("Configuring modules...\n");
+	if (configureModules(&pipePython)) {
+		exit(EXIT_FAILURE);
+	}
+
 	
    printf("mem2file succesfully initialized!! \n\n");
 
@@ -112,30 +131,19 @@ unsigned int readFileValue(char filename[]){
 }
 
 int mem2file_main(int number_chunk, int samples_taken) {
-	//===========================================================
-	/*
-    int fd;
-    void *map_base, *virt_addr;
-    unsigned long read_result, writeval;
-    unsigned int addr = readFileValue(MMAP_LOC "addr");
-    unsigned int dataSize = readFileValue(MMAP_LOC "size");
-    unsigned int number_total_samples = dataSize  / 18;
-    unsigned int samples_per_chunk = 10;
-    off_t target = addr;
-	*/
-	//===========================================================
-    target = addr;
 
+    target = addr;
+	/*
 	printf("\n Number_chunk: %d \n", number_chunk);
 		
 	int samples_left = number_total_samples - samples_taken;
 	printf("\n \n Samples left: %d", samples_left);
 	printf("\n  number_total_samples: %d", number_total_samples);
 	printf("\n \n samples_taken %d \n \n", samples_taken);
-
+	*/
 	
 	if(number_chunk==2){
-		target = addr+((2*8+2)*samples_per_chunk); //2*8+2=1chunk (2 bytes per channel, and 3 status bytes (but we only take 2 to have a pair number), we have 100 samples for each chunk
+		target = addr+((size_packet)*samples_per_chunk); //size_packet=1chunk (2 bytes per channel, and 3 status bytes (but we only take 2 to have a pair number), we have 100 samples for each chunk
 	}
 
 
@@ -143,16 +151,39 @@ int mem2file_main(int number_chunk, int samples_taken) {
 	if ( (fd_output = freopen(filename, "w+b", fd_output)) == NULL ) {
 		perror("Error al abrir el fichero de datos");
 	}
-	/*
-	int new_length = 0;
-	if (ftruncate(fileno(fd_output), new_length) != 0) {
-		perror("Error al truncar el fichero de datos");
-	}
-	*/
+	
 
-	target=(number_chunk==1)?addr:addr+((2*8+2)*samples_per_chunk);
+	target=(number_chunk==1)?addr:addr+((size_packet)*samples_per_chunk);
 	virt_addr = map_base + (target & MAP_MASK);
-	fwrite(virt_addr, 2*8+2, samples_per_chunk, fd_output);
+	fwrite(virt_addr, size_packet, samples_per_chunk, fd_output);
+	
+	// Try to open the Python pipe
+	if (pipePython.fid < 1) {
+		pipePython.fid = open(pipePython.name, O_WRONLY | O_NONBLOCK);
+		//printf("Pipe open\n");
+	}
 
+	// Send data if the Python pipe is open
+	if (pipePython.fid > 0) {
+		int writeSuccess = write(pipePython.fid, virt_addr, size_packet*samples_per_chunk);
+		if (writeSuccess < 0) {
+			close(pipePython.fid);
+			pipePython.fid = -1;
+		} else if (writeSuccess > PIPE_BUF) {
+			printf("Warning!! Write in FIFO is not atomic\n");
+		}
+	}
+	
     return 0;
+}
+
+int configureModules(pipeFile* pipePython) {
+	// Pipe Python for Bluetooth
+	printf("\tStarting pipe... ");
+	if (createPipe(pipePython)) {
+		printf("Failed\n");
+	} else {
+		printf("OK\n");
+	}
+	return 0;
 }

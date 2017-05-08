@@ -30,9 +30,8 @@ bluetooth.advertise_service(serverSocket, "BeagleBoneService",
 # Pipe
 #
 
-#pipeName = "fifo.tmp"
-pipeName = "z_cuadrada_chn1.data"
 #pipeName = "ztest.data"
+pipeName = "pipe_medcape.data"
 
 #outputFileName = "data.dat"
 
@@ -43,15 +42,16 @@ pipeName = "z_cuadrada_chn1.data"
 # 	each sample is uint16
 # The Nonin packet contains 6 bytes: 2 (Pleth) + 1 (SpO2) + 2 (Pleth) + 1 (SpO2)
 #
-TAG_SIZE          = 1
-ADC_CHANNELS      = 2
-ADC_SAMP_CHANNEL  = 12
-ADC_PACKET_SIZE   = 2 * (ADC_CHANNELS * ADC_SAMP_CHANNEL) / 2.0
-NONIN_PACKET_SIZE = 6
+TAG_SIZE          = 2
+ADC_CHANNELS      = 8
+ADC_SAMP_CHANNEL  = 2
+ADC_PACKET_SIZE   = int(TAG_SIZE + (ADC_CHANNELS * ADC_SAMP_CHANNEL)) #18 bytes per sample (2 status + 16 data). Each channel has 2 bytes
+
 
 #chunkSize = int(TAG_SIZE + ADC_PACKET_SIZE + NONIN_PACKET_SIZE)
-chunkSize = 18 #18 bytes per sample (2 status + 16 data). Each channel has 2 bytes
-size_file_max = 18*100 #18 bytes per sample * 100 samples per file
+chunkSize = ADC_PACKET_SIZE
+chunkSize = 18
+
 #
 # Combining Bluetooth module with the pipe
 #

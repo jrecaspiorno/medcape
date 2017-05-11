@@ -1,5 +1,5 @@
-This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Tesis.aux
 A level-1 auxiliary file: Cascaras/cover.aux
 A level-1 auxiliary file: Cascaras/dedicatoria.aux
@@ -9,6 +9,7 @@ A level-1 auxiliary file: Cascaras/abstract.aux
 A level-1 auxiliary file: TeXiS/TeXiS_toc.aux
 A level-1 auxiliary file: Capitulos/01Capitulo1.aux
 A level-1 auxiliary file: Capitulos/02Capitulo2.aux
+A level-1 auxiliary file: Capitulos/03Capitulo3.aux
 A level-1 auxiliary file: Cascaras/bibliografia.aux
 The style file: TeXiS/TeXiS.bst
 A level-1 auxiliary file: TeXiS/TeXiS_acron.aux
@@ -18,7 +19,7 @@ Database file #2: latex.bib
 Database file #3: otros.bib
 You've used 3 entries,
             2962 wiz_defined-function locations,
-            1104 strings with 12782 characters,
+            1105 strings with 12807 characters,
 and the built_in function-call counts, 1394 in all, are:
 = -- 99
 > -- 30

@@ -11,3 +11,6 @@
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Est\'andar de comunicaci\'on SPI\relax }}{10}{figure.caption.11}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Configuraci\'ones posibles de fase y polaridad en el est\'andar SPI\relax }}{11}{figure.caption.12}
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Diagrama de funcionamiento interno ADS1198\relax }}{12}{figure.caption.13}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Software multiplataforma proporcionado por Saleae\relax }}{14}{figure.caption.14}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{17}{figure.caption.15}

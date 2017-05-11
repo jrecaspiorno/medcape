@@ -21,6 +21,12 @@
 \BOOKMARK [2][-]{subsection.2.2.2}{Bus SPI}{section.2.2}% 21
 \BOOKMARK [2][-]{subsection.2.2.3}{Chip ADS1198}{section.2.2}% 22
 \BOOKMARK [2][-]{subsection.2.2.4}{Analizador l\363gico Saleae}{section.2.2}% 23
-\BOOKMARK [0][-]{appendix*.14}{Bibliograf\355a}{}% 24
-\BOOKMARK [0][-]{appendix*.14}{Lista de acr\363nimos}{}% 25
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 26
+\BOOKMARK [0][-]{chapter.3}{Desarrollo}{}% 24
+\BOOKMARK [1][-]{section.3.1}{Proyecto inicial}{chapter.3}% 25
+\BOOKMARK [2][-]{subsection.3.1.1}{Objetivos}{section.3.1}% 26
+\BOOKMARK [2][-]{subsection.3.1.2}{Alternativas}{section.3.1}% 27
+\BOOKMARK [1][-]{section.3.2}{Programaci\363n en tiempo real}{chapter.3}% 28
+\BOOKMARK [2][-]{subsection.3.2.1}{Decisiones de dise\361o}{section.3.2}% 29
+\BOOKMARK [0][-]{appendix*.16}{Bibliograf\355a}{}% 30
+\BOOKMARK [0][-]{appendix*.16}{Lista de acr\363nimos}{}% 31
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 32

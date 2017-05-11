@@ -18,5 +18,11 @@
 \contentsline {subsection}{\numberline {2.2.3}Chip ADS1198}{11}{subsection.2.2.3}
 \contentsline {subsubsection}{\numberline {2.2.3.1}Caracter\IeC {\'\i }sticas t\'ecnicas}{12}{subsubsection.2.2.3.1}
 \contentsline {subsection}{\numberline {2.2.4}Analizador l\'ogico Saleae}{13}{subsection.2.2.4}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{15}{appendix*.14}
-\contentsline {chapter}{Lista de acr\'onimos}{16}{appendix*.14}
+\contentsline {chapter}{\numberline {3}Desarrollo}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Proyecto inicial}{15}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Objetivos}{16}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Alternativas}{17}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{18}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{19}{subsection.3.2.1}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{21}{appendix*.16}
+\contentsline {chapter}{Lista de acr\'onimos}{22}{appendix*.16}

@@ -134,12 +134,22 @@ SET_ADS_SAMPLE_RATE:
 	MOV	r12, 1000	 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 //3rd bit=============	
-	MOV r2, 0x00000000
+	//Default is 0x04 (500Hz) (ADS1198)
+	//0x00 is 8kHz (Maximum speed supported by ADS1198)
+	//0x06 is 125Hz (Minimum speed supported by ADS1198)
+	//Each increased number is half the speed of the previous number
+
+	MOV r2, 0x06
+	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
+	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
+	SUB r13, r14, 8
+	CALL TRUNCATE
+
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK procedure until all 8 bits written/read
 
 	MOV	r12, 1000	//Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
-	CALL DELAY_FUNCTION
+	CALL DELAY_FUNCTION	
 	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET r30.t1 //MOSI is active in original hardware SPI
@@ -236,6 +246,7 @@ SET_INTERNAL_SIGNAL_ADS:
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
 //--------------Set ChnSet test signal---------------------------------------------------
+
 	//1st	byte============= Set channel 1 to set the test signal
 	MOV r2, 0x45
 	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,

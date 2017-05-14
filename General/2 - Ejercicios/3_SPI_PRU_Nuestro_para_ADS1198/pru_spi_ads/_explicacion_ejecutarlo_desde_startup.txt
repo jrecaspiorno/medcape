@@ -13,10 +13,7 @@ ln /lib/systemd/system/<scriptname>.service <scriptname>.service
 Nuestro script se llama medcape_script. Se puede ver su contenido haciendo esto: nano /usr/bin/medcape_script.sh
 
 Se puede desactivar haciendo esto:
-systemctl disable <scriptname>.service
+systemctl disable medcape_script.service
 
 Y activar haciendo esto:
-systemctl enable <scriptname>.service
-
-Cuidado al activarlo porque se empezará a generar el .data y el log y si no se detienen ocuparán un tamaño
-excesivo y se llenará la memoria de la BBB
+systemctl enable medcape_script.service

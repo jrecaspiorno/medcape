@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.8)  10 MAY 2017 11:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.8)  12 MAY 2017 19:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -14374,7 +14374,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-<argument> software disponible en \href 
+<argument> Software disponible en \href 
                                         {https://www.saleae.com/downloads}{h...
 l.241 ...loads}{https://www.saleae.com/downloads}}
                                                   . Tras descargarlo e insta...
@@ -14385,8 +14385,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (35.91672pt too wide) in paragraph at lines 241--241
-[][]\OT1/cmr/m/n/10 software
+Overfull \hbox (37.52785pt too wide) in paragraph at lines 241--241
+[][]\OT1/cmr/m/n/10 Software
  []
 
 

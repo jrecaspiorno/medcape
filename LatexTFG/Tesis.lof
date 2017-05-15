@@ -14,3 +14,7 @@
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Software multiplataforma proporcionado por Saleae\relax }}{14}{figure.caption.14}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{17}{figure.caption.15}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{20}{figure.caption.16}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo simple de un fichero \texttt {.dts}\relax }}{21}{figure.caption.17}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Device Tree Overlay del proyecto para la BBB\relax }}{23}{figure.caption.18}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{25}{figure.caption.23}

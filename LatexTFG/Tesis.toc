@@ -24,5 +24,9 @@
 \contentsline {subsection}{\numberline {3.1.2}Alternativas}{17}{subsection.3.1.2}
 \contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{18}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{19}{subsection.3.2.1}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{21}{appendix*.16}
-\contentsline {chapter}{Lista de acr\'onimos}{22}{appendix*.16}
+\contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Device Tree}{21}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{22}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{23}{subsection.3.3.3}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{27}{appendix*.24}
+\contentsline {chapter}{Lista de acr\'onimos}{28}{appendix*.24}

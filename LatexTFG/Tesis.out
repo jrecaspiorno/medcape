@@ -27,6 +27,10 @@
 \BOOKMARK [2][-]{subsection.3.1.2}{Alternativas}{section.3.1}% 27
 \BOOKMARK [1][-]{section.3.2}{Programaci\363n en tiempo real}{chapter.3}% 28
 \BOOKMARK [2][-]{subsection.3.2.1}{Decisiones de dise\361o}{section.3.2}% 29
-\BOOKMARK [0][-]{appendix*.16}{Bibliograf\355a}{}% 30
-\BOOKMARK [0][-]{appendix*.16}{Lista de acr\363nimos}{}% 31
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 32
+\BOOKMARK [1][-]{section.3.3}{Configuraci\363n hardware}{chapter.3}% 30
+\BOOKMARK [2][-]{subsection.3.3.1}{Device Tree}{section.3.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.2}{Device Tree Overlay}{section.3.3}% 32
+\BOOKMARK [2][-]{subsection.3.3.3}{Conexiones f\355sicas}{section.3.3}% 33
+\BOOKMARK [0][-]{appendix*.24}{Bibliograf\355a}{}% 34
+\BOOKMARK [0][-]{appendix*.24}{Lista de acr\363nimos}{}% 35
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 36

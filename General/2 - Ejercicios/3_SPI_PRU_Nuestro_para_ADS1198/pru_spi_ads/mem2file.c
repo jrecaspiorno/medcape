@@ -86,7 +86,7 @@ int mem2file_initialize(){
     addr = readFileValue(MMAP_LOC "addr");
     dataSize = readFileValue(MMAP_LOC "size");
     number_total_samples = dataSize  / 18;
-    samples_per_chunk = 100;
+    samples_per_chunk = 200;
     target = addr;
 	size_packet = 2*8+2;
 	if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1){

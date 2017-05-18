@@ -68,7 +68,7 @@ static void *load_mem2file_thread(void *arg) {
 	printf("\n Number of samples spi %d \n", number_of_samples);
 	int number_chunk = 1; //We have 2 chunks, each one contains 100 samples
 	int samples_taken = 0;
-	int size_chunk = 100;
+	int size_chunk = 200;
 	
 	while(1) {
 	//while(number_of_samples!=0){

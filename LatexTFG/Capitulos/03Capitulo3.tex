@@ -147,7 +147,10 @@ Estos elementos opcionales son denominados \textit{overlays}. Al DT que se forma
 \figura{Vectorial/dto}{width=1\textwidth}{fig:dto}%
 {Device Tree Overlay del proyecto para la BBB}
 
-Para nuestro proyecto, fue necesaria la creación y personalización de un DTO; la base sobre la empezamos esta creación fue la que se utiliza en el capítulo 13 de Exploring BBB  \citep{exploringBBB}. A partir de ahi se realizaron diversas modificaciones y expansiones para obtener un DTO hecho a medida acorde con las necesidades del proyecto. El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmente en la BBB se ilustra en la [Fig \ref{fig:dto}]. El código final fue comentado de modo que pudiese ser interpretado y comprendido de forma sencilla. Como puede apreciarse en la imagen, el primer paso es indicar cuales van a ser los pines que se van a utilizar de forma exclusiva. A continuación se le asigna un modo a cada uno de los pines anteriormente indicado. El modo que se asigna, la señal que va a ir asociada a ese pin concreto y otra información complementaria puede ser encontrada en el código comentado. Cabe destacar que este tipo de ficheros \texttt{.dts} sigue siempre una misma estructura en lo que al código respecta, aunque las posibles combinaciones de configuraciones hardware son prácticamente infinitas.
+Para nuestro proyecto, fue necesaria la creación y personalización de un DTO; la base sobre la empezamos esta creación fue la que se utiliza en el capítulo 13 de Exploring BBB  \citep{exploringBBB}. A partir de ahi se realizaron diversas modificaciones y expansiones para obtener un DTO hecho a medida acorde con las necesidades del proyecto. El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmente en la BBB se ilustra en la [Fig \ref{fig:dto}]. El código final fue comentado de modo que pudiese ser interpretado y comprendido de forma sencilla. Como puede apreciarse en la imagen, el primer paso es indicar cuales van a ser los pines que se van a utilizar de forma exclusiva. A continuación se le asigna un modo a cada uno de los pines anteriormente indicado. De esta forma, el modo que se asigna, la señal que va a ir asociada a ese pin concreto y otra información complementaria puede ser encontrada en el código comentado. Cabe destacar que existen ciertas resticciones a la hora de asignar cierto modo a un pin determinado, ya que no a todos los pines se les puede asignar cualquier modo. En nuestro caso, solo determinados pines de la BBB tienen acceso a determinados modos que permiten interacciones tanto con la PRU0, como con la PRU1. Por ejemplo, el modo \texttt{pr1\_pru0\_pru\_r31\_7} solo puede ser asignado al pin P9\_25 (PRU0), y el modo \texttt{pr1\_pru1\_pru\_r31\_16} solo puede asignarse al pin P9\_26 (PRU1). Los dos ejemplos anteriormente comentados con puestos en práctica en nuestro DTO, aunque la lista de restricciones abarca muchos más modos y pines. Está información puede encontrarse más detallada en la [Fig \ref{fig:restricciones}]. Cabe destacar que este tipo de ficheros \texttt{.dts} sigue siempre una misma estructura en lo que al código respecta, aunque las posibles combinaciones de configuraciones hardware son prácticamente infinitas.
+
+\figura{Vectorial/restricciones}{width=1\textwidth}{fig:restricciones}%
+{Restricciones en la asignación de modos a pines relevantes para el proyecto}
 
 %-------------------------------------------------------------------
 \subsection{Conexiones físicas}
@@ -162,6 +165,8 @@ Una vez diseñada la configuración hardware, era momento de realizar las conexcio
 \item Garantizar el uso de pines con fines GPIO (para cada una de las distintas señales).
 \item Conectar el analizador lógico Saleae con cada una de las señales que see desee depurar.
 \end{itemize}
+
+\clearpage %esto es para que imprima las tablas juntas.
 
 \begin{table}[]
 \centering
@@ -196,8 +201,8 @@ P9 Pin 27        & J3 Pin 14            & START                                 
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{BBB Pin} & \textbf{ADS1198 Pin} & \textbf{Señal asociada a la conexión} \\ \hline
-P9 Pin 29        & J3 Pin 13            & SPI\_10                           \\ \hline
-P9 Pin 30        & J3 Pin 11             & SPI\_11                                 \\ \hline
+P9 Pin 29        & J3 Pin 13            & SPI\_OUT                           \\ \hline
+P9 Pin 30        & J3 Pin 11             & SPI\_IN                                 \\ \hline
 P9 Pin 31        & J3 Pin 3             & SPI\_SCLK                                  \\ \hline
 P9 Pin 28        & J3 Pin 1            & SPI\_CSO                                 \\ \hline
 \end{tabular}
@@ -211,13 +216,13 @@ P9 Pin 28        & J3 Pin 1            & SPI\_CSO                               
 \hline
 \textbf{Canal} & \textbf{ADS1198 Pin} & \textbf{Señal asociada a la conexión} \\ \hline
 CH0        & J3 Pin 15           & DATA\_READY                           \\ \hline
-CH1        & J3 Pin 3             & SCLK                               \\ \hline
-CH2        & J3 Pin 13             & ?                                 \\ \hline
-CH3        & J3 Pin 11            & ?                                \\ \hline
-CH4        & J3 Pin 1             & ?                               \\ \hline
-CH5        & J3 Pin ?            & ?                                 \\ \hline
-CH6        & J3 Pin ?           & ?                              \\ \hline
-CH7       & J3 Pin ?            & ?                       \\ \hline
+CH1        & J3 Pin 3             & CLK                               \\ \hline
+CH2        & J3 Pin 1            & CHIP\_SELECT                                \\ \hline
+CH3        & J3 Pin 13            & DATA\_OUT                                \\ \hline
+CH4        & J3 Pin 11             & DATA\_IN                              \\ \hline
+CH5        & J3 Pin 8             & RESET                                 \\ \hline
+CH6        & J3 Pin 14            & START                                 \\ \hline
+CH7        & J4 Pin 5             & GND                              \\ \hline
 \end{tabular}
 \end{table}
 
@@ -227,6 +232,27 @@ Una vez se han realizado las conexiones indicadas en las tablas \ref{tabla1}, \r
 
 \figura{Vectorial/conexiones}{width=1\textwidth}{fig:conexiones}%
 {Conexiones físicas necesarias para el proyecto}
+
+%-------------------------------------------------------------------
+\section{Inicizalización SPI y ADS}
+%-------------------------------------------------------------------
+\label{cap3:sec:inicialización}
+
+%-------------------------------------------------------------------
+\section{Comunicación SPI}
+%-------------------------------------------------------------------
+\label{cap3:sec:comunicacion}
+
+%-------------------------------------------------------------------
+\section{Guardado de muestras en RAM}
+%-------------------------------------------------------------------
+\label{cap3:sec:guardado}
+
+%-------------------------------------------------------------------
+\section{Lectura y transmisión de muestras}
+%-------------------------------------------------------------------
+\label{cap3:sec:lectura}
+
 
 %\medskip
 

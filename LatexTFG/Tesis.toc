@@ -28,5 +28,9 @@
 \contentsline {subsection}{\numberline {3.3.1}Device Tree}{21}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{22}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{23}{subsection.3.3.3}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{27}{appendix*.24}
-\contentsline {chapter}{Lista de acr\'onimos}{28}{appendix*.24}
+\contentsline {section}{\numberline {3.4}Inicizalizaci\'on SPI y ADS}{26}{section.3.4}
+\contentsline {section}{\numberline {3.5}Comunicaci\'on SPI}{26}{section.3.5}
+\contentsline {section}{\numberline {3.6}Guardado de muestras en RAM}{26}{section.3.6}
+\contentsline {section}{\numberline {3.7}Lectura y transmisi\'on de muestras}{26}{section.3.7}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{27}{appendix*.25}
+\contentsline {chapter}{Lista de acr\'onimos}{28}{appendix*.25}

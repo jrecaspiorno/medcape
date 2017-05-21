@@ -230,7 +230,7 @@ SET_INTERNAL_SIGNAL_ADS:
 	CALL DELAY_FUNCTION	
 	
 	//3rd	byte============= Write config2 register value	
-	MOV r2, 0x30
+	MOV r2, 0x30 //0x20 to disable test signal. 0x30 to enable test signal.
 	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
 	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
 	SUB r13, r14, 8
@@ -274,7 +274,7 @@ CALL DELAY_FUNCTION
 	
 
 	//3rd	byte============= Set channel 1 to set the test signal
-	MOV r2, 0x05
+	MOV r2, 0x05 //0x05 to enable test signal. 0x00 to disable test signal
 	//We only want 8 bits, but 1 register=32 bits and we can only take 1 bit per clock edge,
 	//so we do lsl(logical shift left) to move our LSB to MSB positions(i.e. first 8 positions)
 	SUB r13, r14, 8

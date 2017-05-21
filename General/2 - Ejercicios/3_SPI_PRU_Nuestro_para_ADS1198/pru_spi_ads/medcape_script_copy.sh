@@ -41,7 +41,7 @@ echo ""
 sleep 1
 
 echo "Mounting shared RAM..."
-modprobe uio_pruss extram_pool_sz=0x001C20
+modprobe uio_pruss extram_pool_sz=0x003840
 echo ""
 #-------------------------------------------------------------
 

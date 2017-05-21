@@ -1,5 +1,5 @@
 
-Starting medcape at 01-03-2015:23:46:44
+Starting medcape at 01-01-2000:01:00:07
 Waiting for pru and other modules to load...
 Modules loaded
 Setting up bluetooth config...

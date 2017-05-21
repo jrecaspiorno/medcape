@@ -68,19 +68,36 @@ static void *load_mem2file_thread(void *arg) {
 	printf("\n Number of samples spi %d \n", number_of_samples);
 	int number_chunk = 1; //We have 2 chunks, each one contains 100 samples
 	int samples_taken = 0;
-	int size_chunk = 200;
+	int size_chunk = 100;
 	
 	while(1) {
+		printf("Waiting \n");
 	//while(number_of_samples!=0){
 		prussdrv_pru_wait_event (PRU_EVTOUT_1); //Every times it enters to execute the pru, it adds 1 to the counter
 		if(number_chunk==3){
 			number_chunk = 1;
 		}
+		
+		/*
+		FILE * fd_cache;
+		fd_cache = open("/proc/sys/vm/drop_caches", O_WRONLY);
+		int i = 0;
+		
+		for (i = 0; i < 1; i++) {
+			sync();
+			write(fd_cache, "3", sizeof(char));
+		}
+		close(fd_cache);
+		*/
 		mem2file_main(number_chunk, samples_taken);
 		number_chunk++;
 		//number_of_samples -= size_chunk; //Comment if we want while(1)
 		samples_taken += size_chunk;
 		prussdrv_pru_clear_event (PRU_EVTOUT_1, PRU0_ARM_INTERRUPT);
+		prussdrv_pru_send_event(ARM_PRU0_INTERRUPT);
+
+		printf("Done \n");
+
 	}
 	//}
 	
@@ -223,65 +240,22 @@ printf("Init GPIOs\n");
    printf("-> the PRUClock on/off state is mapped at address: %x\n", (PRU_data_addr + 0x10000));
 	fflush(stdout);
    // data for PRU0 based on the MCPXXXX datasheet
-   unsigned int spiData[7];
-   	//May we store the initial spi speed in shared memory:
-	//(ADS_SPI_HZ>>5)
-    //printf("initial spi speed in memory \n");
-
-	spiData[0] = SDATAC; 
-    printf("Loading ads_sdatac command\n");
-	spiData[1] = RDATAC; 
-    printf("Loading ads_rdatac command\n");
-	spiData[2] = SRATE_1K; 
-	printf("Loading sample rate speed\n");
-	#ifdef ADS1198
-		spiData[3] = CONFIG3; 
-	#endif
-	#ifdef ADS1192
-		spiData[3] = CONFIG2; 
-	#endif
-    printf("Loading Enable internal reference command \n");
-	//May we check ids...?
-   spiData[4] = readFileValue_sysfs(MMAP1_LOC "addr");
-   spiData[5] = readFileValue_sysfs(MMAP1_LOC "size");
-   printf("Loading spi speed\n");
-   //La velocidad del spi tiene que ser 500 veces la velocidad del sample rate,para que la lectura de los 18 bytes quepan 
-   //en 1 ciclo de data_ready
-   /*
-   Ejemplos de combinaciones posibles:
-   Data_ready: 500Hz
-   SPI: 100kHz
    
-   Data_ready: 8KHz
-   SPI: 5MHz
-   */
-   //spiData[6] = FREQ_100kHz; 
-   spiData[6] = FREQ_250kHz; 
-
-   int numberSamples = spiData[5];
-   printf("The DDR External Memory pool has location: 0x%x and size: 0x%x bytes = %d bytes\n", spiData[4], spiData[5], numberSamples);
-   printf("-> this space has capacity to store %d 18-bytes samples (max)\n", numberSamples/N_DATA);
-
    
-   printf("\nInitializing mem2file...\n");
-   mem2file_initialize(); //Initialize mem2file parameters before the execution of the PRU (to be prepared when we need to get any data stored in RAM)
-	
+
    // Allocate and initialize memory
    prussdrv_init ();
    prussdrv_open (PRU_EVTOUT_0);
    prussdrv_open (PRU_EVTOUT_1);
 
-
-   // Write the spiData into PRU0 Data RAM0.
-   prussdrv_pru_write_memory(PRUSS0_PRU0_DATARAM, 0, spiData, 28);  // spi data
-   printf("spi_control_data stored in pru0 memory\n");
-   prussdrv_pru_write_memory(PRUSS0_PRU1_DATARAM, 0, timerData, 8); // sample clock
-   printf("clock_data stored in pru1 memory\n");
-
    
    // Map the PRU's interrupts
    prussdrv_pruintc_init(&pruss_intc_initdata);
 
+   
+      printf("\nInitializing mem2file...\n");
+   mem2file_initialize(); //Initialize mem2file parameters before the execution of the PRU (to be prepared when we need to get any data stored in RAM)
+	
     //NOTE no muevas esto de aquí, siempre se genera una interrupción inicial
     //y podemos estar jodiendo la comunicación SPI!!!
     //system("cat /proc/interrupts | grep 177 | echo Initial interrupts: $(awk '{print $2}')");

@@ -25,7 +25,7 @@
 #define PRU_EVTOUT_0    3        // the event number that is sent back
 #define PRU_EVTOUT_1	4        //allows notification of sample ready in RAM to be given to host program(in C)
 
-
+#define SIZE_CHUNK_RAM 100
 
 // Constants from the MCP3004/3008 datasheet 
 #define TIME_CLOCK      12       // T_hi and t_lo = 125ns = 25 instructions (min)
@@ -55,6 +55,8 @@ START:
 	LBBO	r9, r1, 20, 24	 // load the size that is passed into r9 -- the number of samples to take
 	LBBO	r11, r1, 24, 28	 // spi speed
 
+	MOV r8, 0
+	
 	// clear registers to receive the response from the ADS
 	MOV	r3,  0x000000
 	MOV	r17, 0x000000 
@@ -73,7 +75,7 @@ START:
 	MOV r14, 32 //Size of 1 PRU register
 	MOV	r24, 0	//Counter of samples taken(it resets every loop of the circular buffer)
 	
-	MOV r6, 200 // SIZE_CHUNK_RAM Size of chunks(1chunk=1sample, we could change this) of the circular buffer to store values in RAM. E.g when we write the 2nd chunk(here in the pru), at the same time we are reading the 1st chunk(in host program)
+	MOV r6, 0 // SIZE_CHUNK_RAM Size of chunks(1chunk=1sample, we could change this) of the circular buffer to store values in RAM. E.g when we write the 2nd chunk(here in the pru), at the same time we are reading the 1st chunk(in host program)
 	
 /* Original Signals(commands) to ADS in C program:
 Reset
@@ -396,7 +398,18 @@ STORE_DATA:                      // store the sample value in memory
 	//-------------------------------
 */
 
-	
+
+	/*
+	//---------------
+	MOV r5, r6
+	CALL REVERSE_ENDIANNESS
+	//---------------
+	SBBO	r1, r8, 0, 3	
+	ADD		r8, r8, 3	
+
+	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
+	CALL DELAY_FUNCTION
+	*/
 	//---------------
 	MOV r5, r3
 	CALL REVERSE_ENDIANNESS
@@ -468,24 +481,33 @@ STORE_DATA:                      // store the sample value in memory
 	MOV	r12, 50 //Numero aleatorio(se debería calcular cuanto es lo justo) para hacer un sleep de un poco de tiempo
 	CALL DELAY_FUNCTION
 	
+	
+	ADD r6, r6, 1
+	
 	//============================================= //Comment this section to store everything without limit in RAM(without storing->removin->storing->removing), it'll cause kernel exceptions when full
-	/*
-	QBLE NOT_REDUCE_SIZE_CHUNK_RAM, r6, r9/18 //samples_left <= r6
-		MOV r6, r9/18
+	QBNE CONTINUE_THIS_LOOP_RAM, r24, SIZE_CHUNK_RAM-1
+		// generate an interrupt to notificate a new chunk of samples is ready in RAM to be given to host program(in C)
 		
-	NOT_REDUCE_SIZE_CHUNK_RAM:
-	*/
-	QBNE CHECK_RAM_FULL, r24, r6-1
-		// generate an interrupt to notificate a new chunk of samples is ready in RAM to be given to host program(in C)
-		MOV R31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1
-	CHECK_RAM_FULL:
-	QBNE CONTINUE_THIS_LOOP_RAM, r24, (r6*2)-1
-		// generate an interrupt to notificate a new chunk of samples is ready in RAM to be given to host program(in C)
-		MOV R31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1
+		//---------------
+		MOV r1, 0xFF
+		SBBO	r1, r8, 0, 1	 // store the value r3 in memory (It has byte 0, byte 1, byte 2, and byte 3)
+		ADD		r8, r8, 1	 // shifting RAM addres by 4 bytes (1 register = 4bytes)
+		//---------------
+		
+		//---------------
 		MOV r8, r25 //Reset ram direction to points to initial cell of RAM memory(r25)
 		MOV r24, 0
+
+		
+		MOV R31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1 //Notificate ARM for a sample ready
+		
+		//WAIT_FOR_ARM_TO_READ:
+		WBS r31, #30
+
+		
 		QBA END_PROCESS_RAM_BUFFER
-	
+
+
 	CONTINUE_THIS_LOOP_RAM:
 	ADD r24, r24, 1
 	//=============================================0

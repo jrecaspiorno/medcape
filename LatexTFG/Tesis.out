@@ -31,10 +31,12 @@
 \BOOKMARK [2][-]{subsection.3.3.1}{Device Tree}{section.3.3}% 31
 \BOOKMARK [2][-]{subsection.3.3.2}{Device Tree Overlay}{section.3.3}% 32
 \BOOKMARK [2][-]{subsection.3.3.3}{Conexiones f\355sicas}{section.3.3}% 33
-\BOOKMARK [1][-]{section.3.4}{Inicizalizaci\363n SPI y ADS}{chapter.3}% 34
-\BOOKMARK [1][-]{section.3.5}{Comunicaci\363n SPI}{chapter.3}% 35
-\BOOKMARK [1][-]{section.3.6}{Guardado de muestras en RAM}{chapter.3}% 36
-\BOOKMARK [1][-]{section.3.7}{Lectura y transmisi\363n de muestras}{chapter.3}% 37
-\BOOKMARK [0][-]{appendix*.25}{Bibliograf\355a}{}% 38
-\BOOKMARK [0][-]{appendix*.25}{Lista de acr\363nimos}{}% 39
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 40
+\BOOKMARK [1][-]{section.3.4}{Ecosistema software}{chapter.3}% 34
+\BOOKMARK [2][-]{subsection.3.4.1}{Inicizalizaci\363n ADS}{section.3.4}% 35
+\BOOKMARK [2][-]{subsection.3.4.2}{Comunicaci\363n SPI}{section.3.4}% 36
+\BOOKMARK [2][-]{subsection.3.4.3}{Guardado de muestras en memoria}{section.3.4}% 37
+\BOOKMARK [2][-]{subsection.3.4.4}{Lectura y transmisi\363n de muestras}{section.3.4}% 38
+\BOOKMARK [0][-]{chapter.4}{Aplicaci\363n Android}{}% 39
+\BOOKMARK [0][-]{appendix*.36}{Bibliograf\355a}{}% 40
+\BOOKMARK [0][-]{appendix*.36}{Lista de acr\363nimos}{}% 41
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 42

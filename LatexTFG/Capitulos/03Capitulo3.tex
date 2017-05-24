@@ -19,9 +19,8 @@ Sir Francis Bacon
 \end{FraseCelebre}
 
 \begin{resumen}
-Aquí va el resumen del capitulo 3
+Para la correcta funcionalidad del proyecto, ha sido necesario configurar el hardware de forma precisa, además de desarrollar un software muy concreto y diseñado a medida para el contexto en el que trabajamos. En este capítulo se exponen los factores fundamentales de ambos ámbitos con cierto nivel de profundidad.
 \end{resumen}
-
 
 %-------------------------------------------------------------------
 \section{Proyecto inicial}
@@ -234,25 +233,131 @@ Una vez se han realizado las conexiones indicadas en las tablas \ref{tabla1}, \r
 {Conexiones físicas necesarias para el proyecto}
 
 %-------------------------------------------------------------------
-\section{Inicizalización SPI y ADS}
+\section{Ecosistema software}
+%-------------------------------------------------------------------
+\label{cap3:sec:ecosistema}
+
+El propósito de esta sección no es más que proporcionar al lector una idea general e intuitiva del modo de funcionamiento del ecosistema software, así como de sus relaciones internas, de forma que sea posible entender el contexto y la motivación de cada una de las acciones que se realizan en el software. 
+La forma en la que se relaciona el ecosistema es bastante sencilla de entender, al menos, si no nos centramos en los complejos detalles técnicos referentes a la implementación de cada uno de los componentes.
+
+El software más destacado que se ejecuta en la BBB es el siguiente:
+\begin{itemize}
+\item Programa principal desarrollado en C que se ejecuta en espacio de usuario denominado \texttt{medcape.c}.
+\item Programa desarrollado en código ensamblador, del que se hablará con más detenimiento más adelante denominado \texttt{PRUADC.p}.
+\item Programa desarrollado en C, denominado \texttt{mem2file.c} y encargado de la escritura de datos de memoria a un fichero externo.
+\item Programa muy sencillo desarrollado en Python, y denominado \texttt{BTConnection.py} y encargado de la recepción y envio de información a otros dispositivos.
+\end{itemize}
+
+La relación de este ecosistema es bastante simple. El programa principal \texttt{medcape.c}, el cual está programado para ejecutarse según enciende la BBB, es el encargado de realizar las inicializaciones pertinentes para que funcione el intercambio de información, de mapear ciertas regiones de memoria, de ejecutar el binario principal\footnote{Código ensamblador compilado que ejecuta el PRU, concretamente el fichero \texttt{PRUADC.p}}, así como de capturar y generar interrupciones hacia el código que ejecuta el PRU. Consta de un hilo que es el encargado de realizar y capturar las interrupciones. Previamente a que este hilo entre en modo de espera, manda una interrupción al código ensamblador indicando que se encuentra a la espera.
+La interrupción se captura en el código ensamblador y se realiza el proceso de recopilación de las muestras. 
+
+Cuando este proceso concluye, se manda una interrupción desde el código ensamblador al hilo del programa C que se encontraba en espera de capturar un evento concreto. La ejecución continua con una llamada al programa en C \texttt{mem2file.c}, encargado de acceder a las regiones de memoria de la BBB en la que el código ensamblador ha guardado las muestras, y guardarlas en un fichero (generalmente con extensión \texttt{.data}).
+
+Es en este momento cuando entra en juego el programa desarrollado en Python, que accede a la información del fichero y gracias a un mecanismo de tuberías, el cual permite la sincronización y comunicación con otros procesos, es capaz de enviar esta información a otros dispositivos, en nuestro caso concreto, se envía a un dispositivo móvil con sistema operativo Android como veremos con más detalle más adelante.
+
+Una vez es asimilado el modo de funcionamiento del ecosistema, aunque sólo sea de forma intuitiva, es posible entrar en detalles técnicos más concretos y complejos, ya que es posible comprender el contexto del ecosistema software.
+
+%-------------------------------------------------------------------
+\subsection{Inicizalización ADS}
 %-------------------------------------------------------------------
 \label{cap3:sec:inicialización}
 
+Una vez configurado correctamente el DTO (tal y como se comenta en la sección \ref{cap3:subsec:dto}), y realizadas las conexiones físicas pertinentes entre la BBB y el ADS1198, es necesario inicializar el ADS. Inicializar el ADS por software es fundamental. Con inicialización nos referimos a realizar la correcta configuración de una serie de parámetros que permita que ambos dispositivos se puedan comunicar correctamente ya que de no configurarlo con los parámetros adecuados no conseguiríamos establecer ningún tipo de conexión entre ambos, es decir, sería como si ni siquiera estuviesen conectados físicamente. Cabe destacar que la inicialización se realiza en código ensamblador, y a diferencia del lenguaje C, no existen bibliotecas que faciliten al desarrollador una capa superior de abstracción para realizar la tarea.
+
+\figura{Vectorial/iniads}{width=0.9\textwidth}{fig:iniads}%
+{Inicialización ADS en el código original en C}
+
+En la Fig \ref{fig:iniads}] y se ilustra el proceso de inicialización del ADS en en el código del proyecto original. Es un código relativamente sencillo y completamente funcional. Los pasos que se siguen en el código original, desde resetear el ciclo, hasta la lectura de datos en modo continuo, son replicados en código ensamblador. El objetivo es conseguir la misma correcta funcionalidad de la que gozaba el código original.
+
+\figura{Vectorial/senddatac}{width=1\textwidth}{fig:senddatac}%
+{Función SDATAC en código ensamblador}
+
+\figura{Vectorial/samplerate}{width=1\textwidth}{fig:samplerate}%
+{Función SET\_ADS\_SAMPLE\_RATE en código ensamblador}
+
+\figura{Vectorial/intref}{width=1\textwidth}{fig:intref}%
+{Función SET\_INTERNAL\_REFERENCE en código ensamblador}
+
+\figura{Vectorial/rdatac}{width=1\textwidth}{fig:rdatac}%
+{Función SEND\_RDATAC en código ensamblador}
+
+\clearpage 
+
+En las anteriores figuras se ilustra un código en ensamblador funcional, utilizado y probado en el presente proyecto, que imita el funcionamiento del código original de inicialización del ADS en C.
+
 %-------------------------------------------------------------------
-\section{Comunicación SPI}
+\subsection{Comunicación SPI}
 %-------------------------------------------------------------------
 \label{cap3:sec:comunicacion}
 
+La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subsec:bus}. El proceso de comunicación se realiza en ensamblador también. Comienza dando el valor activo bajo a la señal Chip Select como puede apreciarse en la figura [Fig \ref{fig:spiens}]. A continuación se lee o se escribe un número específico de bits, de forma que se llama a la función SPICLK\_LOOP tantas veces como bits se quieran leer o escribir. Cuando ha concluido este proceso, se da el valor activo alto a la señal Chip Select. De esta forma se indica que ha finalizado una muestra concreta. 
+
+\figura{Vectorial/spiens}{width=1\textwidth}{fig:spiens}%
+{Comunicación SPI en código ensamblador}
+
+Cabe destacar que cada registro en ensamblador tiene una capacidad de 4 bytes. Debido al tamaño de cada muestra que se recoge, es necesario almacenar esta información en 7 registros. En la función SPICLK\_LOOP se utilizan los registros r16 como contador para saber cuantos bits se han recibido, y r20 como registro auxiliar. Considerando que el tamaño de cada muestra es de 18 bytes, cada una es almacenada de la siguiente forma:
+
+\begin{itemize}
+\item \textbf{Registro r3}: Primer registro (3 bytes)
+\item \textbf{Registro r17}: Segundo registro (3 bytes)
+\item \textbf{Registro r18}: Tercer registro (3 bytes)
+\item \textbf{Registro r19}: Cuarto registro (3 bytes)
+\item \textbf{Registro r20}: Quinto registro (3 bytes)
+\item \textbf{Registro r23}: Sexto registro (3 bytes)
+\item \textbf{Registro r27}: Séptimo registro (3 bytes)
+\end{itemize}
+
+Esta información se refleja en forma de código en las figuras [Fig \ref{fig:loop1}] y [Fig \ref{fig:loop2}]. En estas figuras se muestra el código de la función SPICLK\_LOOP escrito en código ensamblador, en la cual se refleja el proceso de iteración sobre cada uno de los bits concretos, así como el uso de todos los registros anteriormente descritos.
+
+\clearpage
+
+\figura{Vectorial/loop1}{width=1\textwidth}{fig:loop1}%
+{Función SPICLK\_LOOP en código ensamblador (primera parte)}
+
+\figura{Vectorial/loop2}{width=1\textwidth}{fig:loop2}%
+{Función SPICLK\_LOOP en código ensamblador (segunda parte)}
+
+\clearpage
+
 %-------------------------------------------------------------------
-\section{Guardado de muestras en RAM}
+\subsection{Guardado de muestras en memoria}
 %-------------------------------------------------------------------
 \label{cap3:sec:guardado}
 
+Según se van procesando las muestras, es necesario almacenarlas en algun sitio, para luego poder acceder a ellas desde el programa en C, del que se habla en la sección \ref{cap3:sec:lectura} (que a su vez vuelve a transmitir la información a otras vías). Es en este caso cuando entran en juego los bancos de memoria de la BBB, en la que se almacenan de forma temporal todas las muestras que se recogen.
+
+Este proceso de guardado de muestras en memoria se realiza en ensamblador. Para guardar la información de una muestra completa, se almacena la información almacenada en cada uno de los registros indicados en la seccion \ref{cap3:sec:comunicacion}. Es decir, una vez todos estos registros están rellenos con la información de las muestras, el siguiente paso es el almacenamiento en memoria de cada uno de estos registros, que una vez guardados en posiciones de memoria consecutivas, reflejan el contenido de una muestra completa. 
+
+Una vez se guardan las muestras, se lanza una interrupción del PRU hacia el programa principal en C, el cual se encuentra en ejecución y a la espera de una interrupción por parte del código ensamblador. Una vez capturada esta interrupción, la ejecución del código en C puede reanudarse (tal y como se explica en la sección \ref{cap3:sec:ecosistema}).
+
+Todo este proceso se refleja en el código ensamblador, concretamente en la función STORE\_DATA. El contenido completo de esta función se muestra en las figuras [Fig \ref{fig:ram1}] y [Fig \ref{fig:ram2}].
+
+\clearpage
+
+
+\figura{Vectorial/ram1}{width=0.9\textwidth}{fig:ram1}%
+{Función STORE\_RAM en código ensamblador (primera parte)}
+
+\figura{Vectorial/ram2}{width=0.9\textwidth}{fig:ram2}%
+{Función STORE\_RAM en código ensamblador (segunda parte)}
+
+\clearpage
+
 %-------------------------------------------------------------------
-\section{Lectura y transmisión de muestras}
+\subsection{Lectura y transmisión de muestras}
 %-------------------------------------------------------------------
 \label{cap3:sec:lectura}
 
+Como ya se adelantaba en la sección \ref{cap3:sec:guardado}, se ha desarrollado un programa en C encargado de leer la información de las muestras almacenadas en el banco de memoria de la BBB, para posteriormente guardarla en un fichero (con extensión \texttt{.data}) \footnote{Este fichero especial está limitado por software a un tamaño máximo de 50MB}. Este programa en C está desarrollado a raíz de un ejemplo que se muestra en el cápitulo 13 del libro Exploring BeagleBone \citep{exploringBBB} y tanto ampliado como adaptado para su correcto funcionamiento en el presente proyecto.
+
+Inicialmente, este programa crea el fichero en el que se guardaran los datos de las muestras. Accede al espacio de memoria de la BBB en la que se almacenan las muestras \footnote{Las muestras se almacenan por grupos de 100}. Es necesario asegurar que cada grupo de muestras contiene la información correcta y precisa, y para ello tras cada grupo de muestras se escriben dos bytes concretos, como si de un sello se tratase a modo de asegurar que los datos recibidos no sean corruptos o haya pérdidas. Concretamente tras el espacio exacto que requiere un grupo de muestras, se escriben a continuación los bytes \texttt{FF}.
+
+El programa \texttt{mem2file.c} se asegura que contengan este identificador en el lugar exacto en el que corresponde. En caso de no encontrarlo, el grupo de muestras es ignorado y trata de analizarse el siguiente. Sin embargo, si se encuentran estos dos bytes en el lugar específico tras cada grupo de muestras, es el propio programa el encargado de sustituir este sello por otros bytes distintos, a modo a su vez de indicador de que la muestra ha sido leída éxitosamente. Casi como si de otro sello (para confirmar la lectura) se tratase, se sustituyen los antiguos bytes por \texttt{00}.
+
+Posteriormente se abre la tubería de Python (brevemente comentada en la sección \ref{cap3:sec:ecosistema}), y trata de enviarse la información por la misma en caso de haberse abierto correctamente. En la [Fig \ref{fig:mem2file}] se ilustra el proceso completo tras haberlo introducido brevemente.
+
+\figura{Vectorial/mem2file}{width=1.1\textwidth}{fig:mem2file}%
+{Función principal del programa \texttt{mem2file.c} desarrollado en C}
 
 %\medskip
 

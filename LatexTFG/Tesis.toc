@@ -22,15 +22,17 @@
 \contentsline {section}{\numberline {3.1}Proyecto inicial}{15}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Objetivos}{16}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}Alternativas}{17}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{18}{section.3.2}
+\contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{19}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{19}{subsection.3.2.1}
-\contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{19}{section.3.3}
+\contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{20}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Device Tree}{21}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{22}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{23}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}Inicizalizaci\'on SPI y ADS}{26}{section.3.4}
-\contentsline {section}{\numberline {3.5}Comunicaci\'on SPI}{26}{section.3.5}
-\contentsline {section}{\numberline {3.6}Guardado de muestras en RAM}{26}{section.3.6}
-\contentsline {section}{\numberline {3.7}Lectura y transmisi\'on de muestras}{26}{section.3.7}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{27}{appendix*.25}
-\contentsline {chapter}{Lista de acr\'onimos}{28}{appendix*.25}
+\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{24}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Ecosistema software}{26}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{27}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{31}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{34}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{36}{subsection.3.4.4}
+\contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{39}{chapter.4}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{41}{appendix*.36}
+\contentsline {chapter}{Lista de acr\'onimos}{42}{appendix*.36}

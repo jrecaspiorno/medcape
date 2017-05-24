@@ -15,7 +15,19 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{17}{figure.caption.15}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{20}{figure.caption.16}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo simple de un fichero \texttt {.dts}\relax }}{21}{figure.caption.17}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Ejemplo simple de un fichero \texttt {.dts}\relax }}{22}{figure.caption.17}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Device Tree Overlay del proyecto para la BBB\relax }}{23}{figure.caption.18}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto\relax }}{24}{figure.caption.19}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{26}{figure.caption.24}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Inicializaci\'on ADS en el c\'odigo original en C\relax }}{28}{figure.caption.25}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Funci\'on SDATAC en c\'odigo ensamblador\relax }}{29}{figure.caption.26}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Funci\'on SET\_ADS\_SAMPLE\_RATE en c\'odigo ensamblador\relax }}{29}{figure.caption.27}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Funci\'on SET\_INTERNAL\_REFERENCE en c\'odigo ensamblador\relax }}{30}{figure.caption.28}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Funci\'on SEND\_RDATAC en c\'odigo ensamblador\relax }}{30}{figure.caption.29}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Comunicaci\'on SPI en c\'odigo ensamblador\relax }}{31}{figure.caption.30}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (primera parte)\relax }}{33}{figure.caption.31}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (segunda parte)\relax }}{33}{figure.caption.32}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (primera parte)\relax }}{35}{figure.caption.33}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (segunda parte)\relax }}{35}{figure.caption.34}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Funci\'on principal del programa \texttt {mem2file.c} desarrollado en C\relax }}{37}{figure.caption.35}
+\addvspace {10\p@ }

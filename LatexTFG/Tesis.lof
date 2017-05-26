@@ -19,15 +19,28 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Device Tree Overlay del proyecto para la BBB\relax }}{23}{figure.caption.18}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto\relax }}{24}{figure.caption.19}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{26}{figure.caption.24}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Inicializaci\'on ADS en el c\'odigo original en C\relax }}{28}{figure.caption.25}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Funci\'on SDATAC en c\'odigo ensamblador\relax }}{29}{figure.caption.26}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Funci\'on SET\_ADS\_SAMPLE\_RATE en c\'odigo ensamblador\relax }}{29}{figure.caption.27}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Funci\'on SET\_INTERNAL\_REFERENCE en c\'odigo ensamblador\relax }}{30}{figure.caption.28}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Funci\'on SEND\_RDATAC en c\'odigo ensamblador\relax }}{30}{figure.caption.29}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Comunicaci\'on SPI en c\'odigo ensamblador\relax }}{31}{figure.caption.30}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (primera parte)\relax }}{33}{figure.caption.31}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (segunda parte)\relax }}{33}{figure.caption.32}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (primera parte)\relax }}{35}{figure.caption.33}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (segunda parte)\relax }}{35}{figure.caption.34}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Funci\'on principal del programa \texttt {mem2file.c} desarrollado en C\relax }}{37}{figure.caption.35}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Bancos de memoria del PRU\relax }}{27}{figure.caption.25}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Inicializaci\'on ADS en el c\'odigo original en C\relax }}{29}{figure.caption.26}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Funci\'on SDATAC en c\'odigo ensamblador\relax }}{29}{figure.caption.27}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Funci\'on SET\_ADS\_SAMPLE\_RATE en c\'odigo ensamblador\relax }}{30}{figure.caption.28}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Funci\'on SET\_INTERNAL\_REFERENCE en c\'odigo ensamblador\relax }}{30}{figure.caption.29}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Funci\'on SEND\_RDATAC en c\'odigo ensamblador\relax }}{31}{figure.caption.30}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Comunicaci\'on SPI en c\'odigo ensamblador\relax }}{32}{figure.caption.31}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (primera parte)\relax }}{34}{figure.caption.32}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (segunda parte)\relax }}{34}{figure.caption.33}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (primera parte)\relax }}{36}{figure.caption.34}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (segunda parte)\relax }}{36}{figure.caption.35}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Funci\'on principal del programa \texttt {mem2file.c} desarrollado en C\relax }}{38}{figure.caption.36}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{40}{figure.caption.37}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Programa desarrollado en Python \texttt {BTConnection.py}\relax }}{41}{figure.caption.38}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{42}{figure.caption.39}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Fragmento del c\'odigo que ejecuta el hilo encargado de la recepci\'on de datos\relax }}{43}{figure.caption.40}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Pantallas principales de la aplicaci\'on Android\relax }}{45}{figure.caption.41}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Pantalla inicial de autentificaci\'on}}}{45}{subfigure.5.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Men\'u principal de la aplicaci\'on}}}{45}{subfigure.5.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Pantalla de busqueda de pacientes en la app}}}{45}{subfigure.5.3}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Gr\'afica en la que se reflejar\'an los ECG}}}{45}{subfigure.5.4}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Fragmento del c\'odigo que ejecuta el servidor desarrollado en \texttt {Node.js}\relax }}{47}{figure.caption.42}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Simulador de ECG utilizado durante el desarrollo del poryecto\relax }}{48}{figure.caption.43}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{48}{figure.caption.44}

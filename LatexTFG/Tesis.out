@@ -37,6 +37,14 @@
 \BOOKMARK [2][-]{subsection.3.4.3}{Guardado de muestras en memoria}{section.3.4}% 37
 \BOOKMARK [2][-]{subsection.3.4.4}{Lectura y transmisi\363n de muestras}{section.3.4}% 38
 \BOOKMARK [0][-]{chapter.4}{Aplicaci\363n Android}{}% 39
-\BOOKMARK [0][-]{appendix*.36}{Bibliograf\355a}{}% 40
-\BOOKMARK [0][-]{appendix*.36}{Lista de acr\363nimos}{}% 41
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 42
+\BOOKMARK [1][-]{section.4.1}{Env\355o de datos}{chapter.4}% 40
+\BOOKMARK [1][-]{section.4.2}{Recepci\363n de datos}{chapter.4}% 41
+\BOOKMARK [1][-]{section.4.3}{Mejoras desarrolladas}{chapter.4}% 42
+\BOOKMARK [1][-]{section.4.4}{Renovaci\363n visual}{chapter.4}% 43
+\BOOKMARK [1][-]{section.4.5}{Ecosistema de streaming}{chapter.4}% 44
+\BOOKMARK [2][-]{subsection.4.5.1}{Caracter\355sticas del servidor}{section.4.5}% 45
+\BOOKMARK [2][-]{subsection.4.5.2}{Caracter\355sticas de la base de datos}{section.4.5}% 46
+\BOOKMARK [2][-]{subsection.4.5.3}{Interpretaci\363n de datos}{section.4.5}% 47
+\BOOKMARK [0][-]{appendix*.45}{Bibliograf\355a}{}% 48
+\BOOKMARK [0][-]{appendix*.45}{Lista de acr\363nimos}{}% 49
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 50

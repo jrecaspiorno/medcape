@@ -29,10 +29,18 @@
 \contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{22}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{24}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}Ecosistema software}{26}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{27}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{31}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{34}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{36}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{28}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{32}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{35}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{37}{subsection.3.4.4}
 \contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{39}{chapter.4}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{41}{appendix*.36}
-\contentsline {chapter}{Lista de acr\'onimos}{42}{appendix*.36}
+\contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{39}{section.4.1}
+\contentsline {section}{\numberline {4.2}Recepci\'on de datos}{41}{section.4.2}
+\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{42}{section.4.3}
+\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{43}{section.4.4}
+\contentsline {section}{\numberline {4.5}Ecosistema de streaming}{46}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Caracter\IeC {\'\i }sticas del servidor}{46}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Caracter\IeC {\'\i }sticas de la base de datos}{46}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Interpretaci\'on de datos}{47}{subsection.4.5.3}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{49}{appendix*.45}
+\contentsline {chapter}{Lista de acr\'onimos}{50}{appendix*.45}

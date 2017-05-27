@@ -25,3 +25,24 @@
 @entry{GPL, , \emph{General Public License}, Licencia Pública General de GNU}
 
 @entry{PC2, PC$^2$, \emph{Programming Contest Control}}
+
+@entry{BBB, , \emph{BeagleBone Black}}
+
+@entry{PRU, , \emph{programmable real-time unit}, Unidad programable en tiempo real}
+
+@entry{ECG, , \emph{Electrocardiograma}}
+
+@entry{USB, , \emph{Universal Serial Bus}, Bus Universal de Datos}
+
+@entry{SPI, , \emph{Serial Peripheral Interface}}
+
+@entry{CPU, , \emph{Central Processing Unit}, Unidad Central de Procesamiento}
+
+@entry{LCD, , \emph{Liquid Crystal Display}}
+
+@entry{DT, , \emph{Device Tree}}
+
+@entry{DTO, , \emph{Device Tree Overlay}}
+
+@entry{GPIO, , \emph{General Purpose Input/Output}}
+

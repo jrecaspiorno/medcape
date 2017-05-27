@@ -27,7 +27,7 @@ Para la realización del presente proyecto ha sido necesario realizar una investi
 %-------------------------------------------------------------------
 \label{cap2:sec:electro}
 
-Un electrocardiograma (más popularmente conocido como ECG) es un proceso por el cual se registran las actividades eléctricas que emite el corazón durante un tiempo determinado.
+Un \ac{ECG} es un proceso por el cual se registran las actividades eléctricas que emite el corazón durante un tiempo determinado.
 
 El registro de esta actividad cardiaca es posible gracias a las diferencias de potencial existentes producidas por la contractilidad del corazón. El estudio de la información ilustrada por un ECG puede ser de gran utilidad a la hora de detectar multitud de enfermedades cardiovasculares, así como prevenir problemas cardiacos de forma precoz.
 
@@ -111,14 +111,14 @@ Tras la obtención de un ECG completo, se tendrá un registro completo acerca del 
 
 Para llevar a cabo el correcto desarrollo del trabajo que se expone en la presente memoria, ha sido necesaria la investigación y el desarrollo de diversas tecnologías que se expondrán a continuación, así como el estudio y la asimilación de tecnologías ya existentes con el fin de adaptarlas y modificarlas para el proyecto desarrollado.
 
-Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico USB que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha recurrido a una interfaz SPI.
+Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico \ac{USB} que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha recurrido a una interfaz \ac{SPI}.
 
 %-------------------------------------------------------------------
 \subsection{BeagleBone Black}
 %-------------------------------------------------------------------
 \label{cap2:subsec:bbb}
 
-La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nostros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, BeagleBone Black (BBB), ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
+La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nostros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, con una  \ac{BBB}, ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
 \begin{itemize}
   \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo (2000 MIPS).
   \item Tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
@@ -203,7 +203,7 @@ El chip permite obtener la alimentación de manera unipolar o bipolar:
 
 La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más facilmente adaptable a los pines que proporciona la BBB.
 
-Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia.
+Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia \citep{memPi}.
 
 Para el propósito del presente proyecto, se ha utilizado un kit de desarrollo, en el que se incluye el chip integrado en una placa que permite configurar la forma de alimentación o tener acceso a las entradas de datos de forma más cómoda y sencilla.
 

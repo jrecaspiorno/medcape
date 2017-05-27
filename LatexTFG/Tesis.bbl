@@ -1,4 +1,4 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{4}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{elinux.org(2017)}]{BBBsite}
@@ -21,5 +21,11 @@
 \newblock Versión electrónica, Enero, 2014.
 \newblock Disponible en \url{http://exploringbeaglebone.com/} (último acceso,
   Mayo, 2017).
+
+\bibitem[{Nieva et\ al.(2013)Nieva, José y Álvaro Pérez~Liaño}]{memPi}
+{\sc Nieva, X.~G.}, {\sc José, J. F. L.~S.} y {\sc Álvaro Pérez~Liaño}.
+\newblock {\em Desarrollo de dispositivos e-Health de bajo coste para Raspberry
+  Pi\/}.
+\newblock 2013.
 
 \end{thebibliography}

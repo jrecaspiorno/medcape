@@ -28,163 +28,320 @@ El propósito principal del poroyecto es ser lo más portable posible. Es por esto
 \label{cap4:sec:envio}
 
 
-Como ya se adelantaba en la sección \ref{cap3:sec:ecosistema} en el envío de datos interviene el programa desarrollado en Python \texttt{BTConnection.py} \footnote{El autor del programa original es José Manuel Bote}. El programa original ha sido ampliado y adaptado a las necesidades que exigía el presente Proyecto. Este programa lee datos de una tubería \footnote{Más información disponible en \href{https://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}{hhttps://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}} en la que se introducen los paquetes de muestras que estén preparados para ser procesados. Las muestras son leídas una por una de la tubería y son enviadas por bluetooth vía socket a la aplicación Android.
+Como ya se adelantaba en la sección \ref{cap3:sec:ecosistema} en el envío de datos interviene el programa desarrollado en Python \texttt{BTConnection.py} \footnote{El autor del programa original es José Manuel Bote}. El programa original ha sido ampliado y adaptado a las necesidades que exigía el presente Proyecto. Este programa lee datos de una tubería \footnote{Más información disponible en \href{https://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}{hhttps://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}} en la que se introducen los paquetes de muestras que estén preparados para ser procesados. Las muestras son leídas una por una de la tubería y son enviadas por Bluetooth vía socket a la aplicación Android.
+
+
 
 La comunicación por socket no es más que el mecanismo por el cual estos dos programas pueden intercambiar flujos de datos de manera ordenada y fiable \footnote{Más información al respecto disponible en \href{https://es.wikipedia.org/wiki/Socket\_de\_Internet}{https://es.wikipedia.org/wiki/Socket\_de\_Internet}}.
 
+
+
 \figura{Vectorial/dongle}{width=0.7\textwidth}{fig:dongle}%
+
 {Dongle Bluetooth 4.0 CSR utilizado en la BBB}
 
-Para que las muestras sean correctamente leídas es necesario que la BBB disponga de conexión bluetooth, algo que de lo que de forma nativa no dispone. Para ello ha sido necesario utilizar un periférico que le aportase esta caracteria a la placa. En concreto, el periférico que hemos utilizado se denomina Blueetooth CSR 4.0 Dongle, y puede apreciarse de forma visual en la [Fig \ref{fig:dongle}]. 
 
-Ha sido necesario configurar y emparejar este periférico con la BBB para que esta pudiese disponer de conexión Bluetooth. La configuración se ha realizado mediante la intrucción de comandos en el terminal Debian de la BBB mediante el protocolo \texttt{ssh}, ya que la comunicación con la BBB no puede realizarse mediante interfaz visual.
+
+Para que las muestras sean correctamente leídas es necesario que la BBB disponga de conexión Bluetooth, algo que de lo que de forma nativa no dispone. Para ello ha sido necesario utilizar un periférico que le aportase esta característica a la placa. En concreto, el periférico que hemos utilizado se denomina Bluetooth CSR 4.0 Dongle, y puede apreciarse de forma visual en la [Fig \ref{fig:dongle}]. 
+
+
+
+Ha sido necesario configurar y emparejar este periférico con la BBB para que esta pudiese disponer de conexión Bluetooth. La configuración se ha realizado mediante la introducción de comandos en el terminal Debian de la BBB mediante el protocolo \texttt{ssh}, ya que la comunicación con la BBB no puede realizarse mediante interfaz visual.
+
+
 
 Cabe destacar que para que el envío de información de cada una de las muestras mediante sockets concluya correctamente, es necesario que previamente el dispositivo Android que ejecuta la aplicación y la BBB (mediante el dongle Bluetooth) se encuentren emparejados.
 
-Una vez satisfecho el requisito de emparejamiento, las acciones que realiza el programa Python son relativamente sencillas. En primer lugar, realiza una espera una conexión por socket por parte de la apliación Android. Hasta que no se acepte la conexión en el dispositivo móvil, la aplicación Python permanece bloqueada a la espera.
+
+
+Una vez satisfecho el requisito de emparejamiento, las acciones que realiza el programa Python son relativamente sencillas. En primer lugar, realiza una espera una conexión por socket por parte de la aplicación Android. Hasta que no se acepte la conexión en el dispositivo móvil, la aplicación Python permanece bloqueada a la espera.
+
+
 
 Tras aceptar la conexión, se accede a la tubería que contiene la información de los paquetes de muestras. La información se envía por socket (muestra a muestra) a la aplicación Android. Si no es posible realizar este envío, se lanzará una excepción por la que volverá a quedarse el programa a la espera de una conexión vía socket por parte de la aplicación Android.
 
+
+
  Se puede apreciar de forma visual el contenido más importante del programa Python en la [Fig \ref{fig:python}]. 
 
+
+
 \figura{Vectorial/python}{width=1.1\textwidth}{fig:python}%
+
 {Programa desarrollado en Python \texttt{BTConnection.py}}
 
+
+
 %-------------------------------------------------------------------
+
 \section{Recepción de datos}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:recepcion}
 
-Frente al envío de los datos comentado en la sección \ref{cap4:sec:envio}, la recepción de los mismos se realiza desde la aplicación Android. El autor de la aplicación original es José Manuel Bote. Sobre la aplicación original se han realizado modificaciones y ampliaciones adaptándola así a las necesidades de nuestro proyecto. El lenguaje de programación utilizado para desarollar la aplicación es Java.
+
+
+Frente al envío de los datos comentado en la sección \ref{cap4:sec:envio}, la recepción de los mismos se realiza desde la aplicación Android. El autor de la aplicación original es José Manuel Bote. Sobre la aplicación original se han realizado modificaciones y ampliaciones adaptándola así a las necesidades de nuestro proyecto. El lenguaje de programación utilizado para desarrollar la aplicación es Java.
+
+
 
 La aplicación original estaba diseñada para comunicarse por Bluetooth con una BBB para que le transmitiese datos, y estos fuesen representados. La propia aplicación ofrece la posibilidad de activar el Bluetooth del terminal desde el que se usa, si es que tiene. Tras esto, tratará de emparejarse con el otro dispositivo, y esperar la transmisión de información. El propósito fundamental que tiene es representar en forma de onda la información que recibe por Bluetooth. Aunque su propósito sea relativamente simple, internamente presenta cierto nivel de complejidad, puede suponer todo un reto técnico modificarla y ampliarla, sobre todo para programadores poco avezados en la materia.
+
+
 
 La aplicación original tiene una gráfica en la que se representan las ondas recibidas, pudiendo representar hasta un máximo de 2 canales distintos. En la [Fig \ref{fig:original}]puede apreciarse la pantalla principal de la aplicación original ejecutándose en un dispositivo móvil.
 
 
+
+
+
 \figura{Vectorial/original}{width=1\textwidth}{fig:original}%
+
 {Pantalla principal de la aplicación Android original}
+
+
 
 La recepción de los datos por socket de la aplicación Python se realiza desde un hilo que se ejecuta indefinidamente en la aplicación Android. Este hilo se bloquea en espera hasta que haya datos disponibles en la tubería Python. Cuando hay datos  de muestras disponibles, estos son analizados e interpretados por la aplicación para posteriormente ser representados de forma grafica. Este proceso de espera a la disponibilidad de los datos y tratamiento de los mismos (sin incluir la representación gráfica) puede apreciarse de forma visual en la [Fig \ref{fig:recep}]. 
 
+
+
 \figura{Vectorial/recep}{width=1\textwidth}{fig:recep}%
+
 {Fragmento del código que ejecuta el hilo encargado de la recepción de datos}
 
+
+
 %-------------------------------------------------------------------
+
 \section{Mejoras desarrolladas}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:mejoras}
+
+
 
 La realización de pequeñas mejoras y adaptaciones sobre la aplicación original era totalmente necesaria para garantizar el correcto funcionamiento de la misma, teniendo en cuenta que el contexto del proyecto requería una configuración diferente a la original. Una vez configurada, y realizadas las modificaciones, la aplicación funcionaba correctamente.
 
+
+
 Sin embargo consideramos que todavía podían hacerse más mejoras e implementación de nuevas funcionalidades. Entre estas posibles mejoras se a realizar, planteamos las siguientes:
+
 \begin{itemize}
-\item Renovación total de la interfaz gráfica de la aplicación, dotandola de un diseño vistoso y amigable.
+
+\item Renovación total de la interfaz gráfica de la aplicación, dotándola de un diseño vistoso y amigable.
+
 \item Despliegue de servidores que establezcan conexión con la aplicación vía internet utilizando sockets específicos.
+
 \item Separación de la aplicación en dos posibles versiones, una para pacientes y otra para doctores.
+
 \item Retransmisión en tiempo real (\textit{streaming}) de ECG de pacientes a doctores.
+
 \end{itemize}
 
-Sabíamos que la realización de todas estas ampliaciones supondría un reto técnico a nuestras capacidades como informáticos, sobre todo si queríamos implementar éxitosamente la opción de realizar una retransmisión de información en tiempo real de pacientes a doctores. El despliegue de un servidor que actuase como intermediario entre ambos era totalmente necesario para garantizar la comunicación entre los dos extremos. La conexión a este servidor se realizaría por ambas partes mediante una conexión a internet.
+
+
+Sabíamos que la realización de todas estas ampliaciones supondría un reto técnico a nuestras capacidades como informáticos, sobre todo si queríamos implementar exitosamente la opción de realizar una retransmisión de información en tiempo real de pacientes a doctores. El despliegue de un servidor que actuase como intermediario entre ambos era totalmente necesario para garantizar la comunicación entre los dos extremos. La conexión a este servidor se realizaría por ambas partes mediante una conexión a internet.
+
+
+
 
 
 %-------------------------------------------------------------------
+
 \section{Renovación visual}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:mejoras}
+
+
 
 La renovación visual de la aplicación ha supuesto un cambio muy significativo respecto a la apariencia de la misma. En lugar de acceder directamente a la pantalla principal, que nos muestra la gráfica y la opción de sincronizar mediante Bluetooth, según se abre la nueva aplicación, se accede a una pantalla de identificación de usuario, tal y como puede apreciarse en la [Fig \ref{fig:log}]. 
 
+
+
 Una vez el usuario correspondiente se ha identificado, accede a un pequeño menú con 3 opciones disponibles como puede observarse en la [Fig\ref{fig:menu}]. La primera opción permite la recepción de información mediante Bluetooth con la BBB ([Fig\ref{fig:grafica}]). La segunda permite buscar un paciente para ver en tiempo real su ECG en tiempo real ([Fig\ref{fig:buscar}]), y la última nos proporciona información de nuestro perfil de usuario.
 
+
+
 \begin{figure}[t]
+
 \centering
+
 %
+
 \begin{SubFloat}
+
 {\label{fig:log}%
+
 Pantalla inicial de autentificación}%
+
 \includegraphics[width=0.45\textwidth]%
+
 {Imagenes/Vectorial/log}%
+
 \end{SubFloat}
+
 \qquad
+
 \begin{SubFloat}
+
 {\label{fig:menu}%
+
 Menú principal de la aplicación}%
+
 \includegraphics[width=0.45\textwidth]%
+
 {Imagenes/Vectorial/menu}%
+
 \end{SubFloat}
+
 \begin{SubFloat}
+
 {\label{fig:buscar}%
+
 Pantalla de busqueda de pacientes en la app}%
+
 \includegraphics[width=0.45\textwidth]%
+
 {Imagenes/Vectorial/buscar}%
+
 \end{SubFloat}
+
 \qquad
+
 \begin{SubFloat}
+
 {\label{fig:grafica}%
+
 Gráfica en la que se reflejarán los ECG}%
+
 \includegraphics[width=0.45\textwidth]%
+
 {Imagenes/Vectorial/grafica}%
+
 \end{SubFloat}
+
 \caption{Pantallas principales de la aplicación Android%
+
 \label{fig:pantallas}}
+
 \end{figure}
 
-Como puede apreciarse por las imagenes, la renovación visual ha conllevado la implementación de diversas mejoras en la aplicación, y a vez ha adquirido una interfaz más amigable de cara a la experiencia final de usuario.
+
+
+Como puede apreciarse por las imágenes, la renovación visual ha conllevado la implementación de diversas mejoras en la aplicación, y a vez ha adquirido una interfaz más amigable de cara a la experiencia final de usuario.
+
+
 
 Cabe destacar que la aplicación facilita su uso tanto en modo horizontal, como en modo vertical (como se aprecia en la [Fig \ref{fig:pantallas}]). Sin embargo, la versión original solo facilitaba su uso en modo horizontal. La ampliación de posibilidades de uso facilita al usuario flexibilidad a la hora de utilizar la app.
 
+
+
 \clearpage
 
+
+
 %-------------------------------------------------------------------
+
 \section{Ecosistema de streaming}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:streaming}
 
-Tal y como adelantabamos en la sección \ref{cap4:sec:mejoras}, ofrecer un servicio de \textit{streaming} en tiempo real desde la aplicación Android no era un reto sencillo.
 
-Para poder comunicar éxitosamente en tiempo real la aplicación que utilizase un paciente con la que utilizase un doctor, era necesario introducir una infraestructura de comunicación que permitiese la comunicación entre ambas partes. Esta infraestructura sería finalmente un servidor que atendiese y sirviese peticiones realizadas desde la propia aplicación.
+
+Tal y como adelantábamos en la sección \ref{cap4:sec:mejoras}, ofrecer un servicio de \textit{streaming} en tiempo real desde la aplicación Android no era un reto sencillo.
+
+
+
+Para poder comunicar exitosamente en tiempo real la aplicación que utilizase un paciente con la que utilizase un doctor, era necesario introducir una infraestructura de comunicación que permitiese la comunicación entre ambas partes. Esta infraestructura sería finalmente un servidor que atendiese y sirviese peticiones realizadas desde la propia aplicación.
+
+
 
 %-------------------------------------------------------------------
+
 \subsection{Características del servidor}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:servidor}
 
-El servidor que utilizamos para realizar la comunicación por ambos extremos fue un ordenador personal, ya que no contabamos en ese momento con otros medios que facilitasen dicha opción.
 
-Este servidor esta desarollado en \texttt{Node.js}, un lenguaje muy similar a Javascript, solo que a diferencia de Javascript, está pensado para ser utilizado en la parte del servidor en lugar de la del cliente. El servidor es capaz de atender peticiones a través de internet mediante sockets, y de servir peticiones de la misma forma. Es decir, las dos aplicaciones (tanto la del paciente como la del doctor) como el servidor deben disponer de conexión a internet para que la comunicación en tiempo real funcione.
+
+El servidor que utilizamos para realizar la comunicación por ambos extremos fue un ordenador personal, ya que no contábamos en ese momento con otros medios que facilitasen dicha opción.
+
+
+
+Este servidor esta desarrollado en \texttt{Node.js}, un lenguaje muy similar a JavaScript, solo que a diferencia de JavaScript, está pensado para ser utilizado en la parte del servidor en lugar de la del cliente. El servidor es capaz de atender peticiones a través de internet mediante sockets, y de servir peticiones de la misma forma. Es decir, las dos aplicaciones (tanto la del paciente como la del doctor) como el servidor deben disponer de conexión a internet para que la comunicación en tiempo real funcione.
+
+
 
 La función del servidor es recibir paquetes de \texttt{bytes} desde la aplicación de un paciente, y despacharlos de la misma forma a la aplicación de un doctor, donde estos pueden ser representados de forma simultánea (o casi) en ambos dispositivos. Es decir la información se recibe en crudo, y se envía en crudo, sin ningún tratamiento por parte del servidor.
 
+
+
 \figura{Vectorial/server}{width=1.1\textwidth}{fig:server}%
+
 {Fragmento del código que ejecuta el servidor desarrollado en \texttt{Node.js}}
 
-El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la ip local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}.
+
+
+El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la IP local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}.
+
+
 
 En la [Fig \ref{fig:server}] puede apreciarse uno de los fragmentos de código más significativos del servidor.
 
+
+
 %-------------------------------------------------------------------
+
 \subsection{Características de la base de datos}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:bd}
 
-Para el amacenamiento de usuarios se ha recurrido a una base de datos \texttt{NoSQL}, en este caso concreto el sistema de base de datos utilziado ha sido \texttt{MongoDB}. 
 
-La base de datos se hace necesaria en el momento en el que se quiere tener un almacen persistente de información. En nuestro caso, la ultizamos para el amacenaje de usuarios, ya que por ejemplo, si un doctor quiere buscar a un paciente determinado para ver su ECG en tiempo real, es necesario realizar una consulta en la base de datos para saber si este paciente existe. Una vez tenemos la certeza de que existe, y que está emitiendo datos, es posible que el doctor los reciba en tiempo real.
+
+Para el almacenamiento de usuarios se ha recurrido a una base de datos \texttt{NoSQL}, en este caso concreto el sistema de base de datos utilizado ha sido \texttt{MongoDB}. 
+
+
+
+La base de datos se hace necesaria en el momento en el que se quiere tener un almacén persistente de información. En nuestro caso, la utilizamos para el almacenaje de usuarios, ya que por ejemplo, si un doctor quiere buscar a un paciente determinado para ver su ECG en tiempo real, es necesario realizar una consulta en la base de datos para saber si este paciente existe. Una vez tenemos la certeza de que existe, y que está emitiendo datos, es posible que el doctor los reciba en tiempo real.
+
+
 
 %-------------------------------------------------------------------
+
 \subsection{Interpretación de datos}
+
 %-------------------------------------------------------------------
+
 \label{cap4:sec:inter}
 
-Los datos finales son interpretados y representados por la aplicación Android. En principio, los datos podrían ser retransmitidos desde pacientes reales utilizando ciertos sensores que permitan generar un ECG a partir de sus señales cardiacas. Sin embargo, este proyecto ha sido desarrollado utilizando un simulador de ECG, que en principio, y bajo las circunstancias propicias, debería aportar la misma información que un paciente real. El simulador de pacientes utilizado durante el desarrollo y las pruebas del proyecto puede apreciarse en la [Fig \ref{fig:sim}].
+
+
+Los datos finales son interpretados y representados por la aplicación Android. En principio, los datos podrían ser retransmitidos desde pacientes reales utilizando ciertos sensores que permitan generar un ECG a partir de sus señales cardíacas. Sin embargo, este proyecto ha sido desarrollado utilizando un simulador de ECG, que en principio, y bajo las circunstancias propicias, debería aportar la misma información que un paciente real. El simulador de pacientes utilizado durante el desarrollo y las pruebas del proyecto puede apreciarse en la [Fig \ref{fig:sim}].
+
+
 
 \figura{Vectorial/sim}{width=1\textwidth}{fig:sim}%
-{Simulador de ECG utilizado durante el desarrollo del poryecto}
+
+{Simulador de ECG utilizado durante el desarrollo del proyecto}
+
+
 
 La información generada por el simulador, tras ser interpretada y tratada llega a la aplicación Android, la cual es la encargada de representarla, e incluso de retransmitirla en tiempo real. La representación de información por parte de la aplicación Android, y con ausencia de errores, debería ser como muestra la [Fig \ref{fig:retrans}]. De la misma forma, un doctor que utilice la aplicación debería ser capaz de representar de la misma forma en la que le llega al paciente la señal, y todo esto, en tiempo real.
 
+
+
 \figura{Vectorial/retrans}{width=1\textwidth}{fig:retrans}%
+
 {Interpretación de la señal por parte de la aplicación Android}
 
 

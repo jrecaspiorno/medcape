@@ -29,9 +29,15 @@ Para la realización del presente proyecto ha sido necesario realizar una investi
 
 Un \ac{ECG} es un proceso por el cual se registran las actividades eléctricas que emite el corazón durante un tiempo determinado.
 
-El registro de esta actividad cardiaca es posible gracias a las diferencias de potencial existentes producidas por la contractilidad del corazón. El estudio de la información ilustrada por un ECG puede ser de gran utilidad a la hora de detectar multitud de enfermedades cardiovasculares, así como prevenir problemas cardiacos de forma precoz.
+
+
+El registro de esta actividad cardíaca es posible gracias a las diferencias de potencial existentes producidas por la contractilidad del corazón. El estudio de la información ilustrada por un ECG puede ser de gran utilidad a la hora de detectar multitud de enfermedades cardiovasculares, así como prevenir problemas cardíacos de forma precoz.
+
+
 
 La ventaja de un ECG frente a otros métodos de medición para comprobar el estado del corazón, es que el ECG aporta mucha más información que los métodos más habituales como pueden ser simplemente medir el pulso o utilizar un estetoscopio.
+
+
 
 Entre la información extra que puede obtenerse recurriendo al ECG, cabe destacar desde la medición continua durante un tiempo prolongado (días incluso si se utiliza un ECG portátil) hasta la obtención del movimiento de los músculos del corazón (los electrodos conectados al paciente registran esos movimientos en \textit{mV}), lo cual permite saber cuando entra la sangre, cuando sale, cuanto dura cada movimiento, etc. Sin esa información sería imposible detectar ciertos tipos de arritmias y/o otras alteraciones del corazón.
 
@@ -51,7 +57,7 @@ La estructura habitual de un ECG [Fig \ref{fig:ondaecg}] habitualmente está form
 \end{itemize}
 
 \figura{Vectorial/ecg}{width=.7\textwidth}{fig:ondaecg}%
-{Estructura habitual de la señal ECG durante un ciclo cardiaco.}
+{Estructura habitual de la señal ECG durante un ciclo cardíaco.}
 
 Habitualmente este tipo de señales se encuentran dentro de un rango determinado de amplitudes, que generalmente abarca desde los 0.5\textit{mV} hasta los 5\textit{mV}, existiendo además una componente continua causada por el contacto existente entre los electrodos y la piel. 
 
@@ -73,7 +79,7 @@ El corazón está constituido por cuatro cámaras diferenciadas: dos aurículas (izq
 
 Su funcionamiento sigue siempre un mismo ciclo que se repite una y otra vez: la aurícula derecha recibe la sangre venosa del cuerpo a través de la vena cava superior y la envía al ventrículo derecho. Para que dicha sangre pueda oxigenarse, el ventrículo derecho la envía a través de la arteria pulmonar a los pulmones, retornando al corazón, a través de la vena pulmonar, a la aurícula izquierda. Para finalizar con el ciclo, la sangre pasa de dicha aurícula al ventrículo izquierdo, el cual la distribuye por todo el cuerpo gracias a la arteria aorta, para volver posteriormente a la aurícula derecha y así cerrar el ciclo.
 
-Para que este ciclo periódico funcione de manera correcta, síncrona y con total ausencia de errores, el corazón dispone de un sistema de conducción eléctrica constituido por fibras de músculo cardiaco cuya finaludad es la transmisión de impulsos eléctricos. El motivo por el cual no tenemos ningún tipo de control sobre los latidos del corazón es porque este sistema es autoexcitable.
+Para que este ciclo periódico funcione de manera correcta, síncrona y con total ausencia de errores, el corazón dispone de un sistema de conducción eléctrica constituido por fibras de músculo cardíaco cuya finalidad es la transmisión de impulsos eléctricos. El motivo por el cual no tenemos ningún tipo de control sobre los latidos del corazón es porque este sistema es autoexcitable.
 
 %-------------------------------------------------------------------
 \subsection{Obtención del ECG}
@@ -90,13 +96,13 @@ El equipo de registro consta de una serie de electrodos, que se conectan a la pi
 %-------------------------------------------------------------------
 \label{cap2:subsec:utilidades}
 
-Tras la obtención de un ECG completo, se tendrá un registro completo acerca del tamaño, la cadencia, y la naturaleza de los impulsos eléctricos emitidos por el corazón. Gracias a esta información, es posible definir tanto el ritmo como la frecuencia cardiaca. Este tipo de información puede ser crucial a la hora de detectar ciertos problemas cardiacos. A continuación se detallan posibles utilidades que puede tener la obtención de un ECG:
+Tras la obtención de un ECG completo, se tendrá un registro completo acerca del tamaño, la cadencia, y la naturaleza de los impulsos eléctricos emitidos por el corazón. Gracias a esta información, es posible definir tanto el ritmo como la frecuencia cardíaca. Este tipo de información puede ser crucial a la hora de detectar ciertos problemas cardíacos. A continuación se detallan posibles utilidades que puede tener la obtención de un ECG:
 
 \begin{itemize}
   \item Obtener información sobre el estado físico del corazón.
-  \item Detectar problemas cardiacos de forma precoz, o alteraciones elecctróliticas de potasio, sodio, calcio, magnesio, u otros elementos químicos.
+  \item Detectar problemas cardíacos de forma precoz, o alteraciones electrolíticas de potasio, sodio, calcio, magnesio, u otros elementos químicos.
    \item Determinar si el corazón funciona correctamente, en caso de no encontrar ninguna anomalía.
-   \item Adquirir información acerca de la repercusión miocárdica de diversas enfermedades cardiacas.
+   \item Adquirir información acerca de la repercusión miocárdica de diversas enfermedades cardíacas.
     \item Detección de anormalidades conductivas.
     \item Indicar bloqueos coronarios arteriales.
 \end{itemize}
@@ -118,18 +124,18 @@ Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede a
 %-------------------------------------------------------------------
 \label{cap2:subsec:bbb}
 
-La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nostros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, con una  \ac{BBB}, ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
+La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nosotros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, con una  \ac{BBB}, ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
 \begin{itemize}
   \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo (2000 MIPS).
   \item Tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
-  \item Es compatible con muchos estandares de interfaces para dispotivos electronicos (SPI entre otros).
+  \item Es compatible con muchos estándares de interfaces para dispositivos electrónicos (SPI entre otros).
   \item Es muy eficiente, ya que requiere únicamente entre 1 y 2.3 W, según este inactivo, o funcionando a máxima potencia.
   \item Es fácilmente ampliable a través de otro tipo de placas de expansión opcionales y de dispositivos USB.
   \item Tiene una gran comunidad de desarrolladores innovadores y entusiastas que respaldan y dan soporte a los usuarios de la plataforma.
   \item Es hardware libre, y es compatible con multitud de herramientas y de aplicaciones de software libre.
 \end{itemize}
 
-La plataforma BeagleBone lleva el sistema operativo Linux, lo que significa que es posible usar todo tipo de librerías de software libre, y aplicaciones. La posibilidad de usar software libre, brinda también la oportunidad de conectar esta plataforma con todo tipo de perifericos como pueden ser cámaras USB, teclados, adaptadores Wi-Fi \ldots
+La plataforma BeagleBone lleva el sistema operativo Linux, lo que significa que es posible usar todo tipo de librerías de software libre, y aplicaciones. La posibilidad de usar software libre, brinda también la oportunidad de conectar esta plataforma con todo tipo de periféricos como pueden ser cámaras USB, teclados, adaptadores Wi-Fi \ldots
 
 %-------------------------------------------------------------------
 \subsubsection{Versiones BeagleBoneBlack}
@@ -142,13 +148,13 @@ La plataforma BeagleBone y sus placas computadoras han evolucionado progresivame
   \item \textbf{(2008) BeagleBoard (125\$)} La original placa de desarrollo de hardware libre basada en ARM que tiene soporte para video HD. Tiene un Procesador ARM A8 a 720MHz pero no tiene conexión Ethernet.
   \item \textbf{(2010) BeagleBoard xM (149\$)} Similar a la BeagleBoard, solo que tiene un procesador ARM AM37x a 1Ghz, 512MB de memoria, cuatro puertos USB, y soporte para Ethernet. Es una placa muy popular por su núcleo C64+TMDSP para procesamiento de señales digitales.
   \item \textbf{(2011) BeagleBone (89\$)} Más compacta que su antecesora la BeagleBoard. Tiene un procesador a 720Mhz y 256MB de memoria, soporta Ethernet y conexiones de salida de bajo nivel, pero no tiene soporte nativo de video.
-  \item \textbf{(2013) BeagleBone Black (45\$-55\$)} Esta placa mejora la BeagleBone con un procesador a 1GHz, 512MB de memoria DDR3, conexión Ethernet, almacenamietno eMMC y soporte para conexión de video HDMI.
+  \item \textbf{(2013) BeagleBone Black (45\$-55\$)} Esta placa mejora la BeagleBone con un procesador a 1GHz, 512MB de memoria DDR3, conexión Ethernet, almacenamiento eMMC y soporte para conexión de video HDMI.
 \end{itemize}
 
 \figura{Vectorial/Features}{width=1\textwidth}{fig:feat}
 {Especificación hardware BeagleBone Black}
 
-La especificación completa de las carácteristicas de la BBB se muestran con más detalle en la [Fig. \ref{fig:feat}] \citep{BBBsite}
+La especificación completa de las características de la BBB se muestran con más detalle en la [Fig. \ref{fig:feat}] \citep{BBBsite}
 
 
 %-------------------------------------------------------------------
@@ -156,7 +162,7 @@ La especificación completa de las carácteristicas de la BBB se muestran con más 
 %-------------------------------------------------------------------
 \label{cap2:subsec:bus}
 
-El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dipositivos en una distancia corta \citep{exploringBBB}. Es posible que la comunicación sea bidireccional, ya que tanto la transmisión como la recepción de datos se realizan en buses separados. 
+El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dispositivos en una distancia corta \citep{exploringBBB}. Es posible que la comunicación sea bidireccional, ya que tanto la transmisión como la recepción de datos se realizan en buses separados. 
 
 En la transferencia de datos se implican distintos dispositivos que desempeñan diferentes funciones. Existe un dispositivo principal, más conocido como maestro, y otro  dispositivo denominado esclavo (como mínimo debe existir uno). El maestro es responsable de enviar las señales de reloj y de seleccionar  al esclavo activo en cada instante de la comunicación. 
 
@@ -174,16 +180,16 @@ Las diferentes líneas existentes en este estándar de comunicación son las siguie
 
 Con el fin de procesar una lectura desde un dispositivo esclavo, el maestro debe realizar una escritura en el bus, forzando de esta forma la generación de una señal del reloj que tendrá como consecuencia la escritura de datos por parte del dispositivo deseado.
 
-El dispositivo maestro debe conocer las características de cada esclavo implicado en la comunación, entre las cuales, es posible destacar las siguientes:
+El dispositivo maestro debe conocer las características de cada esclavo implicado en la comunicación, entre las cuales, es posible destacar las siguientes:
 
 \begin{itemize}
-  \item \textbf{Frecuencia máxima de transferencia}: La velocidad de comunicación  con cada dispositivo etará limitada por este valor, haciendo imposible enviar o recibir datos a mayor velocidad.
+  \item \textbf{Frecuencia máxima de transferencia}: La velocidad de comunicación  con cada dispositivo estará limitada por este valor, haciendo imposible enviar o recibir datos a mayor velocidad.
    \item \textbf{Polaridad} (CPOL): Determina la polaridad del reloj [Fig \ref{fig:spi3}].
    \item \textbf{Fase} (CPHA): Determina el flanco de reloj en el que se desencadenará la escritura [Fig \ref{fig:spi3}].
 \end{itemize}
 
 \figura{Vectorial/spi3}{width=1\textwidth}{fig:spi3}
-{Configuraciónes posibles de fase y polaridad en el estándar SPI}
+{Configuraciones posibles de fase y polaridad en el estándar SPI}
 
 %-------------------------------------------------------------------
 \subsection{Chip ADS1198}
@@ -192,7 +198,7 @@ El dispositivo maestro debe conocer las características de cada esclavo implicad
 
 El ADS1198 es un chip de Texas Instruments de bajo consumo para mediciones de señales ECG, que se caracteriza por tener ocho canales de 16 bits cada uno, una frecuencia de muestreo de hasta 8KHz, un amplificados de ganancia programable, referencia interna, y un oscilador integrado. \citep{ads1198} Cada canal consta de un multiplexor que permite la lectura desde ocho entradas diferentes, siendo las más relevantes las entradas de temperatura, electrodos, y señal de test generada internamente.
 
-El chip consta de una interfaz SPI para permitir la comunicación con otros sipositivos. Además de las líneas típicas de SPI se proporciona una línea adicional, \textbf{DRDY} (Data ready), que índica cuando se tienen nuevos datos válidos preparados para enviar. La lectura de datos se realiza siempre para los 8 canales, devolviendo adicionalmente una cabecera con información de la configuración del chip.
+El chip consta de una interfaz SPI para permitir la comunicación con otros dispositivos. Además de las líneas típicas de SPI se proporciona una línea adicional, \textbf{DRDY} (Data ready), que índica cuando se tienen nuevos datos válidos preparados para enviar. La lectura de datos se realiza siempre para los 8 canales, devolviendo adicionalmente una cabecera con información de la configuración del chip.
 
 El chip permite obtener la alimentación de manera unipolar o bipolar:
 
@@ -201,7 +207,7 @@ El chip permite obtener la alimentación de manera unipolar o bipolar:
    \item \textbf{Bipolar}: El modo bipolar requiere entradas desde -2.5V hasta 2.5V.
 \end{itemize}
 
-La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más facilmente adaptable a los pines que proporciona la BBB.
+La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más fácilmente adaptable a los pines que proporciona la BBB.
 
 Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia \citep{memPi}.
 
@@ -234,13 +240,13 @@ Dado su elevado rendimiento, alto nivel de integración y bajo consumo, el ADS119
 %-------------------------------------------------------------------
 \label{cap2:subsec:saleae}
 
-Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depuración durante el desarrollo del proyecto. Gracias al uso de este dispositivo ha sido posible detectar fallos muy concretos en periódos de tiempo relativamente pequeños, ya que de otra forma, en caso de no haberlo utilizado hubiese sido muy complicado el desarrollo, o al menos, hubiese llevado muchisimo más tiempo del esperado. 
+Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depuración durante el desarrollo del proyecto. Gracias al uso de este dispositivo ha sido posible detectar fallos muy concretos en periodos de tiempo relativamente pequeños, ya que de otra forma, en caso de no haberlo utilizado hubiese sido muy complicado el desarrollo, o al menos, hubiese llevado muchísimo más tiempo del esperado. 
 
-La idea de funcionamiento de este dispositivo es muy sencilla. Cuenta con 8 canales que actuan como analizadores lógicos, por lo que basta con conectar cada analizador al canal que se desee analizar. 
+La idea de funcionamiento de este dispositivo es muy sencilla. Cuenta con 8 canales que actúan como analizadores lógicos, por lo que basta con conectar cada analizador al canal que se desee analizar. 
 
-Una vez conectado cada canal, entra en juego el software que proporciona el propio Saleae, que en este caso es multiplataforma \footnote{Software disponible en \href{https://www.saleae.com/downloads}{https://www.saleae.com/downloads}}. Tras descargarlo e instalarlo bastará con conectar el analizador lógico por usb y configurarlo para comenzar a analizar cada una de las señales.
+Una vez conectado cada canal, entra en juego el software que proporciona el propio Saleae, que en este caso es multiplataforma \footnote{Software disponible en \href{https://www.saleae.com/downloads}{https://www.saleae.com/downloads}}. Tras descargarlo e instalarlo bastará con conectar el analizador lógico por USB y configurarlo para comenzar a analizar cada una de las señales.
 
-Entre sus principales características, cabe destacar als siguientes:
+Entre sus principales características, cabe destacar las siguientes:
 
 \begin{itemize}
   \item Flexible, software fácil de usar.

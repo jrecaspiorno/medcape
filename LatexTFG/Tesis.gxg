@@ -1,11 +1,13 @@
 
-Capitulos/02Capitulo2.aux:8 ECG[n](acr)a@3
-Capitulos/02Capitulo2.aux:27 USB[n](acr)a@7
-Capitulos/02Capitulo2.aux:28 SPI[n](acr)a@7
-Capitulos/02Capitulo2.aux:31 BBB[n](acr)a@7
-Capitulos/03Capitulo3.aux:12 CPU[n](acr)a@17
-Capitulos/03Capitulo3.aux:15 PRU[n](acr)a@18
-Capitulos/03Capitulo3.aux:24 GPIO[n](acr)a@21
-Capitulos/03Capitulo3.aux:25 LCD[n](acr)a@21
-Capitulos/03Capitulo3.aux:28 DT[n](acr)a@21
-Capitulos/03Capitulo3.aux:35 DTO[n](acr)a@22
+Capitulos/02Capitulo2.aux:8 ECG[n](acr)a@5
+Capitulos/02Capitulo2.aux:29 USB[n](acr)a@10
+Capitulos/02Capitulo2.aux:30 SPI[n](acr)a@10
+Capitulos/02Capitulo2.aux:33 BBB[n](acr)a@10
+Capitulos/03Capitulo3.aux:8 ADC[n](acr)a@22
+Capitulos/03Capitulo3.aux:13 CPU[n](acr)a@23
+Capitulos/03Capitulo3.aux:18 PRU[n](acr)a@24
+Capitulos/03Capitulo3.aux:27 GPIO[n](acr)a@27
+Capitulos/03Capitulo3.aux:28 LCD[n](acr)a@27
+Capitulos/03Capitulo3.aux:34 DT[n](acr)a@28
+Capitulos/03Capitulo3.aux:38 DTO[n](acr)a@29
+Capitulos/04Capitulo4.aux:40 PPM[n](acr)a@52

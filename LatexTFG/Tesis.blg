@@ -12,6 +12,7 @@ A level-1 auxiliary file: Capitulos/02Capitulo2.aux
 A level-1 auxiliary file: Capitulos/03Capitulo3.aux
 A level-1 auxiliary file: Capitulos/04Capitulo4.aux
 A level-1 auxiliary file: Capitulos/05Capitulo5.aux
+A level-1 auxiliary file: Apendices/01ApendiceA.aux
 A level-1 auxiliary file: Cascaras/bibliografia.aux
 The style file: TeXiS/TeXiS.bst
 A level-1 auxiliary file: TeXiS/TeXiS_acron.aux
@@ -22,7 +23,7 @@ Database file #3: otros.bib
 Warning--missing publisher in memPi
 You've used 4 entries,
             2962 wiz_defined-function locations,
-            1112 strings with 13010 characters,
+            1113 strings with 13035 characters,
 and the built_in function-call counts, 1941 in all, are:
 = -- 136
 > -- 56

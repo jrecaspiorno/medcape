@@ -1,49 +1,60 @@
 \select@language {spanish}
-\contentsline {chapter}{Autorizaci\'on}{\es@scroman {ix}}{chapter*.1}
-\contentsline {chapter}{Agradecimientos}{\es@scroman {xi}}{chapter*.2}
-\contentsline {chapter}{Resumen}{\es@scroman {xiii}}{chapter*.3}
-\contentsline {chapter}{Abstract}{\es@scroman {xv}}{chapter*.4}
+\contentsline {chapter}{Agradecimientos}{\es@scroman {ix}}{chapter*.1}
+\contentsline {chapter}{Resumen}{\es@scroman {xi}}{chapter*.2}
+\contentsline {chapter}{Abstract}{\es@scroman {xiii}}{chapter*.3}
 \contentsline {chapter}{\numberline {1}Introducci\'on}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivaci\'on}{1}{section.1.1}
-\contentsline {chapter}{\numberline {2}Antecedentes}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Electrocardiograma}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Estructura de un ECG}{4}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Funcionamiento interno del coraz\'on}{5}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Obtenci\'on del ECG}{6}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Utilidades del ECG}{6}{subsection.2.1.4}
-\contentsline {section}{\numberline {2.2}Tecnolog\IeC {\'\i }as}{6}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}BeagleBone Black}{7}{subsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.1.1}Versiones BeagleBoneBlack}{8}{subsubsection.2.2.1.1}
-\contentsline {subsection}{\numberline {2.2.2}Bus SPI}{9}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}Chip ADS1198}{11}{subsection.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.3.1}Caracter\IeC {\'\i }sticas t\'ecnicas}{13}{subsubsection.2.2.3.1}
-\contentsline {subsection}{\numberline {2.2.4}Analizador l\'ogico Saleae}{13}{subsection.2.2.4}
-\contentsline {chapter}{\numberline {3}Desarrollo}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}Proyecto inicial}{15}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Objetivos}{16}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Alternativas}{17}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{19}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{19}{subsection.3.2.1}
-\contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{20}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Device Tree}{21}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{22}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{24}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}Ecosistema software}{26}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{28}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{32}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{35}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{37}{subsection.3.4.4}
-\contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{39}{chapter.4}
-\contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{39}{section.4.1}
-\contentsline {section}{\numberline {4.2}Recepci\'on de datos}{41}{section.4.2}
-\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{43}{section.4.3}
-\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{44}{section.4.4}
-\contentsline {section}{\numberline {4.5}Ecosistema de streaming}{46}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Caracter\IeC {\'\i }sticas del servidor}{46}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Caracter\IeC {\'\i }sticas de la base de datos}{46}{subsection.4.5.2}
-\contentsline {subsection}{\numberline {4.5.3}Interpretaci\'on de datos}{47}{subsection.4.5.3}
-\contentsline {chapter}{\numberline {5}Resultados}{49}{chapter.5}
-\contentsline {section}{\numberline {5.1}Conclusiones}{49}{section.5.1}
-\contentsline {section}{\numberline {5.2}Conclusions}{49}{section.5.2}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{51}{appendix*.46}
-\contentsline {chapter}{Lista de acr\'onimos}{52}{appendix*.46}
+\contentsline {section}{\numberline {1.2}Estructura de cap\IeC {\'\i }tulos}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Visi\'on global}{3}{section.1.3}
+\contentsline {section}{\numberline {1.4}Contribuciones}{3}{section.1.4}
+\contentsline {chapter}{\numberline {2}Antecedentes}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Electrocardiograma}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Estructura de un ECG}{6}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Funcionamiento interno del coraz\'on}{7}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Obtenci\'on del ECG}{8}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Utilidades del ECG}{8}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Tecnolog\IeC {\'\i }as}{9}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}BeagleBone Black}{10}{subsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.1.1}Versiones BeagleBoneBlack}{11}{subsubsection.2.2.1.1}
+\contentsline {subsection}{\numberline {2.2.2}Bus SPI}{11}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}ADS1198}{13}{subsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.3.1}Caracter\IeC {\'\i }sticas t\'ecnicas}{14}{subsubsection.2.2.3.1}
+\contentsline {subsection}{\numberline {2.2.4}Analizador l\'ogico Saleae}{16}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}Simulador de pacientes}{17}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}Mult\IeC {\'\i }metro}{18}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}Otros recursos}{18}{subsection.2.2.7}
+\contentsline {chapter}{\numberline {3}Desarrollo}{21}{chapter.3}
+\contentsline {section}{\numberline {3.1}Proyecto inicial}{21}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Objetivos}{22}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Alternativas}{24}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{27}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{27}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{28}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Device Tree}{29}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{30}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{32}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Ecosistema software}{35}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{37}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{41}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{43}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{45}{subsection.3.4.4}
+\contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{47}{chapter.4}
+\contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{47}{section.4.1}
+\contentsline {section}{\numberline {4.2}Recepci\'on de datos}{49}{section.4.2}
+\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{51}{section.4.3}
+\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{52}{section.4.4}
+\contentsline {section}{\numberline {4.5}Identificaci\'on complejo QRS}{55}{section.4.5}
+\contentsline {section}{\numberline {4.6}Almacenamiento de ECGs}{56}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Animaci\'on de ECGs}{56}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Incidencias}{57}{section.4.7}
+\contentsline {section}{\numberline {4.8}Ecosistema de streaming}{59}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Caracter\IeC {\'\i }sticas del servidor}{59}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Caracter\IeC {\'\i }sticas de la base de datos}{59}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.3}Interpretaci\'on de datos}{61}{subsection.4.8.3}
+\contentsline {chapter}{\numberline {5}Resultados}{63}{chapter.5}
+\contentsline {section}{\numberline {5.1}Conclusiones}{63}{section.5.1}
+\contentsline {section}{\numberline {5.2}Conclusions}{64}{section.5.2}
+\contentsline {chapter}{\numberline {A}C\'odigo}{65}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Edici\'on}{65}{section.Alph1.1}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{67}{appendix*.61}
+\contentsline {chapter}{Lista de acr\'onimos}{68}{appendix*.61}

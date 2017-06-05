@@ -23,13 +23,13 @@ Dale Carnegie
 \end{Fuente}
 \end{FraseCelebre}
 
-El propósito fundamental del proyecto es conseguir la lectura de muestras en tiempo real con unos plazos de captura de las mismas muy estrictos, con el fin de no perder ninguna muestra. El proyecto parte de una aplicación en espacio de usuario que presentaba unas pérdidas en la recepción de muestras de entre un 1 y un 2\% respecto al conjunto total de muestras enviadas originalmente. Se observó que si además de ejecutar esta aplicación en espacio de usuario, se ejecutaba otra tarea en paralelo, el número de muestras perdidas se disparaba. Era necesario realizar una descarga de la \ac{CPU}.
+El propósito fundamental del proyecto es conseguir la lectura de muestras en tiempo real con unos plazos de captura de las mismas muy estrictos, con el fin de no perder ninguna muestra. El proyecto parte de una aplicación en espacio de usuario que presentaba unas pérdidas en la recepción de muestras de entre un 1 y un 2\% respecto al conjunto total de muestras enviadas originalmente. Se observó que si además de ejecutar esta aplicación en espacio de usuario, se ejecutaba otra tarea en paralelo, el número de muestras perdidas se disparaba. Era necesario realizar una descarga de la CPU.
 
-Para conseguirlo, se ha utilizado la \ac{PRU} de la \ac{BBB}, que es un hardware específicamente diseñado para este tipo de operaciones, es decir, para realizar tareas sencillas en tiempo real; principalmente se programa en ensamblador y facilita la interacción entre el código ensamblador y una aplicación en espacio de usuario.
+Para conseguirlo, se ha utilizado la Unidad Programable en Tiempo-real de la BeagleBone Black, que es un hardware específicamente diseñado para este tipo de operaciones, es decir, para realizar tareas sencillas en tiempo real; principalmente se programa en ensamblador y facilita la interacción entre el código ensamblador y una aplicación en espacio de usuario.
 
-Una vez implementada la solución con éxito, se evita la pérdida de ninguna muestra en el proceso. Además, se consigue descargar la CPU, de manera que es posible ejecutar otras tareas de forma paralela, como pueden ser la utilización de ciertos algoritmos de delineación como los que se han usado en este proyecto.
+Una vez implementada la solución con éxito, se evita la pérdida muestras en el proceso. Además, se consigue descargar la CPU, de manera que es posible ejecutar otras tareas de forma paralela.
 
-Finalmente, se consigue que la BBB se comunique con una aplicación Android mediante Bluetooth. Esta aplicación consta de una infraestructura de tipo cliente-servidor, por lo que le es posible que un paciente envíe su información cardíaca al servidor, y el servidor la envíe a su vez a un potencial doctor para que pueda ser analizada e interpretada.
+Finalmente, se consigue que la BeagleBone Black se comunique con una aplicación Android mediante Bluetooth. Esta aplicación facilita a un paciente la recogida de información de su electrocardiograma, para que posteriormente, o incluso en tiempo real, sea un médico el que trate de analizarla e interpretarla. Para que la comunicación entre médico y paciente sea posible, es necesario que ambos dispongan de conexión a internet, ya que la interacción se realiza a través de un servidor, el cual recibe la información de un dispositivo y la retransmite al otro. 
 
 \break
 \textbf{Palabras clave:} ECG, BeagleBone Black, PRU, ADS1198, Android

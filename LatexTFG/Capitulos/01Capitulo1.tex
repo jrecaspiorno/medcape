@@ -38,9 +38,46 @@ La monitorización de ciertas señales biomédicas puede ser un factor fundamental 
 
 
 %-------------------------------------------------------------------
-%\section{Estructura de capítulos}
+\section{Estructura de capítulos}
 %-------------------------------------------------------------------
-%\label{cap1:sec:estructura}
+\label{cap1:sec:estructura}
+
+A continuación aparece la secuencia de capítulos, así como una breve descripción de su contenido:
+
+\begin{itemize}
+
+\item \textbf{Capítulo 2: Antecedentes}. Este capítulo introduce las partes más importantes que caracterizan a la investigación previa a la puesta en marcha del proyecto. En particular, se repasarán ciertos conceptos teóricos fundamentales para la completa comprensión del trabajo, así como la investigación realizada respecto a las tecnologías que finalmente se utilizarían en el proyecto. Además se explica el hardware utilizado, y todas las posibilidades que este ofrece, sobre todo, en un contexto tan concreto y específico como el que este trabajo trata de ilustrar.
+
+\item \textbf{Capítulo 3: Desarrollo}. Se presenta una visión global del desarrollo que ha sido necesario para el correcto funcionamiento del trabajo final. Se comienza explicando el proyecto inicial, así como los problemas que planteaba y las posibles soluciones a los mismos. Posteriormente, se explican las bases de la solución propuesta, desde la infraestructura hardware requerida, hasta el ecosistema software desarrollado a medida.
+
+\item \textbf{Capítulo 4: Aplicación Android}. Este capítulo comienza analizando el funcionamiento de la aplicación Android desarrollada, así como todas las mejoras que se han implementado con el fin de mejorar la calidad de atención que puede recibir un paciente por parte de un doctor. Posteriormente se explica con cierto detalle la puesta en marcha e implementación de la infraestructura que hace posible el correcto funcionamiento del producto final.
+
+\item \textbf{Capítulo 5: Resultados}. Se presenta una discusión crítica y razonada sobre los resultados tras la consecución del proyecto, así como las conclusiones finales por parte de los autores.
+
+\end{itemize}
+
+%-------------------------------------------------------------------
+\section{Visión global}
+%-------------------------------------------------------------------
+\label{cap1:sec:global}
+
+En esta sección se tratará de dar una visión global del proyecto al lector con el fin de facilitar el entendimiento y la comprensión del trabajo.
+
+\figura{Vectorial/global}{width=1.1\textwidth}{fig:global}%
+{Visión global del poyecto}
+
+El proceso (se ilustra en la [Fig \ref{fig:global}])comienza con la colocación apropiada de electrodos en el cuerpo del paciente, de forma que sea posible monitorizar sus señales biométricas. Estas señales captadas del paciente, son originalmente de carácter analógico. La intervención del ADS1198 es crucial para realizar el tratamiento de esta señal, y su conversión a formato digital. La señal digital es captada por la BeagleBone Black, y por un lado es almacenada en un fichero binario, y por otro es enviada mediante Bluetooth a una aplicación Android (en este caso la app del paciente). La app del paciente envía la información que recopila al servidor mediante una conexión a internet, y es el servidor el que reenvía esa información a otra aplicación Android, en este caso a la aplicación del doctor. De esta forma el doctor dispone de la información cardíaca del paciente para poder analizarla e interpretarla.
+
+%-------------------------------------------------------------------
+\section{Contribuciones}
+%-------------------------------------------------------------------
+\label{cap1:sec:contribuciones}
+
+
+
+
+
+
 
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}

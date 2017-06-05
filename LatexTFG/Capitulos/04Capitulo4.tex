@@ -28,7 +28,7 @@ El propósito principal del poroyecto es ser lo más portable posible. Es por esto
 \label{cap4:sec:envio}
 
 
-Como ya se adelantaba en la sección \ref{cap3:sec:ecosistema} en el envío de datos interviene el programa desarrollado en Python \texttt{BTConnection.py} \footnote{El autor del programa original es José Manuel Bote}. El programa original ha sido ampliado y adaptado a las necesidades que exigía el presente Proyecto. Este programa lee datos de una tubería \footnote{Más información disponible en \href{https://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}{hhttps://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}} en la que se introducen los paquetes de muestras que estén preparados para ser procesados. Las muestras son leídas una por una de la tubería y son enviadas por Bluetooth vía socket a la aplicación Android.
+Como ya se adelantaba en la sección \ref{cap3:sec:ecosistema} en el envío de datos interviene el programa desarrollado en Python \texttt{BTConnection.py} \footnote{El autor del programa original es José Manuel Bote}. El programa original ha sido ampliado y adaptado a las necesidades que exigía el presente proyecto. Este programa lee datos de una tubería \footnote{Más información disponible en \href{https://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}{hhttps://es.wikipedia.org/wiki/Tuber\%C3\%ADa\_(inform\%C3\%A1tica)}} en la que se introducen los paquetes de muestras que estén preparados para ser procesados. Las muestras son leídas una por una de la tubería y son enviadas por Bluetooth vía socket a la aplicación Android.
 
 La comunicación por socket no es más que el mecanismo por el cual estos dos programas pueden intercambiar flujos de datos de manera ordenada y fiable \footnote{Más información al respecto disponible en \href{https://es.wikipedia.org/wiki/Socket\_de\_Internet}{https://es.wikipedia.org/wiki/Socket\_de\_Internet}}.
 
@@ -43,7 +43,7 @@ Cabe destacar que para que el envío de información de cada una de las muestras m
 
 Una vez satisfecho el requisito de emparejamiento, las acciones que realiza el programa Python son relativamente sencillas. En primer lugar, realiza una espera una conexión por socket por parte de la apliación Android. Hasta que no se acepte la conexión en el dispositivo móvil, la aplicación Python permanece bloqueada a la espera.
 
-Tras aceptar la conexión, se accede a la tubería que contiene la información de los paquetes de muestras. La información se envía por socket (muestra a muestra) a la aplicación Android. Si no es posible realizar este envío, se lanzará una excepción por la que volverá a quedarse el programa a la espera de una conexión vía socket por parte de la aplicación Android.
+Tras aceptar la conexión, se accede a la tubería que contiene la información de los paquetes de muestras. La información se envía por socket (muestra a muestra) a la aplicación Android. Si se cierra la aplicación o se desconecta el Bluetooth del dispositivo móvil, se lanzará una excepción por la que volverá a quedarse el programa a la espera de una conexión vía socket por parte de la aplicación Android.
 
  Se puede apreciar de forma visual el contenido más importante del programa Python en la [Fig \ref{fig:python}]. 
 
@@ -57,7 +57,7 @@ Tras aceptar la conexión, se accede a la tubería que contiene la información de 
 
 Frente al envío de los datos comentado en la sección \ref{cap4:sec:envio}, la recepción de los mismos se realiza desde la aplicación Android. El autor de la aplicación original es José Manuel Bote. Sobre la aplicación original se han realizado modificaciones y ampliaciones adaptándola así a las necesidades de nuestro proyecto. El lenguaje de programación utilizado para desarrollar la aplicación es Java.
 
-La aplicación original estaba diseñada para comunicarse por Bluetooth con una BBB para que le transmitiese datos, y estos fuesen representados. La propia aplicación ofrece la posibilidad de activar el Bluetooth del terminal desde el que se usa, si es que tiene. Tras esto, tratará de emparejarse con el otro dispositivo, y esperar la transmisión de información. El propósito fundamental que tiene es representar en forma de onda la información que recibe por Bluetooth. Aunque su propósito sea relativamente simple, internamente presenta cierto nivel de complejidad, puede suponer todo un reto técnico modificarla y ampliarla, sobre todo para programadores poco avezados en la materia.
+La aplicación original estaba diseñada para comunicarse por Bluetooth con una BBB para que le transmitiese datos, y estos fuesen representados. La propia aplicación ofrece la posibilidad de activar el Bluetooth del terminal desde el que se usa, si es que tiene. Tras esto, tratará de establecer una conexión con el otro dispositivo, y esperar la transmisión de información. El propósito fundamental que tiene es representar en forma de onda la información que recibe por Bluetooth. Aunque su propósito sea relativamente simple, internamente presenta cierto nivel de complejidad, puede suponer todo un reto técnico modificarla y ampliarla, sobre todo para programadores poco avezados en la materia.
 
 La aplicación original tiene una gráfica en la que se representan las ondas recibidas, pudiendo representar hasta un máximo de 2 canales distintos. En la [Fig \ref{fig:original}]puede apreciarse la pantalla principal de la aplicación original ejecutándose en un dispositivo móvil.
 
@@ -65,7 +65,7 @@ La aplicación original tiene una gráfica en la que se representan las ondas reci
 \figura{Vectorial/original}{width=1\textwidth}{fig:original}%
 {Pantalla principal de la aplicación Android original}
 
-La recepción de los datos por socket de la aplicación Python se realiza desde un hilo que se ejecuta indefinidamente en la aplicación Android. Este hilo se bloquea en espera hasta que haya datos disponibles en la tubería Python. Cuando hay datos  de muestras disponibles, estos son analizados e interpretados por la aplicación para posteriormente ser representados de forma gráfica. Este proceso de espera a la disponibilidad de los datos y tratamiento de los mismos (sin incluir la representación gráfica) puede apreciarse de forma visual en la [Fig \ref{fig:recep}]. 
+La recepción de los datos por socket de la aplicación Python se realiza desde un hilo que se ejecuta indefinidamente en la aplicación Android. Este hilo se bloquea en espera hasta que haya datos disponibles en la tubería Python. Cuando hay datos  de muestras disponibles, estos son analizados e interpretados por la aplicación para posteriormente ser representados de forma gráfica. Este proceso se espera a la disponibilidad de los datos y tratamiento de los mismos (sin incluir la representación gráfica) puede apreciarse de forma visual en la [Fig \ref{fig:recep}]. 
 
 \figura{Vectorial/recep}{width=1\textwidth}{fig:recep}%
 {Fragmento del código que ejecuta el hilo encargado de la recepción de datos}
@@ -75,14 +75,21 @@ La recepción de los datos por socket de la aplicación Python se realiza desde un
 %-------------------------------------------------------------------
 \label{cap4:sec:mejoras}
 
-La realización de pequeñas mejoras y adaptaciones sobre la aplicación original era totalmente necesaria para garantizar el correcto funcionamiento de la misma, teniendo en cuenta que el contexto del proyecto requería una configuración diferente a la original. Una vez configurada, y realizadas las modificaciones, la aplicación funcionaba correctamente.
+La realización adaptaciones sobre la aplicación original era totalmente necesaria para garantizar el correcto funcionamiento de la misma, teniendo en cuenta que el contexto del proyecto requería una configuración diferente a la original. A su vez, la implementación de mejoras consideramos que era obligatoria, sobre todo si queríamos conseguir que la aplicación fuese útil y cumpliese el cometido final para el que estaba diseñada. Una vez configurada, y realizadas las modificaciones, la aplicación funcionaba correctamente.
 
 Sin embargo consideramos que todavía podían hacerse más mejoras e implementación de nuevas funcionalidades. Entre estas posibles mejoras se a realizar, planteamos las siguientes:
 \begin{itemize}
 \item Renovación total de la interfaz gráfica de la aplicación, dotándola de un diseño vistoso y amigable.
-\item Despliegue de servidores que establezcan conexión con la aplicación vía internet utilizando sockets específicos.
+\item Despliegue de un servidor que establezca conexión con la aplicación vía internet utilizando sockets específicos.
 \item Separación de la aplicación en dos posibles versiones, una para pacientes y otra para doctores.
 \item Retransmisión en tiempo real (\textit{streaming}) de ECG de pacientes a doctores.
+\item Listado completo de pacientes de un doctor, y posibilidad de búsqueda de un paciente determinado.
+\item Capacidad de visualizar ECGs completos registrados por pacientes, almacenados en el servidor.
+\item Posibilidad de ampliar partes concretas de un ECG realizando zoom (de forma táctil).
+\item Monitorización de la frecuencia cardíaca.
+\item Detección y prevención de bradicardias y taquicardias.
+\item Posibilidad de animar ECGs previamente almacenados, de forma que parece que se está observando el ECG en tiempo real.
+\item Registro de incidencias de cada paciente, y de la fecha en la que son detectadas.
 \end{itemize}
 
 Sabíamos que la realización de todas estas ampliaciones supondría un reto técnico a nuestras capacidades como informáticos, sobre todo si queríamos implementar exitosamente la opción de realizar una retransmisión de información en tiempo real de pacientes a doctores. El despliegue de un servidor que actuase como intermediario entre ambos era totalmente necesario para garantizar la comunicación entre los dos extremos. La conexión a este servidor se realizaría por ambas partes mediante una conexión a internet.
@@ -95,7 +102,7 @@ Sabíamos que la realización de todas estas ampliaciones supondría un reto técnic
 
 La renovación visual de la aplicación ha supuesto un cambio muy significativo respecto a la apariencia de la misma. En lugar de acceder directamente a la pantalla principal, que nos muestra la gráfica y la opción de sincronizar mediante Bluetooth, según se abre la nueva aplicación, se accede a una pantalla de identificación de usuario, tal y como puede apreciarse en la [Fig \ref{fig:log}]. 
 
-Una vez el usuario correspondiente se ha identificado, accede a un pequeño menú con 3 opciones disponibles como puede observarse en la [Fig\ref{fig:menu}]. La primera opción permite la recepción de información mediante Bluetooth con la BBB ([Fig\ref{fig:grafica}]). La segunda permite buscar un paciente para ver en tiempo real su ECG en tiempo real ([Fig\ref{fig:buscar}]), y la última nos proporciona información de nuestro perfil de usuario.
+Una vez el usuario correspondiente se ha identificado, accede a un pequeño menú con 3 opciones disponibles como puede observarse en la [Fig\ref{fig:menu}]. La primera opción permite la recepción de información mediante Bluetooth con la BBB. La segunda permite buscar un paciente para ver o bien su ECG en tiempo real, o bien los registros anteriores que tiene guardados. En la ([Fig\ref{fig:listado}]) se ilustra el listado de pacientes al que tiene acceso un doctor; sobre cada paciente existe la posibilidad de ver en tiempo real la retransmisión de su ECG, o de ver otros registros de ECGs guardados por ese paciente. La última nos proporciona información de nuestro perfil de usuario, en este caso concreto, sobre los registros de ECGs que hemos realizado en la aplicación a lo largo del tiempo. La [Fig \ref{fig:registro}] ilustra una recopilación de ECGs de un paciente determinado.
 
 \begin{figure}[t]
 \centering
@@ -114,27 +121,82 @@ Menú principal de la aplicación}%
 {Imagenes/Vectorial/menu}%
 \end{SubFloat}
 \begin{SubFloat}
-{\label{fig:buscar}%
-Pantalla de busqueda de pacientes en la app}%
+{\label{fig:listado}%
+Listado de pacientes de un doctor determinado}%
 \includegraphics[width=0.45\textwidth]%
-{Imagenes/Vectorial/buscar}%
+{Imagenes/Vectorial/listado}%
 \end{SubFloat}
 \qquad
 \begin{SubFloat}
-{\label{fig:grafica}%
-Gráfica en la que se reflejarán los ECG}%
+{\label{fig:registro}%
+Listado completo del registro de ECGs de un paciente}%
 \includegraphics[width=0.45\textwidth]%
-{Imagenes/Vectorial/grafica}%
+{Imagenes/Vectorial/registro}%
 \end{SubFloat}
 \caption{Pantallas principales de la aplicación Android%
 \label{fig:pantallas}}
 \end{figure}
 
-Como puede apreciarse por las imagenes, la renovación visual ha conllevado la implementación de diversas mejoras en la aplicación, y a vez ha adquirido una interfaz más amigable de cara a la experiencia final de usuario.
+Como puede apreciarse por las imágenes, la renovación visual ha conllevado la implementación de diversas mejoras en la aplicación, y a vez ha adquirido una interfaz más amigable de cara a la experiencia final de usuario.
 
-Cabe destacar que la aplicación facilita su uso tanto en modo horizontal, como en modo vertical (como se aprecia en la [Fig \ref{fig:pantallas}]). Sin embargo, la versión original solo facilitaba su uso en modo horizontal. La ampliación de posibilidades de uso facilita al usuario flexibilidad a la hora de utilizar la app.
+Cabe destacar que la aplicación facilita su uso tanto en modo horizontal, como en modo vertical. Sin embargo, la versión original solo facilitaba su uso en modo horizontal. La ampliación de posibilidades de uso facilita al usuario flexibilidad a la hora de utilizar la app.
 
 \clearpage
+
+%-------------------------------------------------------------------
+\section{Identificación complejo QRS}
+%-------------------------------------------------------------------
+\label{cap4:sec:qrs}
+
+Se ha utilizado un algoritmo de identificación de complejos QRS para la estimación de la frecuencia cardíaca en pacientes. Este algoritmo fue originalmente desarrollado por Patrick S. Hamilton y ha sido adaptado a las necesidades del proyecto.
+
+El uso que requerimos del algoritmo es bastante sencillo, ya que lo único que precisamos conocer son las pulsaciones por minuto. Gracias a la detección de complejos QRS que proporciona este algoritmo, nos ha sido posible realizar una estimación de la frecuencia cardíaca en un intervalo de tiempo reducido.
+
+El algoritmo ha sido aplicado exitosamente al proyecto como puede apreciarse en la [Fig \ref{fig:algoritmo}]. En este caso se utiliza el simulador de pacientes como emisor de señales cardíacas, y como puede apreciarse, el margen de error de captación de la frecuencia cardiaca es mínimo. El simulador emite 160 \ac{PPM}, y la aplicación Android detecta 160 PPM.
+
+\figura{Vectorial/algoritmo}{width=1\textwidth}{fig:algoritmo}%
+{Algoritmo de detección de complejos QRS usado para detectar PPM }
+
+%-------------------------------------------------------------------
+\section{Almacenamiento de ECGs}
+%-------------------------------------------------------------------
+\label{cap4:sec:almacen}
+
+Una de las mejoras implementadas en la aplicación, es la posibilidad que tiene un paciente de almacenar sus ECGs en la nube (en este caso nuestro servidor), para que posteriormente un doctor pueda acceder a esta información con el fin de analizarla e interpretarla. El proceso de guardado del ECG se realiza en tiempo real, durante la retransmisión del propio ECG en el dispositivo móvil del paciente.
+
+\figura{Vectorial/guardado}{width=1\textwidth}{fig:guardado}%
+{Interpretación de un ECG almacenado en el servidor}
+
+Una vez un ECG ha quedado registrado en el servidor, el paciente que lo realizó puede acceder a él en cualquier momento. La [Fig \ref{fig:guardado}] muestra la interpretación de un ECG previamente guardado en el servidor.
+
+Debido a que el ECG puede llegar a ser muy extenso, y podría dificultar el correcto diagnóstico a un doctor, se implemento entre otras de las mejoras la posibilidad de desplazarse por un ECG y hacer zoom de forma táctil e intuitiva. De esta forma es sencillo visualizar de forma clara y precisa cualquier sección del ECG por pequeña que parezca. En la [Fig \ref{fig:zoom}] se muestra un ECG al que se ha hecho zoom en una parte concreta mediante la propia aplicación móvil.
+
+\figura{Vectorial/zoom}{width=1\textwidth}{fig:zoom}%
+{Zoom de una sección de un ECG de un paciente}
+
+%-------------------------------------------------------------------
+\subsection{Animación de ECGs}
+%-------------------------------------------------------------------
+\label{cap4:sec:animacion}
+
+Entre otras de las mejoras implementadas cabe destacar la posibilidad de animar un ECG tras haberlo almacenado en el servidor previamente. Una vez se accede a la visualización un ECG previamente almacenado, se ofrece la posibilidad de animarlo. Esta opción se encuentra en la esquina inferior izquierda de la pantalla (como puede observarse en la [Fig \ref{fig:zoom}]). Al pulsar el botón que permite realizar la animación, se mostrará el ECG que se estaba visualizando, pero esta vez, como si se estuviese observando en tiempo real (aunque tenga la apariencia de ser un ECG en tiempo real, no es más que la representación animada de un ECG ya almacenado).
+
+%-------------------------------------------------------------------
+\section{Incidencias}
+%-------------------------------------------------------------------
+\label{cap4:sec:aviso}
+
+Gracias a la monitorización de la frecuencia cardíaca, tal y como comentabamos en la sección \ref{cap4:sec:qrs}, es posible detectar variaciones significativas en el ritmo de los latidos del corazón. Otra de las mejoras implementadas consiste en la detección tando de bradicardias\footnote{Descenso de la frecuencia de contracción cardíaca} como de taquicardias\footnote{Velocidad excesiva del ritmo de los latidos del corazón}. Aunque no sean valores que se ajusten a la realidad, ya que nos encontramos ante un prototipo, hemos considerado que el aviso de bradicardia salta cuando se detectan unas PPM menores que 50, y taquicardia cuando las PPM son superiores a 100.
+
+\figura{Vectorial/taquicardia}{width=0.5\textwidth}{fig:taquicardia}%
+{Notificación de la aplicación en caso de detectar indidencias}
+
+La propia aplicación es capaz de detectar este tipo de alteraciones en la frecuencia de contracción cardíaca, y notifica al doctor en caso de detectar alguna alteración fuera de lo normal en cualquiera de sus pacientes. La [Fig \ref{fig:taquicardia}] muestra el aviso a un doctor por una taquicardia de uno de sus pacientes. Este aviso preventivo puede suponer la detección temprana de problemas más graves, así como su prematuro tratamiento.
+
+Además de detectar de este tipo de incidencias, la aplicación es capaz de guardar este tipo de alteraciones en el registro de incidencias de un paciente (esta es otra de las mejoras implementadas). Además de guardar la incidencia, se almacena la fecha en la que se detectó la misma, e incluso se ofrece la posibilidad de poder visualizar el ECG que muestra la alteración, y todo desde la propia incidencia. De esta forma, cada vez que un paciente experimente una alteración en su frecuencia de contracción, esta será almacenada en su historial, para que en un futuro pueda ser considerada por un doctor. La [Fig \ref{fig:incidencias}] muestra el historial de un paciente (a la derecha de la figura) con 2 taquicardias, concretamente cada una de 110PPM.
+
+\figura{Vectorial/incidencias}{width=1\textwidth}{fig:incidencias}%
+{Registro de incidencias de un paciente (a la derecha)}
 
 %-------------------------------------------------------------------
 \section{Ecosistema de streaming}
@@ -152,14 +214,14 @@ Para poder comunicar exitosamente en tiempo real la aplicación que utilizase un 
 
 El servidor que utilizamos para realizar la comunicación por ambos extremos fue un ordenador personal, ya que no contábamos en ese momento con otros medios que facilitasen dicha opción.
 
-Este servidor esta desarollado en \texttt{Node.js}, un lenguaje muy similar a JavaScript, solo que a diferencia de JavaScript, está pensado para ser utilizado en la parte del servidor en lugar de la del cliente. El servidor es capaz de atender peticiones a través de internet mediante sockets, y de servir peticiones de la misma forma. Es decir, las dos aplicaciones (tanto la del paciente como la del doctor) como el servidor deben disponer de conexión a internet para que la comunicación en tiempo real funcione.
+Este servidor esta desarollado en \texttt{Node.js}, una tecnología pensada para servidores, cuyo lenguaje de programación es JavaScript. El servidor es capaz de atender peticiones a través de internet mediante sockets, y de servir peticiones de la misma forma. Es decir, las dos aplicaciones (tanto la del paciente como la del doctor) como el servidor deben disponer de conexión a internet para que la comunicación en tiempo real funcione.
 
-La función del servidor es recibir paquetes de \texttt{bytes} desde la aplicación de un paciente, y despacharlos de la misma forma a la aplicación de un doctor, donde estos pueden ser representados de forma simultánea (o casi) en ambos dispositivos. Es decir la información se recibe en crudo, y se envía en crudo, sin ningún tratamiento por parte del servidor.
+La función del servidor es recibir paquetes de \texttt{bytes} desde la aplicación de un paciente, y despacharlos de la misma forma a la aplicación de un doctor, donde estos pueden ser representados de forma simultánea en ambos dispositivos. Es decir la información se recibe en crudo, y se envía en crudo, sin ningún tratamiento por parte del servidor.
 
 \figura{Vectorial/server}{width=1.1\textwidth}{fig:server}%
 {Fragmento del código que ejecuta el servidor desarrollado en \texttt{Node.js}}
 
-El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la IP local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}.
+El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la IP local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}. Para conseguirlo, ha sido necesario redirigir las conexiones desde el router (que proporciona internet al servidor) al propio ordenador que hace de servidor, para que las conexiones entrantes por un determinado puerto a nuestra IP, se mandasen al servidor.
 
 En la [Fig \ref{fig:server}] puede apreciarse uno de los fragmentos de código más significativos del servidor.
 
@@ -168,19 +230,23 @@ En la [Fig \ref{fig:server}] puede apreciarse uno de los fragmentos de código má
 %-------------------------------------------------------------------
 \label{cap4:sec:bd}
 
-Para el amacenamiento de usuarios se ha recurrido a una base de datos \texttt{NoSQL}, en este caso concreto el sistema de base de datos utilziado ha sido \texttt{MongoDB}. 
+Para el amacenamiento de usuarios y de información de los mismos se ha recurrido a una base de datos \texttt{NoSQL}, en este caso concreto el sistema de base de datos utilziado ha sido \texttt{MongoDB}. Para la utilización de \texttt{MongoDB} en \texttt{Node.js} y la disposición de un modelo relacional se ha utilizado el framework \texttt{Mongoose}.
 
-La base de datos se hace necesaria en el momento en el que se quiere tener un almacén persistente de información. En nuestro caso, la utilizamos para el almacenaje de usuarios, ya que por ejemplo, si un doctor quiere buscar a un paciente determinado para ver su ECG en tiempo real, es necesario realizar una consulta en la base de datos para saber si este paciente existe. Una vez tenemos la certeza de que existe, y que está emitiendo datos, es posible que el doctor los reciba en tiempo real.
+\texttt{Mongoose} ofrece la capacidad de definir un esquema de un documento; usa un objeto \texttt{Schema} que define una lista de propiedades del documento, cada una de ellas con un tipo concreto y características para forzar su estructuración \footnote{Más información básica sobre \texttt{Mongoose} disponible en \href{https://rafaruiznavas.wordpress.com/2015/07/27/introduccion-a-mongoose-entendiendo-los-esquemas-de-mongoose/}{https://rafaruiznavas.wordpress.com/2015/07/27/introduccion-a-mongoose-entendiendo-los-esquemas-de-mongoose/}}. 
+
+La base de datos se hace necesaria en el momento en el que se quiere tener un almacén persistente de información. En nuestro caso, la utilizamos para el almacenaje de información de los usuarios, ya que por ejemplo, si un doctor quiere buscar a un paciente determinado para ver su ECG en tiempo real, es necesario realizar una consulta en la base de datos para saber si este paciente existe. Una vez tenemos la certeza de que existe, y que está emitiendo datos, es posible que el doctor los reciba en tiempo real.
+
+Gracias a la información que se almacena de los usuarios es posible acceder a los registros de ECGs de cada uno de ellos, a sus indicencias, a las fechas en las que las incidencias fueron detectadas, etc. La [Fig \ref{fig:mongo}] muestra de forma visual el almacenamiento de un ECG para un paciente determinado. Como puede apreciarse en la figura, en la base de datos no se almacena todo el fichero que contiene la información del ECG, ya que esto sería insostenible para ficheros grandes, si no que se almacena el nombre del archivo que contiene dicha información y está guardado en el servidor.
+
+\figura{Vectorial/mongo}{width=1\textwidth}{fig:mongo}%
+{Almacenamiento en la base de datos de un ECG}
 
 %-------------------------------------------------------------------
 \subsection{Interpretación de datos}
 %-------------------------------------------------------------------
 \label{cap4:sec:inter}
 
-Los datos finales son interpretados y representados por la aplicación Android. En principio, los datos podrían ser retransmitidos desde pacientes reales utilizando ciertos sensores que permitan generar un ECG a partir de sus señales cardíacas. Sin embargo, este proyecto ha sido desarrollado utilizando un simulador de ECG, que en principio, y bajo las circunstancias propicias, debería aportar la misma información que un paciente real. El simulador de pacientes utilizado durante el desarrollo y las pruebas del proyecto puede apreciarse en la [Fig \ref{fig:sim}].
-
-\figura{Vectorial/sim}{width=1\textwidth}{fig:sim}%
-{Simulador de ECG utilizado durante el desarrollo del proyecto}
+Los datos finales son interpretados y representados por la aplicación Android; estos mismos datos pueden ser retransmitidos desde pacientes reales utilizando ciertos sensores que permitan generar un ECG a partir de sus señales cardíacas. Este proyecto ha sido desarrollado fundamentalmente utilizando un simulador de ECG, que en principio, y bajo las circunstancias propicias, debería aportar la misma información que un paciente real. El simulador de pacientes utilizado durante el desarrollo y las pruebas del proyecto puede apreciarse en la [Fig \ref{fig:sim}]. Este proyecto ha sido probado también en personas, sin intervención ninguna del simulador de pacientes, con un resultado éxitoso.
 
 La información generada por el simulador, tras ser interpretada y tratada llega a la aplicación Android, la cual es la encargada de representarla, e incluso de retransmitirla en tiempo real. La representación de información por parte de la aplicación Android, y con ausencia de errores, debería ser como muestra la [Fig \ref{fig:retrans}]. De la misma forma, un doctor que utilice la aplicación debería ser capaz de representar de la misma forma en la que le llega al paciente la señal, y todo esto, en tiempo real.
 

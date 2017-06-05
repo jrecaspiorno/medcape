@@ -20,15 +20,9 @@
 % tienes ninguno  referenciado, basta con que no  definas la constante
 % \acronimosEnRelease en config.tex
 
-@entry{CVS, , \emph{Control Version System}, Sistema de Control de Versiones}
-
-@entry{GPL, , \emph{General Public License}, Licencia Pública General de GNU}
-
-@entry{PC2, PC$^2$, \emph{Programming Contest Control}}
-
 @entry{BBB, , \emph{BeagleBone Black}}
 
-@entry{PRU, , \emph{programmable real-time unit}, Unidad programable en tiempo real}
+@entry{PRU, , \emph{Programmable Real-time Unit}, Unidad programable en tiempo real}
 
 @entry{ECG, , \emph{Electrocardiograma}}
 
@@ -45,4 +39,8 @@
 @entry{DTO, , \emph{Device Tree Overlay}}
 
 @entry{GPIO, , \emph{General Purpose Input/Output}}
+
+@entry{PPM, , \emph{Pulsaciones Por Minuto}}
+
+@entry{ADC, , \emph{Analog Digital Converter}, Convertidor Analógico-Digital}
 

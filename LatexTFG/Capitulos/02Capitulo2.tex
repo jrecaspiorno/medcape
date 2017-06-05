@@ -86,9 +86,12 @@ Para que este ciclo periódico funcione de manera correcta, síncrona y con total 
 %-------------------------------------------------------------------
 \label{cap2:subsec:obtención}
 
+\figura{Vectorial/electrodos}{width=0.9\textwidth}{fig:corazon}%
+{Puntos clave en el registro de un ECG}
+
 El proceso físico a traves del cual se realiza el procedimiento de registro y se obtiene el ECG consiste en la medición de la actividad eléctrica del corazón entre distintos puntos corporales, ya que, mientras que el corazón pasa por los estados de polarización y despolarización, el cuerpo en su conjunto se comporta como un volumen conductor, propagando la corriente eléctrica.
 
-El equipo de registro consta de una serie de electrodos, que se conectan a la piel del paciente y a un equipo de registro. Estos electrodos se colocan en unas posiciones predeterminadas y universales, lo que permite obtener el registro del sistema de la forma más precisa y exacta posible.
+El equipo de registro consta de una serie de electrodos, que se conectan a la piel del paciente y a un equipo de registro. Estos electrodos se colocan en unas posiciones predeterminadas y universales, lo que permite obtener el registro del sistema de la forma más precisa y exacta posible. En la [Fig \ref{fig:electrodos}] se ilustran los puntos más importantes a tener en cuenta, a la hora de colocar los electrodos.
 
 
 %-------------------------------------------------------------------
@@ -96,14 +99,14 @@ El equipo de registro consta de una serie de electrodos, que se conectan a la pi
 %-------------------------------------------------------------------
 \label{cap2:subsec:utilidades}
 
-Tras la obtención de un ECG completo, se tendrá un registro completo acerca del tamaño, la cadencia, y la naturaleza de los impulsos eléctricos emitidos por el corazón. Gracias a esta información, es posible definir tanto el ritmo como la frecuencia cardíaca. Este tipo de información puede ser crucial a la hora de detectar ciertos problemas cardíacos. A continuación se detallan posibles utilidades que puede tener la obtención de un ECG:
+Tras la obtención de un ECG, se tendrá un registro completo acerca del tamaño, la cadencia, y la naturaleza de los impulsos eléctricos emitidos por el corazón. Gracias a esta información, es posible definir la frecuencia cardíaca. Este tipo de información puede ser crucial a la hora de detectar ciertos problemas cardíacos. A continuación se detallan posibles utilidades que puede tener la obtención de un ECG:
 
 \begin{itemize}
   \item Obtener información sobre el estado físico del corazón.
   \item Detectar problemas cardíacos de forma precoz, o alteraciones electrolíticas de potasio, sodio, calcio, magnesio, u otros elementos químicos.
    \item Determinar si el corazón funciona correctamente, en caso de no encontrar ninguna anomalía.
    \item Adquirir información acerca de la repercusión miocárdica de diversas enfermedades cardíacas.
-    \item Detección de anormalidades conductivas.
+    \item Detección de anomalías conductivas.
     \item Indicar bloqueos coronarios arteriales.
 \end{itemize}
 
@@ -117,7 +120,7 @@ Tras la obtención de un ECG completo, se tendrá un registro completo acerca del 
 
 Para llevar a cabo el correcto desarrollo del trabajo que se expone en la presente memoria, ha sido necesaria la investigación y el desarrollo de diversas tecnologías que se expondrán a continuación, así como el estudio y la asimilación de tecnologías ya existentes con el fin de adaptarlas y modificarlas para el proyecto desarrollado.
 
-Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el chip ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico \ac{USB} que cuenta con 8 canales para cada posible señal. Como método de sincronización entre los dispositivos que lo necesitasen se ha recurrido a una interfaz \ac{SPI}.
+Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede apreciarse una visión general de esta placa en la [Fig \ref{fig:bbb}]), aprovechando la gran comunidad de desarrolladores existentes gracias a la cual fue posible resolver los problemas que fueron surgiendo durante el desarrollo, y aprovechando también el bajo costo de la placa así como la multitud de posibilidades que ofrece. En cuanto al tratamiento y captura de señales se ha utilizado el ADS1198 de Texas Intruments, que permite unas velocidades de captura suficientemente elevadas para este tipo de desarrollos además de tener un coste asequible. Con motivos de depuración durante el tratamiento de las distintas señales que se han obtenida, se ha utilizado Saleae Logic, un analizador lógico \ac{USB} que cuenta con 8 canales para cada posible señal. Como método de comunicación entre los dispositivos se ha recurrido a una interfaz \ac{SPI}, ya que es la única opción que ofrece el ADS.
 
 %-------------------------------------------------------------------
 \subsection{BeagleBone Black}
@@ -126,7 +129,7 @@ Como módulo de procesamiento se ha utilizado una placa BeagleBone Black (puede a
 
 La BeagleBone es una plataforma compacta, de bajo coste y operada por software libre Linux que puede ser usada para complejas aplicaciones en las que intervenga software de alto nivel y circuitos electrónicos de bajo nivel \citep{exploringBBB}. Nosotros concretamente nos hemos decantado por trabajar con la última versión de la plataforma BeagleBone, es decir, con una  \ac{BBB}, ya que era la placa que más flexibilidad aportaba al presente proyecto. Las características de la BBB son las siguientes:
 \begin{itemize}
-  \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 billones de instrucciones por segundo (2000 MIPS).
+  \item Es muy potente, ya que contiene un procesador que puede realizar hasta 2 mil millones de instrucciones por segundo (2000 MIPS).
   \item Tiene un coste bastante asequible, ya que su precio oscila entre los 45\$ y los 55\$.
   \item Es compatible con muchos estándares de interfaces para dispositivos electrónicos (SPI entre otros).
   \item Es muy eficiente, ya que requiere únicamente entre 1 y 2.3 W, según este inactivo, o funcionando a máxima potencia.
@@ -162,7 +165,7 @@ La especificación completa de las características de la BBB se muestran con más 
 %-------------------------------------------------------------------
 \label{cap2:subsec:bus}
 
-El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dispositivos en una distancia corta \citep{exploringBBB}. Es posible que la comunicación sea bidireccional, ya que tanto la transmisión como la recepción de datos se realizan en buses separados. 
+El bus SPI (del inglés Serial Pripheral Interface) es un estándar de comunicación síncrono, rápido y bidireccional que permite comunicar dispositivos como la BBB con otros dispositivos en una distancia corta \citep{exploringBBB}.
 
 En la transferencia de datos se implican distintos dispositivos que desempeñan diferentes funciones. Existe un dispositivo principal, más conocido como maestro, y otro  dispositivo denominado esclavo (como mínimo debe existir uno). El maestro es responsable de enviar las señales de reloj y de seleccionar  al esclavo activo en cada instante de la comunicación. 
 
@@ -172,13 +175,13 @@ En la transferencia de datos se implican distintos dispositivos que desempeñan d
 Las diferentes líneas existentes en este estándar de comunicación son las siguientes [Fig \ref{fig:spi}]:
 
 \begin{itemize}
-  \item \textbf{MISO} (Master Input Slave Output): Bus de salida de datos de los dispositivos esclavos y de entrada al maestro.
-  \item \textbf{MOSI} (Master Output Slave Input): Bus de salida de datos del maestro y entrada a los esclavos.
+  \item \textbf{MISO} (Master Input Slave Output): Línea de salida de datos de los dispositivos esclavos y de entrada al maestro.
+  \item \textbf{MOSI} (Master Output Slave Input): Línea de salida de datos del maestro y entrada a los esclavos.
    \item \textbf{SCK} (Clock o señal de reloj): Pulso de reloj generado por el maestro.
-   \item \textbf{SS/Select} (Chip Select): Bus de salida del maestro y entrada a los esclavos, encargado de seleccionar el dispositivo esclavo activo en la comunicación.
+   \item \textbf{SS/Select} (Chip Select): Línea de salida del maestro y entrada a los esclavos, encargado de seleccionar el dispositivo esclavo activo en la comunicación.
 \end{itemize}
 
-Con el fin de procesar una lectura desde un dispositivo esclavo, el maestro debe realizar una escritura en el bus, forzando de esta forma la generación de una señal del reloj que tendrá como consecuencia la escritura de datos por parte del dispositivo deseado.
+Para procesar una lectura desde un dispositivo esclavo, es necesario que el maestro  realice una escritura en el bus, forzando de esta forma la generación de una señal de reloj que permitirá la escritura de datos, ya sea por parte del dispositivo maestro, o de otro esclavo.
 
 El dispositivo maestro debe conocer las características de cada esclavo implicado en la comunicación, entre las cuales, es posible destacar las siguientes:
 
@@ -192,15 +195,15 @@ El dispositivo maestro debe conocer las características de cada esclavo implicad
 {Configuraciones posibles de fase y polaridad en el estándar SPI}
 
 %-------------------------------------------------------------------
-\subsection{Chip ADS1198}
+\subsection{ADS1198}
 %-------------------------------------------------------------------
 \label{cap2:subsec:ads}
 
-El ADS1198 es un chip de Texas Instruments de bajo consumo para mediciones de señales ECG, que se caracteriza por tener ocho canales de 16 bits cada uno, una frecuencia de muestreo de hasta 8KHz, un amplificados de ganancia programable, referencia interna, y un oscilador integrado. \citep{ads1198} Cada canal consta de un multiplexor que permite la lectura desde ocho entradas diferentes, siendo las más relevantes las entradas de temperatura, electrodos, y señal de test generada internamente.
+El ADS1198 es un dispositivo electrónico de Texas Instruments de bajo consumo para mediciones de señales ECG, que se caracteriza por tener ocho canales de 16 bits cada uno, una frecuencia de muestreo de hasta 8KHz, un amplificados de ganancia programable, referencia interna, y un oscilador integrado. \citep{ads1198} Cada canal consta de un multiplexor que permite la lectura desde ocho entradas diferentes, siendo las más relevantes las entradas de temperatura, electrodos, y señal de test generada internamente.
 
-El chip consta de una interfaz SPI para permitir la comunicación con otros dispositivos. Además de las líneas típicas de SPI se proporciona una línea adicional, \textbf{DRDY} (Data ready), que índica cuando se tienen nuevos datos válidos preparados para enviar. La lectura de datos se realiza siempre para los 8 canales, devolviendo adicionalmente una cabecera con información de la configuración del chip.
+El ADS consta de una interfaz SPI para permitir la comunicación con otros dispositivos. Además de las líneas típicas de SPI se proporciona una línea adicional, \textbf{DRDY} (Data ready), que índica cuando se tienen nuevos datos válidos preparados para enviar. La lectura de datos se realiza siempre para los 8 canales, devolviendo adicionalmente una cabecera con información de la configuración del ADS.
 
-El chip permite obtener la alimentación de manera unipolar o bipolar:
+El ADS permite obtener la alimentación de manera unipolar o bipolar:
 
 \begin{itemize}
   \item \textbf{Unipolar}: La alimentación unipolar se realiza mediante una entrada de 5V y otra de 3V.
@@ -209,7 +212,7 @@ El chip permite obtener la alimentación de manera unipolar o bipolar:
 
 La alimentación que se ha utilizado en este proyecto ha sido unipolar, por ser más fácilmente adaptable a los pines que proporciona la BBB.
 
-Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del chip [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia \citep{memPi}.
+Internamente el ADS1198 cuenta con 25 registros que permiten al usuario configurar todas las características programables del ADS [Fig \ref{fig:ads}]. Gran parte de la configuración permitida está relacionada con aspectos propios de la captura de señales, como las ganancias, el uso de un oscilador interno, o el voltaje de referencia utilizado para la captura. El resto de configuraciones posibles pueden variar la frecuencia de captura, las entradas de los canales o modificar las señales de test internas en amplitud y frecuencia \citep{memPi}.
 
 Para el propósito del presente proyecto, se ha utilizado un kit de desarrollo, en el que se incluye el chip integrado en una placa que permite configurar la forma de alimentación o tener acceso a las entradas de datos de forma más cómoda y sencilla.
 
@@ -240,7 +243,10 @@ Dado su elevado rendimiento, alto nivel de integración y bajo consumo, el ADS119
 %-------------------------------------------------------------------
 \label{cap2:subsec:saleae}
 
-Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depuración durante el desarrollo del proyecto. Gracias al uso de este dispositivo ha sido posible detectar fallos muy concretos en periodos de tiempo relativamente pequeños, ya que de otra forma, en caso de no haberlo utilizado hubiese sido muy complicado el desarrollo, o al menos, hubiese llevado muchísimo más tiempo del esperado. 
+\figura{Vectorial/saleae}{width=1\textwidth}{fig:saleae}
+{Software multiplataforma proporcionado por Saleae}
+
+Se ha utilizado un analizador lógico, en este caso Saleae, con motivos de depuración durante el desarrollo del proyecto. Gracias a este dispositivo ha sido posible detectar fallos muy concretos durante el desarrollo del proyecto, y en periodos de tiempo relativamente pequeños; su uso ha supuesto un ahorro muy significativo de tiempo, sobre todo, a la hora de detectar la causa de determinados fallos.
 
 La idea de funcionamiento de este dispositivo es muy sencilla. Cuenta con 8 canales que actúan como analizadores lógicos, por lo que basta con conectar cada analizador al canal que se desee analizar. 
 
@@ -258,8 +264,79 @@ Entre sus principales características, cabe destacar las siguientes:
   \item Marcadores de medidas, señaladores y temporizadores.
 \end{itemize}
 
-\figura{Vectorial/saleae}{width=1\textwidth}{fig:saleae}
-{Software multiplataforma proporcionado por Saleae}
+%-------------------------------------------------------------------
+\subsection{Simulador de pacientes}
+%-------------------------------------------------------------------
+\label{cap2:subsec:simulador}
+
+\figura{Vectorial/sim}{width=1\textwidth}{fig:sim}%
+{Simulador de ECG utilizado durante el desarrollo del proyecto}
+
+Durante gran parte del desarrollo del proyecto se ha recurrido a un simulador de pacientes similar al que puede apreciarse en la [Fig \ref{fig:sim}].
+
+El simulador de ECG portátil es capaz genera señales cardíacas en 12 derivaciones para el ensayo de desempeño en equipamiento de diagnóstico basado en ECG, tal como monitores de paciente de terapia intensiva, electrocardiógrafos y grabadores Holter.
+
+Las ondas de calibración y prueba, la variabilidad latido a latido y el análisis de ruido avanzado son algunas de las ventajas únicas que distinguen al simulador utilizado de otros simuladores de paciente cardíacos.
+
+\begin{table}[]
+\centering
+\caption{Especificaciones generales simulador de pacientes}
+\label{simulador}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Formas de onda}    & ECG, Seno, Triangular, Cuad., Pulsos y Base \\ \hline
+\textbf{Frec. cardíaca}    & 20 PPM a 300 PPM, desvío 0\% a 20\%         \\ \hline
+\textbf{Frecuencia}        & 1/8Hz a 120Hz                               \\ \hline
+\textbf{Amplitud}          & 0,5mV, 1mV, 2mV, 4mV, desvío 0\% a 20\%     \\ \hline
+\textbf{Fuentes de ruido}  & Línea, Ripple, Aleatorio, Deriva y Temblor  \\ \hline
+\textbf{Derivaciones}      & 12 (Broche / Banana / Pin)                  \\ \hline
+\textbf{Salida Alta Señal} & 200x Derivación II más DC                   \\ \hline
+\textbf{Fuente de energía} & Batería estándar de 9V o adaptador 9VDC     \\ \hline
+\textbf{Dimensiones}       & 150mm x 90mm x 26mm                         \\ \hline
+\textbf{Peso}              & 0,40kg                                      \\ \hline
+\end{tabular}
+\end{table}
+
+En la tabla \ref{simulador} pueden apreciarse las especificaciones generales del simulador de pacientes utilizado.
+
+%-------------------------------------------------------------------
+\subsection{Multímetro}
+%-------------------------------------------------------------------
+\label{cap2:subsec:multimetro}
+
+Un multímetro es un aparato de medida que sirve para analizar las diferentes variables de los circuitos, es decir, sirve para analizar voltajes, corrientes, resistencias, etc. Es un aparato que auna las utilidades de un voltímetro, un amperímetro y, e incluso de muchos más dispositivos.
+
+En concreto, el multímetro utilizado durante el desarrollo del proyecto, concretamente el multímetro digital XL830L, (se ilustra este modelo concreto en la figura [Fig \ref{fig:multimetro}])permite analizar voltajes, corrientes, resistencias, voltaje de los diodos, si la corriente que hay es continua o alterna y si el transistor es NPN o PNP, cuáles son su base, emisor y colector, y qué ganancia tiene el transistor. Proporciona los valores típicos con los que se trabaja en este tipo de proyectos \footnote{Fuente original y más información disponible en \href{http://www.educachip.com/como-usar-el-multimetro-digital-xl830l-correctamente/}{http://www.educachip.com/como-usar-el-multimetro-digital-xl830l-correctamente/}}.
+
+Es un elemento fundamental en cualquier desarollo en el que haya hardware y circuitos implicados, porque no solo proporciona datos que de otra manera no se podrían obtener salvo que se hicieren cálculos matemáticos sobre los circuitos, si no que además, permite ahorrar mucho tiempo.
+
+%-------------------------------------------------------------------
+\subsection{Otros recursos}
+%-------------------------------------------------------------------
+\label{cap2:subsec:otros}
+
+Para la medición de la frecuencia cardíaca se han utilizado dos formas de medición distintas. En primer lugar un POLAR Soft strap como el que puede verse en la [Fig \ref{fig:cinturon}], que permite una medición confortable gracias al acabado elástico que ofrece el producto. Por otra parte se han utilzado electrodos de botón pregelizado como los que pueden observarse en la [Fig \ref{fig:pegatinas}]. Las pegatinas han aportado un mejor resultado debido a la mayor ausencia de ruido que presenta la captación final de la señal.
+
+\figura{Vectorial/multimetro}{width=0.7\textwidth}{fig:multimetro}
+{Multímetro modelo 830L}
+
+\begin{figure}[t]
+\centering
+%
+\subfloat[][Cinta de medición cardíaca]{
+\includegraphics[width=0.42\textwidth]%
+{Imagenes/Vectorial/cintas}
+\label{fig:cinturon}
+}
+\qquad
+\subfloat[][Electrodos de boton pregelizado]{
+\includegraphics[width=0.42\textwidth]%
+{Imagenes/Vectorial/pegatinas}
+\label{fig:pegatinas}
+}
+\caption{Otros materiales utilizados\label{cap2:fig:todo}}
+\end{figure}
+
 
 %\medskip
 

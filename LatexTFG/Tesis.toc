@@ -41,26 +41,28 @@
 \contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{39}{chapter.4}
 \contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{39}{section.4.1}
 \contentsline {section}{\numberline {4.2}Recepci\'on de datos}{41}{section.4.2}
-\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{43}{section.4.3}
-\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{44}{section.4.4}
-\contentsline {section}{\numberline {4.5}Identificaci\'on complejo QRS}{47}{section.4.5}
-\contentsline {section}{\numberline {4.6}Almacenamiento de ECGs}{48}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Animaci\'on de ECGs}{48}{subsection.4.6.1}
-\contentsline {section}{\numberline {4.7}Incidencias}{49}{section.4.7}
-\contentsline {section}{\numberline {4.8}Ecosistema de streaming}{51}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Caracter\IeC {\'\i }sticas del servidor}{51}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Caracter\IeC {\'\i }sticas de la base de datos}{51}{subsection.4.8.2}
-\contentsline {subsection}{\numberline {4.8.3}Interpretaci\'on de datos}{53}{subsection.4.8.3}
-\contentsline {chapter}{\numberline {5}Resultados}{55}{chapter.5}
-\contentsline {section}{\numberline {5.1}Conclusiones}{55}{section.5.1}
-\contentsline {section}{\numberline {5.2}Conclusions}{56}{section.5.2}
-\contentsline {chapter}{\numberline {A}Recursos software}{57}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}Device Tree Overlay}{57}{section.Alph1.1}
-\contentsline {section}{\numberline {A.2}Inicializaci\'on del ADS1198}{58}{section.Alph1.2}
-\contentsline {section}{\numberline {A.3}Comunicaci\'on SPI}{63}{section.Alph1.3}
-\contentsline {section}{\numberline {A.4}Guardado de muestras en memoria}{66}{section.Alph1.4}
-\contentsline {section}{\numberline {A.5}Lectura de muestras en memoria}{69}{section.Alph1.5}
-\contentsline {chapter}{\numberline {B}Recursos Android}{71}{appendix.Alph2}
-\contentsline {section}{\numberline {B.1}Aplicaci\'on Python}{71}{section.Alph2.1}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{73}{appendix*.48}
-\contentsline {chapter}{Lista de acr\'onimos}{74}{appendix*.48}
+\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{41}{section.4.3}
+\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{43}{section.4.4}
+\contentsline {section}{\numberline {4.5}Identificaci\'on complejo QRS}{46}{section.4.5}
+\contentsline {section}{\numberline {4.6}Almacenamiento de ECGs}{47}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Animaci\'on de ECGs}{47}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Incidencias}{48}{section.4.7}
+\contentsline {section}{\numberline {4.8}Ecosistema de streaming}{50}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Caracter\IeC {\'\i }sticas del servidor}{50}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Caracter\IeC {\'\i }sticas de la base de datos}{50}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.3}Interpretaci\'on de datos}{51}{subsection.4.8.3}
+\contentsline {chapter}{\numberline {5}Resultados}{53}{chapter.5}
+\contentsline {section}{\numberline {5.1}Conclusiones}{53}{section.5.1}
+\contentsline {section}{\numberline {5.2}Conclusions}{54}{section.5.2}
+\contentsline {chapter}{\numberline {A}Recursos software}{55}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Device Tree Overlay}{55}{section.Alph1.1}
+\contentsline {section}{\numberline {A.2}Inicializaci\'on del ADS1198}{56}{section.Alph1.2}
+\contentsline {section}{\numberline {A.3}Comunicaci\'on SPI}{59}{section.Alph1.3}
+\contentsline {section}{\numberline {A.4}Guardado de muestras en memoria}{61}{section.Alph1.4}
+\contentsline {section}{\numberline {A.5}Lectura de muestras en memoria}{63}{section.Alph1.5}
+\contentsline {chapter}{\numberline {B}Recursos Android}{65}{appendix.Alph2}
+\contentsline {section}{\numberline {B.1}Aplicaci\'on Python}{65}{section.Alph2.1}
+\contentsline {section}{\numberline {B.2}Recepci\'on de datos}{66}{section.Alph2.2}
+\contentsline {section}{\numberline {B.3}C\'odigo servidor}{67}{section.Alph2.3}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{69}{appendix*.45}
+\contentsline {chapter}{Lista de acr\'onimos}{70}{appendix*.45}

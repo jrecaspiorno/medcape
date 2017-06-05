@@ -46,7 +46,7 @@ Confucio
 \end{FraseCelebre}
 
 \begin{resumen}
-Este apéndice recoge en detalle los fragmentos más importantes para garantizar el correcto funcionamiento de la aplicación Android.
+Este apéndice recoge en detalle los fragmentos más importantes relacionados con el correcto funcionamiento de la aplicación Android.
 \end{resumen}
 
 %-------------------------------------------------------------------
@@ -54,8 +54,162 @@ Este apéndice recoge en detalle los fragmentos más importantes para garantizar e
 %-------------------------------------------------------------------
 \label{ap1:python}
 
+A continuación se muestra el código de la aplicacación Python utilizada para el envío de datos a la aplicación Android.
 
+\lstset{language=Python}          % Set your language (you can change the language for each code-block optionally)
 
+\begin{lstlisting}  % Start your code-block
+import bluetooth
+import time
+import sys
+import os
+print "Starting programm"
+# Open Bluetooth socket and listen for connections
+serverSocket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+serverSocket.bind(("", bluetooth.PORT_ANY))
+serverSocket.listen(1)  # Listen for any incoming connections
+serverSocketChannel = serverSocket.getsockname()[1]
+uuid = "34B1CF4D-1069-4AD6-89B6-E161D79BE4D8"
+# Advertise our Bluetooth service so other devices can find it
+bluetooth.advertise_service(serverSocket, 
+		"BeagleBoneService",
+        service_id = uuid,
+        service_classes = [uuid, bluetooth.SERIAL_PORT_CLASS],
+        profiles = [bluetooth.SERIAL_PORT_PROFILE])
+pipeName = "pipe_medcape.data"
+TAG_SIZE          = 2
+ADC_CHANNELS      = 8
+ADC_SAMP_CHANNEL  = 2
+ADC_PACKET_SIZE   = int(TAG_SIZE + (ADC_CHANNELS * ADC_SAMP_CHANNEL)) #18 bytes per sample (2 status + 16 data). Each channel has 2 bytes
+chunkSize = ADC_PACKET_SIZE
+chunkSize = 18
+while True:
+	# Wait for an incoming connection
+	print "Waiting for a new connection on channel", serverSocketChannel
+	clientSocket, clientAddress = serverSocket.accept()
+	print "Accepted connection from ", clientAddress
+	time.sleep(1)
+	# Send the data received from pipe to connected device
+	try:
+		pipeFile = open(pipeName, "rb")
+		print pipeName, "opened"
+		while True:
+			try:
+				while True:
+					chunk = pipeFile.read(chunkSize)
+					if len(chunk) <= 0:
+						break
+					else:
+						clientSocket.send(chunk)
+			except:
+				break  # Device is disconnected
+	except IOError:
+		print "Pipe cannot be established"
+	print "Device disconnected"
+	clientSocket.close()
+\end{lstlisting} 
+
+%-------------------------------------------------------------------
+\section{Recepción de datos}
+%-------------------------------------------------------------------
+\label{ap1:recep}
+
+El fragmento de código más representativo de la recepción de datos por parte de la aplicación Android puede observarse a continuación.
+
+\lstset{language=Java}          % Set your language (you can change the language for each code-block optionally)
+
+\begin{lstlisting}
+void beginListen() {
+		stopWorker = false;
+		workerThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (!Thread.currentThread().isInterrupted() && !stopWorker) {
+					if (BTConnection.receiveDataIsAvailable()) {
+						recvBuff = BTConnection.receiveData();
+						bytesRead = BTConnection.getBytesRead();
+						if (send_transmission_online) {
+							byte[] recvBuff_send_socket = new byte[bytesRead];
+							for (int i = 0; i < bytesRead; i++) {
+								if (i < recvBuff.length) {
+									recvBuff_send_socket[i] = recvBuff[i];
+								}
+							}
+							JSONObject data = new JSONObject();
+							try {
+								data.put("doctor_socket_id", doctor_socket_id);
+								data.put("transmission", recvBuff_send_socket);
+								ConfigSocketIO.socket.emit("emit transmission server", data);
+							} catch (JSONException e) {
+								System.out.println(e);
+							}
+						}
+						for (int i = 0; i < bytesRead; i++) {
+							if (i < recvBuff.length){
+								ringBuffer.add(recvBuff[i]);
+							}
+						}
+					}
+					while (ringBuffer.size() > MIN_RING_BUFFER_LENGTH) {
+						double point;
+						//BTConnection.sendData(1);
+						byte byte_get = ringBuffer.get();
+						switch (byte_get) {
+							case PACKET_TAG:
+									//graphical representation fragment
+								break;
+							default:
+								add_send_samples_online(byte_get);
+								Log.w("", "Tag missed");
+								break;
+						}
+					}
+				}
+			}
+		});
+		workerThread.start();
+	}
+\end{lstlisting}
+
+%-------------------------------------------------------------------
+\section{Código servidor}
+%-------------------------------------------------------------------
+\label{ap1:server}
+
+A continuación se muestran algunos de los fragmentos más representativos del código que se ejecuta en el servidor.
+
+\lstset{style=customjava}          % Set your language (you can change the language for each code-block optionally)
+
+\begin{lstlisting}
+socket.on('request transmission server', function(data){
+		var patient_socket_id = users[data.patient_name];
+		console.log('request transmission server');
+		console.log("Doctor: ", socket.id);
+		console.log("Patient: ", data.patient_name, " with id ", patient_socket_id);
+		var data_to_client = {};
+		data_to_client["doctor_socket_id"] = socket.id;
+		data_to_client["patient_socket_id"] = patient_socket_id;
+		socket.broadcast.to(patient_socket_id).emit(
+		'request transmission client',{doctor_socket_id: socket.id});
+	});
+
+socket.on('emit transmission server', function(data){
+		var doctor_socket_id = data.doctor_socket_id;
+		console.log('emit transmission server');
+		console.log("Patient: ", socket.id);
+		console.log("Doctor: ", doctor_socket_id);
+		console.log("transmission: ", data.transmission[0]);
+		var users_keys = Object.keys(users);
+		var user_values = users_keys.map(function(key) {
+			return users[key];
+		});
+		var index_user =  user_values.indexOf(socket.id);
+		var patient_name = users_keys[index_user];
+		socket.broadcast.to(doctor_socket_id).emit(
+		'receive transmission client',{transmission: data.transmission});
+	});	
+
+\end{lstlisting}
 
 
 

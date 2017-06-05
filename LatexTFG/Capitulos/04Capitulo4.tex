@@ -45,10 +45,10 @@ Una vez satisfecho el requisito de emparejamiento, las acciones que realiza el p
 
 Tras aceptar la conexión, se accede a la tubería que contiene la información de los paquetes de muestras. La información se envía por socket (muestra a muestra) a la aplicación Android. Si se cierra la aplicación o se desconecta el Bluetooth del dispositivo móvil, se lanzará una excepción por la que volverá a quedarse el programa a la espera de una conexión vía socket por parte de la aplicación Android.
 
- Se puede apreciar de forma visual el contenido más importante del programa Python en la [Fig \ref{fig:python}]. 
+Para más información al respecto, puede apreciar de forma visual el contenido más importante del programa Python en el Apéndice \ref{ap1:python}. 
 
-\figura{Vectorial/python}{width=1.1\textwidth}{fig:python}%
-{Programa desarrollado en Python \texttt{BTConnection.py}}
+%\figura{Vectorial/python}{width=1.1\textwidth}{fig:python}%
+%{Programa desarrollado en Python \texttt{BTConnection.py}}
 
 %-------------------------------------------------------------------
 \section{Recepción de datos}
@@ -65,10 +65,10 @@ La aplicación original tiene una gráfica en la que se representan las ondas reci
 \figura{Vectorial/original}{width=1\textwidth}{fig:original}%
 {Pantalla principal de la aplicación Android original}
 
-La recepción de los datos por socket de la aplicación Python se realiza desde un hilo que se ejecuta indefinidamente en la aplicación Android. Este hilo se bloquea en espera hasta que haya datos disponibles en la tubería Python. Cuando hay datos  de muestras disponibles, estos son analizados e interpretados por la aplicación para posteriormente ser representados de forma gráfica. Este proceso se espera a la disponibilidad de los datos y tratamiento de los mismos (sin incluir la representación gráfica) puede apreciarse de forma visual en la [Fig \ref{fig:recep}]. 
+La recepción de los datos por socket de la aplicación Python se realiza desde un hilo que se ejecuta indefinidamente en la aplicación Android. Este hilo se bloquea en espera hasta que haya datos disponibles en la tubería Python. Cuando hay datos  de muestras disponibles, estos son analizados e interpretados por la aplicación para posteriormente ser representados de forma gráfica. Este proceso se espera a la disponibilidad de los datos y tratamiento de los mismos (sin incluir la representación gráfica) puede apreciarse de forma visual en el Apéndice \ref{ap1:recep}. 
 
-\figura{Vectorial/recep}{width=1\textwidth}{fig:recep}%
-{Fragmento del código que ejecuta el hilo encargado de la recepción de datos}
+%\figura{Vectorial/recep}{width=1\textwidth}{fig:recep}%
+%{Fragmento del código que ejecuta el hilo encargado de la recepción de datos}
 
 %-------------------------------------------------------------------
 \section{Mejoras desarrolladas}
@@ -219,12 +219,12 @@ Este servidor esta desarollado en \texttt{Node.js}, una tecnología pensada para 
 
 La función del servidor es recibir paquetes de \texttt{bytes} desde la aplicación de un paciente, y despacharlos de la misma forma a la aplicación de un doctor, donde estos pueden ser representados de forma simultánea en ambos dispositivos. Es decir la información se recibe en crudo, y se envía en crudo, sin ningún tratamiento por parte del servidor.
 
-\figura{Vectorial/server}{width=1.1\textwidth}{fig:server}%
-{Fragmento del código que ejecuta el servidor desarrollado en \texttt{Node.js}}
+%\figura{Vectorial/server}{width=1.1\textwidth}{fig:server}%
+%{Fragmento del código que ejecuta el servidor desarrollado en \texttt{Node.js}}
 
-El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la IP local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}. Para conseguirlo, ha sido necesario redirigir las conexiones desde el router (que proporciona internet al servidor) al propio ordenador que hace de servidor, para que las conexiones entrantes por un determinado puerto a nuestra IP, se mandasen al servidor.
+El servidor puede ser accedido desde cualquier lugar del planeta, gracias a que la IP local del servidor ha sido montada sobre un servidor de dns \footnote{Concretamente nosotros hemos recurrido a no-ip. Más información sobre este servicio gratuito en su página web oficial \href{https://www.noip.com/}{https://www.noip.com/}}. Para conseguirlo, ha sido necesario redirigir las conexiones desde el router (que proporciona internet al servidor) al propio ordenador que hace de servidor, para que las conexiones entrantes por un determinado puerto a nuestra IP, se mandasen al servidor. Para más información sobre el código que se ejecuta en el servidor, puede consultarse el Apéndice \ref{ap1:server}.
 
-En la [Fig \ref{fig:server}] puede apreciarse uno de los fragmentos de código más significativos del servidor.
+%En la [Fig \ref{fig:server}] puede apreciarse uno de los fragmentos de código más significativos del servidor.
 
 %-------------------------------------------------------------------
 \subsection{Características de la base de datos}

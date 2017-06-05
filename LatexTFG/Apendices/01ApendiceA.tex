@@ -62,22 +62,17 @@ El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmen
 
 /dts-v1/;
 /plugin/;
-
 / {
    compatible = "ti,beaglebone", "ti,beaglebone-black";
-
    part-number = "EBB-PRU-ADC2";
    version = "00A0";
-
    /* This overlay uses the following resources */
    exclusive-use =
           "P9.24", "P9.25", "P9.27", "P9.28", "P9.29",
            "P9.30", "P9.31", "P8.46", "pru0", "pru1";
-
    fragment@0 {
       target = <&am33xx_pinmux>;
       __overlay__ {
-
          pru_pru_pins: pinmux_pru_pru_pins {  
 				0x184 0x2e  // DRDY P9_24 pr1_pru0_pru_r31_16,
 				 MODE6 | INPUT  | DIS  00101110=0x2e
@@ -85,7 +80,6 @@ El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmen
 				 MODE5 | OUTPUT | DIS  00001101=0x0d
 				0x190 0x0d  // RESET   P9_31 pr1_pru0_pru_r30_0,
 				 MODE5 | OUTPUT | DIS  00001101=0x0d
-
                0x1a4 0x0d  // CS   P9_27 pr1_pru0_pru_r30_5,
                 MODE5 | OUTPUT | DIS  00001101=0x0d
                0x19c 0x2e  // MISO P9_28 pr1_pru0_pru_r31_3,
@@ -101,7 +95,6 @@ El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmen
          };
       };
    };
-
    fragment@1 {         // Enable the PRUSS
       target = <&pruss>;
       __overlay__ {
@@ -110,7 +103,6 @@ El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmen
          pinctrl-0 = <&pru_pru_pins>;
       };
    };
-
 };
 \end{lstlisting}
 
@@ -121,60 +113,46 @@ El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmen
 
 En el siguiente fragmento de código ilustra el proceso de inicialización del ADS del proyecto original. Es un código relativamente sencillo y completamente funcional. Los pasos que se siguen en el código original, desde resetear el ciclo, hasta la lectura de datos en modo continuo, son replicados en código ensamblador. El objetivo final ha sido conseguir la misma correcta funcionalidad de la que gozaba el código original.
 
-\lstset{language=C}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customc}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
-
-printf("Init GPIOs\n");
+	printf("Init GPIOs\n");
     if ( ads_init_gpios() == -1 ) {
         printf("can't init GPIOs\n");
         return -1;
     }
-
     printf("Conf SPI\n");
     init_spi(spi_hz>>5);
-    //init_spi(ADS_SPI_HZ);
     sleep(1);
-
     printf("Reset cycle\n");
     if ( ads_reset() == -1 ) {
         printf("can't reset ADS\n");
         return -1;
     }
-
     printf("Stop Read Data Continuously mode\n");
     if ( ads_sdatac() == -1 ) {
         printf("can't stop read data continuously\n");
         return -1;
     }
     sleep(1);
-
     printf("POR registers\n");
-    //ads_print_registers();
-
     printf("Set sample rate %d\n", tmp_srate);
-    //if ( ads_set_rate(SRATE_500) == -1 ) {
     if ( ads_set_rate(sample_rate) == -1 ) {
-        //if( ads_set_rate(SRATE_125) == -1 ){
         printf("can't set sample rate!!\n");
         return -1;
     }
     sleep(1);
-
     printf("Enable internal reference\n");
     if ( ads_enable_intref() == -1 ) {
         printf("Error enabling internal reference!!\n");
         return -1;
     }
     sleep(2);
-
-    //Just in case...
     printf("Checl ID\n");
     if ( ads_check_id() == -1 ) {
         printf("can't read IDReg\n");
         return -1;
     }
-
     if(test_signal){
         printf("Set test signals\n");
         if( ads_set_test() == -1 ){
@@ -182,32 +160,26 @@ printf("Init GPIOs\n");
             return -1;
         }
     }
-
     ads_print_registers();
-
     printf("START: start continuous reading\n");
     if ( ads_start() == -1 ) {
         printf("can't start conversion\n");
         return -1;
     }
-
     printf("RDATAC: read data continuously\n");
     if ( ads_command(RDATAC) == -1 ) {
         printf("can't read data continuously\n");
         return -1;
     }
-
     close_spi();
     init_spi(spi_hz);
-
 \end{lstlisting}
 
 A continuación se muestra el código desarrollado en ensamblador, totalmente funcional, y utilizado en el presente proyecto, que imita a la perfección el funcionamiento del código original de inicialización del ADS en C.
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
-
 //----------------------SDATAC----------------------
 SEND_SDATAC:
 	LBBO	r2, r1, 0, 4	 // Load sdatac command=0x11
@@ -215,7 +187,6 @@ SEND_SDATAC:
 	//so we do lsl(logical shift left) to move our LSB to MSB
 	SUB r13, r14, 8
 	CALL TRUNCATE
-	//---------------------------------
 	CLR	r30.t5		 // set the CS line low (active low)
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
@@ -223,51 +194,37 @@ SEND_SDATAC:
 //------------------SLEEP 2 SECONDS---------------------------
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
-
 \end{lstlisting}
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 //---------------------SET_ADS_SAMPLE_RATE	
 SET_ADS_SAMPLE_RATE:
 	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
-//1st bit=============
 	MOV r2, 0x41
 	//We only want 8 bits, but 1 register=32 bits
 	//so we do lsl(logical shift left) to move our LSB to MSB
 	SUB r13, r14, 8
 	CALL TRUNCATE
-	//---------------------------------
 	CLR	r30.t5		 // set the CS line low (active low)
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
-	
 	MOV	r12, 1000 //Numero aleatorio
 	CALL DELAY_FUNCTION
-//2nd bit=============	
 	MOV r2, 0x00000000
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
-	
 	MOV	r12, 1000	 //Numero aleatorio
-	CALL DELAY_FUNCTION
-//3rd bit=============	
-	//Default is 0x04 (500Hz) (ADS1198)
-	//0x00 is 8kHz (Maximum speed supported by ADS1198)
-	//0x06 is 125Hz (Minimum speed supported by ADS1198)
-	//Each increased number is half the speed
+	CALL DELAY_FUNCTION	
 	MOV r2, 0x06
-	//We only want 8 bits, but 1 register=32 bits
-	//so we do lsl(logical shift left) to move our LSB to MSB 
 	SUB r13, r14, 8
 	CALL TRUNCATE
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
 	MOV	r12, 1000	//Numero aleatorio
 	CALL DELAY_FUNCTION	
-	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET r30.t1 //MOSI is active in original hardware SPI
 //------------------SLEEP 2 SECONDS----
@@ -276,72 +233,52 @@ CALL DELAY_FUNCTION
 
 \end{lstlisting}
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 //---------------------SET_INTERNAL_REFERENCE_ADS
-
 SET_INTERNAL_REFERENCE_ADS:
-//1st bit=============	
 	//LBBO	r2, r1, 8, 12	 // Load sample rate speed
 	MOV r2, 0x43
-	//We only want 8 bits, but 1 register=32 bits 
-	//so we do lsl(logical shift left) to move our LSB to MSB
 	SUB r13, r14, 8
 	CALL TRUNCATE
-	
 	CLR	r30.t5		 // set the CS line low (active low)
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK
-	
 	MOV	r12, 1000	//Numero aleatorio
-	CALL DELAY_FUNCTION	
-//2nd bit=============	
+	CALL DELAY_FUNCTION		
 	MOV r2, 0x00000000
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
-	
 	MOV	r12, 1000	//Numero aleatorio
-	CALL DELAY_FUNCTION	
-//3rd bit=============	
+	CALL DELAY_FUNCTION		
 	MOV r2, 0xC0
 	SUB r13, r14, 8
-	//We only want 8 bits, but 1 register=32 bits 
-	//so we do lsl(logical shift left) to move our LSB to MSB
 	CALL TRUNCATE
-	
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
-
 	MOV	r12, 1000	//Numero aleatorio
 	CALL DELAY_FUNCTION
-	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET r30.t1 //MOSI is active in original hardware SPI
-
 //------------------SLEEP 2 SECONDS-------
 MOV	r12, DELAYCOUNT	
 CALL DELAY_FUNCTION
 
 \end{lstlisting}
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
-
 //---------------------RDATAC----------------------
 SEND_RDATAC:
 	LBBO	r2, r1, 4, 8	 // Load rdatac command
 	SUB r13, r14, 8
-	//We only want 8 bits, but 1 register=32 
-	//so we do lsl(logical shift left) to move our LSB to MSB 
 	CALL TRUNCATE
-	
 	CLR	r30.t5		 // set the CS line low (active low)
 	MOV	r4, 8		 // going to write/read 8 bits (1 byte)
 	CALL	SPICLK_LOOP           // repeat call the SPICLK 
-
 	SET	r30.t5		 // pull the CS line high (end of sample)
 
 \end{lstlisting}
@@ -355,43 +292,27 @@ El proceso de comunicación SPI desarrollado en código ensamblador, se ilustra en
 
 En el siguiente código se muestra la función SPICLK\_LOOP escrita en código ensamblador, en la cual se refleja el proceso de iteración sobre cada uno de los bits concretos, así como el uso de todos los registros necesarios para el almacenamiento de la información.
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 GET_SAMPLE: //Receive 1 sample (18 bytes)
 	CLR	r30.t5		 // set the CS line low (active low)
-	// Para evitar coger el 1er byte (FF) 
-		MOV	r12, 200 //Numero aleatorio
-		CALL DELAY_FUNCTION
-		
-	//-------------------------------
-
 	MOV r15, 21 //Number of bytes/sample 
 	GET_BYTE:
-		
 		MOV	r4, 8		 // going to write/read 1 byte (8 bits)
 		MOV r2, 0x00000000 //What we want to write (i.e 0)
 		CALL	SPICLK_LOOP // repeat call the SPICLKread		
-	
 		MOV	r12, 800 //Numero aleatorio
 		CALL DELAY_FUNCTION
-				
 		SET	r30.t1 //MOSI: 1 (before start taking the sample)
-		
 		MOV	r12, 800 //Numero aleatorio
 		CALL DELAY_FUNCTION
-			
 		CLR	r30.t1 //MOSI: 0 (before start taking the sample)
-
 		SUB	r15, r15, 1     // decrement loop counter
-
 	QBNE	GET_BYTE, r15, 0  // repeat loop unless zero
-	
 	SET	r30.t5		 // pull the CS line high (end of sample)
 	SET	r30.t1 //MOSI: 1 (before start taking the sample)
-	
-	
 	LSR	r3, r3, 1        // SPICLK shifts left 
 	LSR	r17, r17, 1        // SPICLK shifts left 
 	LSR	r18, r18, 1        // SPICLK shifts left
@@ -403,12 +324,11 @@ GET_SAMPLE: //Receive 1 sample (18 bytes)
 
 \end{lstlisting}
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 SPICLK_LOOP: //LOOP through the X bits (read and write)
-	
 	SPI_CLK_BIT:
 			MOV	r0, r11	 // time for clock low 
 		CLKLOW:	
@@ -430,88 +350,58 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 			LSL	r2, r2, 1 //Permorm logical shif left 
 						 // clock goes low now read 
 			CLR	r30.t2		 // set the clock low
-			
 			//----Store 1 received bit in a register 
 			QBBC	DATAINLOW, r31.t3 //Take the MISO bit
 				OR	r21, r21, 0x000001 //bit received=1
 			DATAINLOW:	 //bit received=0
 				LSL	r21, r21, 1 
-			//-----------------------------------------	
-			
 		QBNE END_TAKING_MISO, r26, 1 //Flag 
 			QBLE STORE_1ST_REGISTER, r22, 23
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_1ST_REGISTER: 
 				QBNE STORE_2ND_REGISTER, r22, 23 
 				MOV r3, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-			//=====================================
 			QBLE STORE_2ND_REGISTER, r22, (23*2)+1
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_2ND_REGISTER: //Entra aqui si r22 >= 23             
 				QBNE STORE_3RD_REGISTER, r22, (23*2)+1
 				MOV r17, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-			//=======================================
 			QBLE STORE_3RD_REGISTER, r22, (23*3)+2
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_3RD_REGISTER: //Entra aqui si r22 >= 23            
 				QBNE STORE_4TH_REGISTER, r22, (23*3)+2 
 				MOV r18, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-	
-	//=================================================
 			QBLE STORE_4TH_REGISTER, r22, (23*4)+3
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_4TH_REGISTER: //Entra aqui si r22 >= 23            
 				QBNE STORE_5TH_REGISTER, r22, (23*4)+3 
 				MOV r19, r21 //If we wan to check how bits
-				
 				MOV r21, 0x000000
-			//=========================================
 			QBLE STORE_5TH_REGISTER, r22, (23*5)+4
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_5TH_REGISTER: //Entra aqui si r22 >= 23             
 				QBNE STORE_6TH_REGISTER, r22, (23*5)+4 
 				MOV r20, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-			
-			//=======================================
 			QBLE STORE_6TH_REGISTER, r22, (23*6)+5
-				QBA BREAK_IF //r22 > 23
-					
+				QBA BREAK_IF //r22 > 23	
 			STORE_6TH_REGISTER: //Entra aqui si r22 >= 23             
 				QBNE STORE_7TH_REGISTER, r22, (23*6)+5 
 				MOV r23, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-			//======================================
 			QBLE STORE_7TH_REGISTER, r22, (23*7)+6
 				QBA BREAK_IF //r22 > 23
-					
 			STORE_7TH_REGISTER: //Entra aqui si r22 >= 23             
 				QBNE BREAK_IF, r22, (23*7)+6 //23 < r22
 				MOV r27, r21 //If we wan to check bits
-				
 				MOV r21, 0x000000
-			//======================================
-			
 			BREAK_IF:
 				ADD r22, r22, 1	//Entra aqui si r22 < 23
-		
 		END_TAKING_MISO:
-		
-		SUB	r4, r4, 1   // count down through the bits
-//--------------------------------	
+		SUB	r4, r4, 1   // count down through the bits	
 		QBNE	SPICLK_LOOP, r4, 0		
 	RET	
 
@@ -525,129 +415,72 @@ SPICLK_LOOP: //LOOP through the X bits (read and write)
 
 A continuación se muestra el proceso de guardado de muestras desarrollado en código ensamblador.
 
-\lstset{language={[x86masm]Assembler}}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customasm}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 STORE_DATA:         // store the sample value in memory
 	SUB	r9, r9, 21	 // reducing the number of bytes 
-	
-	//Reset Counter of bits written
 	MOV	r22, 0 //r3
 	MOV	r26, 1	//r20
-
-
-	/*
-	//---------------
-	MOV r5, r6
-	CALL REVERSE_ENDIANNESS
-	//---------------
-	SBBO	r1, r8, 0, 3	
-	ADD		r8, r8, 3	
-	MOV	r12, 50 //Numero aleatorio
-	CALL DELAY_FUNCTION
-	*/
-	//---------------
 	MOV r5, r3
 	CALL REVERSE_ENDIANNESS
-	//-----Store in RAM the whole sample 
+	//-----Store in the whole sample 
 	SBBO	r1, r8, 0, 2	//Last register only needs 2 bytes
 	ADD		r8, r8, 2	// shifting RAM addres by 2 bytes 
-	
-	
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r17
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 3	
 	ADD		r8, r8, 3	
-
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r18
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 3	 
 	ADD		r8, r8, 3	 
-	
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r19
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 3	 
 	ADD		r8, r8, 3	
-	
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r20
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 3	 
 	ADD		r8, r8, 3	 // shifting RAM addres
-	
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r23
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 3	 // store the value r3 
 	ADD		r8, r8, 3	 // shifting RAM addres 
 	MOV	r12, 50 //Numero aleatorio(
 	CALL DELAY_FUNCTION
-	
-	//---------------
 	MOV r5, r27
 	CALL REVERSE_ENDIANNESS
-	//---------------
 	SBBO	r1, r8, 0, 1	 // store the value r3 
 	ADD		r8, r8, 1	 // shifting RAM addres 
 	MOV	r12, 50 //Numero aleatorio
 	CALL DELAY_FUNCTION
-	
-	
 	ADD r6, r6, 1
-	
 	QBNE CONTINUE_THIS_LOOP_RAM, r24, SIZE_CHUNK_RAM-1
 		// generate an interrupt to notificate a new chunk 
-		
-		//---------------
 		MOV r1, 0xFF
 		SBBO	r1, r8, 0, 1	 // store the value r3 
 		ADD		r8, r8, 1	 // shifting RAM addres by 4 bytes
-		
-		//---------------
 		MOV r8, r25 //Reset ram direction 
-		MOV r24, 0
-
-		
+		MOV r24, 0	
 		MOV R31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1 
-		
 		//WAIT_FOR_ARM_TO_READ:
 		WBS r31, #30
-
-		
 		QBA END_PROCESS_RAM_BUFFER
-
-
 	CONTINUE_THIS_LOOP_RAM:
 	ADD r24, r24, 1
-	//===========================
 	END_PROCESS_RAM_BUFFER:
-	
-	
-	//--------------------------------
 		// clear registers to receive the response
 	MOV	r3,  0x000000
 	MOV	r17, 0x000000	 
@@ -656,19 +489,9 @@ STORE_DATA:         // store the sample value in memory
 	MOV	r20, 0x000000	
 	MOV	r23, 0x000000	
 	MOV	r27, 0x000000	
-
-	
-	
-	//QBGE	END, r9, 0       
-	//It's QBGE( r9 <= 0 ) and not QBEQ (r0 == 0)
-	
 	POLLING_DATA_READY_LOW: 
 	QBBC	POLLING_DATA_READY_LOW, r31.t16 
-	
-		
 	QBA	POLLING_DATA_READY_HIGH
-
-
 END:
 
 \end{lstlisting}
@@ -680,14 +503,12 @@ END:
 
 A continuación se muestra el proceso de lectura de muestras desde el programa de usuario desarrollado en C.
 
-\lstset{language=C}          % Set your language (you can change the language for each code-block optionally)
+\lstset{style=customc}          % Set your language (you can change the language for each code-block optionally)
 
 \begin{lstlisting}  % Start your code-block
 
 int mem2file_main(int number_chunk, int samples_taken) {
-
     target = addr;
-	
 	int i = 0;
 	stat(filename, &st);
 	int size_file = st.st_size;
@@ -697,7 +518,6 @@ int mem2file_main(int number_chunk, int samples_taken) {
 			perror("Error al abrir el fichero de datos");
 		}
 	}
-	
 	while (((uint8_t *)pru1_data0)
 	[(size_packet*samples_per_chunk)]
 	 != 0xFF) {
@@ -713,20 +533,16 @@ int mem2file_main(int number_chunk, int samples_taken) {
    printf("Mem flag correct [%d] is: %x \n", 
    (size_packet*samples_per_chunk),
     ((uint8_t *)pru1_data0)[(size_packet*samples_per_chunk)]);  
-
 	fwrite(pru1_data0, size_packet, 
 	samples_per_chunk, fd_output);
 	((uint8_t *)pru1_data0)[(size_packet*samples_per_chunk)]
 	 = 0x00;
-	
-
 	// Try to open the Python pipe
 	if (pipePython.fid < 1) {
 		pipePython.fid = 
 		open(pipePython.name, O_WRONLY | O_NONBLOCK);
 		//printf("Pipe open\n");
 	}
-
 	// Send data if the Python pipe is open
 	if (pipePython.fid > 0) {
 		int writeSuccess = write(pipePython.fid, pru1_data0,
@@ -738,11 +554,8 @@ int mem2file_main(int number_chunk, int samples_taken) {
 			printf("Warning!! Write in FIFO is not atomic\n");
 		}
 	}
-	
     return 0;
 }
-
-
 \end{lstlisting}
 
 

@@ -17,7 +17,7 @@
 \contentsline {subsection}{\numberline {2.2.1}BeagleBone Black}{10}{subsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.1.1}Versiones BeagleBoneBlack}{11}{subsubsection.2.2.1.1}
 \contentsline {subsection}{\numberline {2.2.2}Bus SPI}{11}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}ADS1198}{13}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.3}ADS1198}{14}{subsection.2.2.3}
 \contentsline {subsubsection}{\numberline {2.2.3.1}Caracter\IeC {\'\i }sticas t\'ecnicas}{14}{subsubsection.2.2.3.1}
 \contentsline {subsection}{\numberline {2.2.4}Analizador l\'ogico Saleae}{16}{subsection.2.2.4}
 \contentsline {subsection}{\numberline {2.2.5}Simulador de pacientes}{17}{subsection.2.2.5}
@@ -32,29 +32,35 @@
 \contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{28}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Device Tree}{29}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{30}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{32}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}Ecosistema software}{35}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{37}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{41}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{43}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{45}{subsection.3.4.4}
-\contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{47}{chapter.4}
-\contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{47}{section.4.1}
-\contentsline {section}{\numberline {4.2}Recepci\'on de datos}{49}{section.4.2}
-\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{51}{section.4.3}
-\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{52}{section.4.4}
-\contentsline {section}{\numberline {4.5}Identificaci\'on complejo QRS}{55}{section.4.5}
-\contentsline {section}{\numberline {4.6}Almacenamiento de ECGs}{56}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Animaci\'on de ECGs}{56}{subsection.4.6.1}
-\contentsline {section}{\numberline {4.7}Incidencias}{57}{section.4.7}
-\contentsline {section}{\numberline {4.8}Ecosistema de streaming}{59}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Caracter\IeC {\'\i }sticas del servidor}{59}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Caracter\IeC {\'\i }sticas de la base de datos}{59}{subsection.4.8.2}
-\contentsline {subsection}{\numberline {4.8.3}Interpretaci\'on de datos}{61}{subsection.4.8.3}
-\contentsline {chapter}{\numberline {5}Resultados}{63}{chapter.5}
-\contentsline {section}{\numberline {5.1}Conclusiones}{63}{section.5.1}
-\contentsline {section}{\numberline {5.2}Conclusions}{64}{section.5.2}
-\contentsline {chapter}{\numberline {A}C\'odigo}{65}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}Edici\'on}{65}{section.Alph1.1}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{67}{appendix*.61}
-\contentsline {chapter}{Lista de acr\'onimos}{68}{appendix*.61}
+\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{31}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Ecosistema software}{34}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{36}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{36}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Guardado de muestras en memoria}{36}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}Lectura y transmisi\'on de muestras}{37}{subsection.3.4.4}
+\contentsline {chapter}{\numberline {4}Aplicaci\'on Android}{39}{chapter.4}
+\contentsline {section}{\numberline {4.1}Env\IeC {\'\i }o de datos}{39}{section.4.1}
+\contentsline {section}{\numberline {4.2}Recepci\'on de datos}{41}{section.4.2}
+\contentsline {section}{\numberline {4.3}Mejoras desarrolladas}{43}{section.4.3}
+\contentsline {section}{\numberline {4.4}Renovaci\'on visual}{44}{section.4.4}
+\contentsline {section}{\numberline {4.5}Identificaci\'on complejo QRS}{47}{section.4.5}
+\contentsline {section}{\numberline {4.6}Almacenamiento de ECGs}{48}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Animaci\'on de ECGs}{48}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Incidencias}{49}{section.4.7}
+\contentsline {section}{\numberline {4.8}Ecosistema de streaming}{51}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Caracter\IeC {\'\i }sticas del servidor}{51}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Caracter\IeC {\'\i }sticas de la base de datos}{51}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.3}Interpretaci\'on de datos}{53}{subsection.4.8.3}
+\contentsline {chapter}{\numberline {5}Resultados}{55}{chapter.5}
+\contentsline {section}{\numberline {5.1}Conclusiones}{55}{section.5.1}
+\contentsline {section}{\numberline {5.2}Conclusions}{56}{section.5.2}
+\contentsline {chapter}{\numberline {A}Recursos software}{57}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Device Tree Overlay}{57}{section.Alph1.1}
+\contentsline {section}{\numberline {A.2}Inicializaci\'on del ADS1198}{58}{section.Alph1.2}
+\contentsline {section}{\numberline {A.3}Comunicaci\'on SPI}{63}{section.Alph1.3}
+\contentsline {section}{\numberline {A.4}Guardado de muestras en memoria}{66}{section.Alph1.4}
+\contentsline {section}{\numberline {A.5}Lectura de muestras en memoria}{69}{section.Alph1.5}
+\contentsline {chapter}{\numberline {B}Recursos Android}{71}{appendix.Alph2}
+\contentsline {section}{\numberline {B.1}Aplicaci\'on Python}{71}{section.Alph2.1}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{73}{appendix*.48}
+\contentsline {chapter}{Lista de acr\'onimos}{74}{appendix*.48}

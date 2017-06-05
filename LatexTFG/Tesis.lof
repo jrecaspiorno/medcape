@@ -11,7 +11,7 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Vista general de una BeagleBone Black\relax }}{9}{figure.caption.11}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Especificaci\'on hardware BeagleBone Black\relax }}{12}{figure.caption.12}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Est\'andar de comunicaci\'on SPI\relax }}{13}{figure.caption.13}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Configuraciones posibles de fase y polaridad en el est\'andar SPI\relax }}{14}{figure.caption.14}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Configuraciones posibles de fase y polaridad en el est\'andar SPI\relax }}{13}{figure.caption.14}
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Diagrama de funcionamiento interno ADS1198\relax }}{15}{figure.caption.15}
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Software multiplataforma proporcionado por Saleae\relax }}{16}{figure.caption.16}
 \contentsline {figure}{\numberline {2.10}{\ignorespaces Simulador de ECG utilizado durante el desarrollo del proyecto\relax }}{17}{figure.caption.17}
@@ -24,40 +24,28 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{25}{figure.caption.24}
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema hardware del PRU de la BBB\relax }}{26}{figure.caption.25}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{28}{figure.caption.26}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Ejemplo simple de un fichero \texttt {.dts}\relax }}{30}{figure.caption.27}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Device Tree Overlay del proyecto para la BBB\relax }}{31}{figure.caption.28}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto\relax }}{32}{figure.caption.29}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{35}{figure.caption.34}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Bancos de memoria del PRU\relax }}{36}{figure.caption.35}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Inicializaci\'on ADS en el c\'odigo original en C\relax }}{38}{figure.caption.36}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Funci\'on SDATAC en c\'odigo ensamblador\relax }}{38}{figure.caption.37}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Funci\'on SET\_ADS\_SAMPLE\_RATE en c\'odigo ensamblador\relax }}{39}{figure.caption.38}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Funci\'on SET\_INTERNAL\_REFERENCE en c\'odigo ensamblador\relax }}{39}{figure.caption.39}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Funci\'on SEND\_RDATAC en c\'odigo ensamblador\relax }}{40}{figure.caption.40}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Comunicaci\'on SPI en c\'odigo ensamblador\relax }}{41}{figure.caption.41}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (primera parte)\relax }}{42}{figure.caption.42}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Funci\'on SPICLK\_LOOP en c\'odigo ensamblador (segunda parte)\relax }}{42}{figure.caption.43}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (primera parte)\relax }}{44}{figure.caption.44}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Funci\'on STORE\_RAM en c\'odigo ensamblador (segunda parte)\relax }}{44}{figure.caption.45}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Representaci\'on de la traza del fichero binario en Octave\relax }}{45}{figure.caption.46}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Funci\'on principal del programa \texttt {mem2file.c} desarrollado en C\relax }}{46}{figure.caption.47}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto\relax }}{31}{figure.caption.27}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{34}{figure.caption.32}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Bancos de memoria del PRU\relax }}{35}{figure.caption.33}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Representaci\'on de la traza del fichero binario en Octave\relax }}{37}{figure.caption.34}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{48}{figure.caption.48}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Programa desarrollado en Python \texttt {BTConnection.py}\relax }}{49}{figure.caption.49}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{50}{figure.caption.50}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Fragmento del c\'odigo que ejecuta el hilo encargado de la recepci\'on de datos\relax }}{51}{figure.caption.51}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Pantallas principales de la aplicaci\'on Android\relax }}{54}{figure.caption.52}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Pantalla inicial de autentificaci\'on}}}{54}{subfigure.5.1}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Men\'u principal de la aplicaci\'on}}}{54}{subfigure.5.2}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Listado de pacientes de un doctor determinado}}}{54}{subfigure.5.3}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Listado completo del registro de ECGs de un paciente}}}{54}{subfigure.5.4}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Algoritmo de detecci\'on de complejos QRS usado para detectar PPM \relax }}{55}{figure.caption.53}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Interpretaci\'on de un ECG almacenado en el servidor\relax }}{56}{figure.caption.54}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Zoom de una secci\'on de un ECG de un paciente\relax }}{57}{figure.caption.55}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Notificaci\'on de la aplicaci\'on en caso de detectar indidencias\relax }}{58}{figure.caption.56}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Registro de incidencias de un paciente (a la derecha)\relax }}{58}{figure.caption.57}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Fragmento del c\'odigo que ejecuta el servidor desarrollado en \texttt {Node.js}\relax }}{60}{figure.caption.58}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Almacenamiento en la base de datos de un ECG\relax }}{61}{figure.caption.59}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{62}{figure.caption.60}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{40}{figure.caption.35}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Programa desarrollado en Python \texttt {BTConnection.py}\relax }}{41}{figure.caption.36}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{42}{figure.caption.37}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Fragmento del c\'odigo que ejecuta el hilo encargado de la recepci\'on de datos\relax }}{43}{figure.caption.38}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Pantallas principales de la aplicaci\'on Android\relax }}{46}{figure.caption.39}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Pantalla inicial de autentificaci\'on}}}{46}{subfigure.5.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Men\'u principal de la aplicaci\'on}}}{46}{subfigure.5.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Listado de pacientes de un doctor determinado}}}{46}{subfigure.5.3}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Listado completo del registro de ECGs de un paciente}}}{46}{subfigure.5.4}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Algoritmo de detecci\'on de complejos QRS usado para detectar PPM \relax }}{47}{figure.caption.40}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Interpretaci\'on de un ECG almacenado en el servidor\relax }}{48}{figure.caption.41}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Zoom de una secci\'on de un ECG de un paciente\relax }}{49}{figure.caption.42}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Notificaci\'on de la aplicaci\'on en caso de detectar indidencias\relax }}{50}{figure.caption.43}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Registro de incidencias de un paciente (a la derecha)\relax }}{50}{figure.caption.44}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Fragmento del c\'odigo que ejecuta el servidor desarrollado en \texttt {Node.js}\relax }}{52}{figure.caption.45}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Almacenamiento en la base de datos de un ECG\relax }}{53}{figure.caption.46}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{54}{figure.caption.47}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

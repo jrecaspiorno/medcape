@@ -141,13 +141,9 @@ Cada uno de los pines físicos que incorpora la placa tiene una función determina
 
 Un \ac{DT} es una descripción del hardware de un sistema. Debería incorporar el nombre de la CPU, la configuración de memoria, y cualquier periférico (interno y externo). Un DT no deberia ser usado para describir software, a pesar de que listar los modulos harware pueda causar que estos se carguen. Es preciso recordar que los DTs son neutros en lo que se refiere al sistema operativo, es decir, no deberían incluir nada específico de Linux por ejemplo.
 
-
-\figura{Vectorial/dt}{width=1\textwidth}{fig:dt}%
-{Ejemplo simple de un fichero \texttt{.dts}}
-
 Un DT representa la configuración hardware como si de una jerarquía de nodos se tratase. Cada nodo puede contener propiedades y subnodos. Las propiedades se denominan arrays de bytes, los cuales pueden contener strings, números (big-endian), secuencias arbitrarias de bytes, y cualquier combinación de estos. Para intentar clarificar un concepto tan abstracto, trataremos de realizar una analogía con un ejemplo del mundo real; un DT podría visualizarse como un sistema de ficheros cualquiera, en el que los nodos serían los directorios, y las propiedades serían los ficheros.
 
-Los DT generalmente se encuentran en un formato textual conocido como Device Tree Source (DTS) y son almacenados en ficheros con extensión \texttt{.dts}. La sintaxis DTS es como la de C, con llaves para agrupar código y punto y coma para concluir cada línea. En la [Fig \ref{fig:dt}] puede apreciarse un ejemplo muy simple de este tipo de ficheros.
+Los DT generalmente se encuentran en un formato textual conocido como Device Tree Source (DTS) y son almacenados en ficheros con extensión \texttt{.dts}. La sintaxis DTS es como la de C, con llaves para agrupar código y punto y coma para concluir cada línea.
 
 Cabe destacar que los DTS requieren de punto y coma tras el cierre de una llave. El formato del binario compilado es denominado Flattened Device Tree (DFT) o Device Tree Blob (DTB), y se almacena en ficheros con extensión \texttt{.dtb}. 
 
@@ -163,10 +159,10 @@ Pero cuando una placa como la BBB es compatible con accesorios expandibles, el p
 Lo que se necesita es una forma de describir estos componentes opcionales utilizando un DT parcial, y luego poder construir un árbol completo tomando un DT como base y añadiendo una serie de elementos opcionales. 
 Estos elementos opcionales son denominados \textit{overlays}. Al DT que se forma siguiendo este proceso se le denomina \ac{DTO}.
 
-\figura{Vectorial/dto}{width=1\textwidth}{fig:dto}%
-{Device Tree Overlay del proyecto para la BBB}
+%\figura{Vectorial/dto}{width=1\textwidth}{fig:dto}%
+%{Device Tree Overlay del proyecto para la BBB}
 
-Para nuestro proyecto, fue necesaria la creación y personalización de un DTO; la base sobre la empezamos esta creación fue la que se utiliza en el capítulo 13 de Exploring BBB  \citep{exploringBBB}. A partir de ahi se realizaron diversas modificaciones y expansiones para obtener un DTO hecho a medida acorde con las necesidades del proyecto. El resultado final del DTO que se obtuvo finalmente y que es utilizado actualmente en la BBB se ilustra en la [Fig \ref{fig:dto}]. El código final fue comentado de modo que pudiese ser interpretado y comprendido de forma sencilla. Como puede apreciarse en la imagen, el primer paso es indicar cuales van a ser los pines que se van a utilizar de forma exclusiva. A continuación se le asigna un modo a cada uno de los pines anteriormente indicado. De esta forma, el modo que se asigna, la señal que va a ir asociada a ese pin concreto y otra información complementaria puede ser encontrada en el código comentado. Cabe destacar que existen ciertas resticciones a la hora de asignar cierto modo a un pin determinado, ya que no a todos los pines se les puede asignar cualquier modo. En nuestro caso, solo determinados pines de la BBB tienen acceso a determinados modos que permiten interacciones tanto con la PRU0, como con la PRU1. Por ejemplo, el modo \texttt{pr1\_pru0\_pru\_r31\_7} solo puede ser asignado al pin P9\_25 (PRU0), y el modo \texttt{pr1\_pru1\_pru\_r31\_16} solo puede asignarse al pin P9\_26 (PRU1). Los dos ejemplos anteriormente comentados con puestos en práctica en nuestro DTO, aunque la lista de restricciones abarca muchos más modos y pines. Está información puede encontrarse más detallada en la [Fig \ref{fig:restricciones}]. Cabe destacar que este tipo de ficheros \texttt{.dts} sigue siempre una misma estructura en lo que al código respecta, aunque las posibles combinaciones de configuraciones hardware son prácticamente infinitas.
+Para nuestro proyecto, fue necesaria la creación y personalización de un DTO; la base sobre la empezamos esta creación fue la que se utiliza en el capítulo 13 de Exploring BBB  \citep{exploringBBB}. A partir de ahi se realizaron diversas modificaciones y expansiones para obtener un DTO hecho a medida acorde con las necesidades del proyecto. El primer paso es indicar cuales van a ser los pines que se van a utilizar de forma exclusiva. A continuación se le asigna un modo a cada uno de los pines anteriormente indicado. De esta forma, el modo que se asigna, la señal que va a ir asociada a ese pin concreto y otra información complementaria puede ser encontrada en el código comentado. Cabe destacar que existen ciertas resticciones a la hora de asignar cierto modo a un pin determinado, ya que no a todos los pines se les puede asignar cualquier modo. En nuestro caso, solo determinados pines de la BBB tienen acceso a determinados modos que permiten interacciones tanto con la PRU0, como con la PRU1. Por ejemplo, el modo \texttt{pr1\_pru0\_pru\_r31\_7} solo puede ser asignado al pin P9\_25 (PRU0), y el modo \texttt{pr1\_pru1\_pru\_r31\_16} solo puede asignarse al pin P9\_26 (PRU1). Los dos ejemplos anteriormente comentados con puestos en práctica en nuestro DTO, aunque la lista de restricciones abarca muchos más modos y pines. Está información puede encontrarse más detallada en la [Fig \ref{fig:restricciones}]. Cabe destacar que este tipo de ficheros \texttt{.dts} sigue siempre una misma estructura en lo que al código respecta, aunque las posibles combinaciones de configuraciones hardware son prácticamente infinitas. El fichero DTO utilizado en el proyecto puede apreciarse en el Apéndice \ref{ap1:dto};
 
 \figura{Vectorial/restricciones}{width=1\textwidth}{fig:restricciones}%
 {Restricciones en la asignación de modos a pines relevantes para el proyecto}
@@ -286,52 +282,48 @@ Una vez es asimilado el modo de funcionamiento del ecosistema, aunque sólo sea d
 %-------------------------------------------------------------------
 \label{cap3:sec:inicialización}
 
-Una vez configurado correctamente el DTO (tal y como se comenta en la sección \ref{cap3:subsec:dto}), y realizadas las conexiones físicas pertinentes entre la BBB y el ADS1198, es necesario inicializar el ADS. Inicializar el ADS por software es fundamental. Con inicialización nos referimos a realizar la correcta configuración de una serie de parámetros que permita que ambos dispositivos se puedan comunicar correctamente ya que de no configurarlo con los parámetros adecuados no conseguiríamos establecer ningún tipo de conexión entre ambos, es decir, sería como si ni siquiera estuviesen conectados físicamente. Cabe destacar que la inicialización se realiza en código ensamblador, y a diferencia del lenguaje C, no existen bibliotecas que faciliten al desarrollador una capa superior de abstracción para realizar la tarea.
+Una vez configurado correctamente el DTO (tal y como se comenta en la sección \ref{cap3:subsec:dto}), y realizadas las conexiones físicas pertinentes entre la BBB y el ADS1198, es necesario inicializar el ADS. Inicializar el ADS por software es fundamental. Con inicialización nos referimos a realizar la correcta configuración de una serie de parámetros que permita que ambos dispositivos se puedan comunicar correctamente ya que de no configurarlo con los parámetros adecuados no conseguiríamos establecer ningún tipo de conexión entre ambos, es decir, sería como si ni siquiera estuviesen conectados físicamente. Cabe destacar que la inicialización se realiza en código ensamblador, y a diferencia del lenguaje C, no existen bibliotecas que faciliten al desarrollador una capa superior de abstracción para realizar la tarea. Para más información sobre este proceso de inicialización consultar el Apéndice \ref{ap1:ini};
 
-\figura{Vectorial/iniads}{width=0.9\textwidth}{fig:iniads}%
-{Inicialización ADS en el código original en C}
+%\figura{Vectorial/iniads}{width=0.9\textwidth}{fig:iniads}%
+%{Inicialización ADS en el código original en C}
 
-En la Fig \ref{fig:iniads}] y se ilustra el proceso de inicialización del ADS en en el código del proyecto original. Es un código relativamente sencillo y completamente funcional. Los pasos que se siguen en el código original, desde resetear el ciclo, hasta la lectura de datos en modo continuo, son replicados en código ensamblador. El objetivo es conseguir la misma correcta funcionalidad de la que gozaba el código original.
 
-\figura{Vectorial/senddatac}{width=1\textwidth}{fig:senddatac}%
-{Función SDATAC en código ensamblador}
 
-\figura{Vectorial/samplerate}{width=1\textwidth}{fig:samplerate}%
-{Función SET\_ADS\_SAMPLE\_RATE en código ensamblador}
+%\figura{Vectorial/senddatac}{width=1\textwidth}{fig:senddatac}%
+%{Función SDATAC en código ensamblador}
 
-\figura{Vectorial/intref}{width=1\textwidth}{fig:intref}%
-{Función SET\_INTERNAL\_REFERENCE en código ensamblador}
+%\figura{Vectorial/samplerate}{width=1\textwidth}{fig:samplerate}%
+%{Función SET\_ADS\_SAMPLE\_RATE en código ensamblador}
 
-\figura{Vectorial/rdatac}{width=1\textwidth}{fig:rdatac}%
-{Función SEND\_RDATAC en código ensamblador}
+%\figura{Vectorial/intref}{width=1\textwidth}{fig:intref}%
+%{Función SET\_INTERNAL\_REFERENCE en código ensamblador}
 
-\clearpage 
+%\figura{Vectorial/rdatac}{width=1\textwidth}{fig:rdatac}%
+%{Función SEND\_RDATAC en código ensamblador}
 
-En las anteriores figuras se ilustra un código en ensamblador funcional, utilizado y probado en el presente proyecto, que imita el funcionamiento del código original de inicialización del ADS en C.
+%\clearpage 
+
+
 
 %-------------------------------------------------------------------
 \subsection{Comunicación SPI}
 %-------------------------------------------------------------------
 \label{cap3:sec:comunicacion}
 
-La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subsec:bus}. El proceso de comunicación se realiza en ensamblador también. Comienza dando el valor activo bajo a la señal Chip Select como puede apreciarse en la figura [Fig \ref{fig:spiens}]. A continuación se lee o se escribe un número específico de bits, de forma que se llama a la función SPICLK\_LOOP tantas veces como bits se quieran leer o escribir. Cuando ha concluido este proceso, se da el valor activo alto a la señal Chip Select. De esta forma se indica que ha finalizado una muestra concreta. 
+La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subsec:bus}. El proceso de comunicación se realiza en ensamblador también. Comienza dando el valor activo bajo a la señal Chip Select. A continuación se lee o se escribe un número específico de bits, de forma que se llama a la función SPICLK\_LOOP tantas veces como bits se quieran leer o escribir. Cuando ha concluido este proceso, se da el valor activo alto a la señal Chip Select. De esta forma se indica que ha finalizado una muestra concreta. Para mñas información sobre el proceso de comunicación SPI que se realiza en código ensamblador consultar el Apéndice \ref{ap1:com};
 
-\figura{Vectorial/spiens}{width=1\textwidth}{fig:spiens}%
-{Comunicación SPI en código ensamblador}
+%\figura{Vectorial/spiens}{width=1\textwidth}{fig:spiens}%
+%{Comunicación SPI en código ensamblador}
 
-Cabe destacar que cada registro en ensamblador tiene una capacidad de 4 bytes. Debido al tamaño de cada muestra que se recoge, es necesario almacenar esta información en 7 registros. 
+%\clearpage
 
-Esta información se refleja en forma de código en las figuras [Fig \ref{fig:loop1}] y [Fig \ref{fig:loop2}]. En estas figuras se muestra el código de la función SPICLK\_LOOP escrito en código ensamblador, en la cual se refleja el proceso de iteración sobre cada uno de los bits concretos, así como el uso de todos los registros anteriormente nombrados.
+%\figura{Vectorial/loop1}{width=1\textwidth}{fig:loop1}%
+%{Función SPICLK\_LOOP en código ensamblador (primera parte)}
 
-\clearpage
+%\figura{Vectorial/loop2}{width=1\textwidth}{fig:loop2}%
+%{Función SPICLK\_LOOP en código ensamblador (segunda parte)}
 
-\figura{Vectorial/loop1}{width=1\textwidth}{fig:loop1}%
-{Función SPICLK\_LOOP en código ensamblador (primera parte)}
-
-\figura{Vectorial/loop2}{width=1\textwidth}{fig:loop2}%
-{Función SPICLK\_LOOP en código ensamblador (segunda parte)}
-
-\clearpage
+%\clearpage
 
 %-------------------------------------------------------------------
 \subsection{Guardado de muestras en memoria}
@@ -344,18 +336,18 @@ Este proceso de guardado de muestras en memoria se realiza en ensamblador. Para 
 
 Una vez se guardan las muestras, se lanza una interrupción del PRU hacia el programa principal en C, el cual se encuentra en ejecución y a la espera de una interrupción por parte del código ensamblador. Una vez capturada esta interrupción, la ejecución del código en C puede reanudarse (tal y como se explica en la sección \ref{cap3:sec:ecosistema}).
 
-Todo este proceso se refleja en el código ensamblador, concretamente en la función STORE\_DATA. El contenido completo de esta función se muestra en las figuras [Fig \ref{fig:ram1}] y [Fig \ref{fig:ram2}].
+Todo este proceso se refleja en el código ensamblador ilustrado con detalle en el Apéndice \ref{ap1:guardado}.
 
-\clearpage
+%\clearpage
 
 
-\figura{Vectorial/ram1}{width=0.9\textwidth}{fig:ram1}%
-{Función STORE\_RAM en código ensamblador (primera parte)}
+%\figura{Vectorial/ram1}{width=0.9\textwidth}{fig:ram1}%
+%{Función STORE\_RAM en código ensamblador (primera parte)}
 
-\figura{Vectorial/ram2}{width=0.9\textwidth}{fig:ram2}%
-{Función STORE\_RAM en código ensamblador (segunda parte)}
+%\figura{Vectorial/ram2}{width=0.9\textwidth}{fig:ram2}%
+%{Función STORE\_RAM en código ensamblador (segunda parte)}
 
-\clearpage
+%\clearpage
 
 %-------------------------------------------------------------------
 \subsection{Lectura y transmisión de muestras}
@@ -373,10 +365,10 @@ Inicialmente, este programa crea el fichero en el que se guardarán los datos de 
 
 El programa \texttt{mem2file.c} se asegura que contengan este identificador en el lugar exacto en el que corresponde. En caso de no encontrarlo, significa que no se ha escrito esta información aun, por lo que el programa sigue en bucle de espera hasta que la información se escriba. Sin embargo, si se encuentran estos dos bytes en el lugar específico tras cada grupo de muestras, es el propio programa el encargado de sustituir este sello por otros bytes distintos, a modo a su vez de indicador de que la muestra ha sido leída éxitosamente. Casi como si de otro sello (para confirmar la lectura) se tratase, se sustituyen los antiguos bytes por \texttt{00}.
 
-Posteriormente se abre la tubería de Python (brevemente comentada en la sección \ref{cap3:sec:ecosistema})\footnote{La capacidad máxima de esta tubería es de 4KB}, y trata de enviarse la información por la misma en caso de haberse abierto correctamente. En la [Fig \ref{fig:mem2file}] se ilustra el proceso completo tras haberlo introducido brevemente.
+Posteriormente se abre la tubería de Python (brevemente comentada en la sección \ref{cap3:sec:ecosistema})\footnote{La capacidad máxima de esta tubería es de 4KB}, y trata de enviarse la información por la misma en caso de haberse abierto correctamente. En el Apéndice \ref{ap1:lectura} se ilustra el proceso completode forma visual.
 
-\figura{Vectorial/mem2file}{width=1.1\textwidth}{fig:mem2file}%
-{Función principal del programa \texttt{mem2file.c} desarrollado en C}
+%\figura{Vectorial/mem2file}{width=1.1\textwidth}{fig:mem2file}%
+%{Función principal del programa \texttt{mem2file.c} desarrollado en C}
 
 %\medskip
 

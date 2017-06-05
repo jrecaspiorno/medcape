@@ -57,8 +57,14 @@
 \BOOKMARK [0][-]{chapter.5}{Resultados}{}% 57
 \BOOKMARK [1][-]{section.5.1}{Conclusiones}{chapter.5}% 58
 \BOOKMARK [1][-]{section.5.2}{Conclusions}{chapter.5}% 59
-\BOOKMARK [0][-]{appendix.Alph1}{C\363digo}{}% 60
-\BOOKMARK [1][-]{section.Alph1.1}{Edici\363n}{appendix.Alph1}% 61
-\BOOKMARK [0][-]{appendix*.61}{Bibliograf\355a}{}% 62
-\BOOKMARK [0][-]{appendix*.61}{Lista de acr\363nimos}{}% 63
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 64
+\BOOKMARK [0][-]{appendix.Alph1}{Recursos software}{}% 60
+\BOOKMARK [1][-]{section.Alph1.1}{Device Tree Overlay}{appendix.Alph1}% 61
+\BOOKMARK [1][-]{section.Alph1.2}{Inicializaci\363n del ADS1198}{appendix.Alph1}% 62
+\BOOKMARK [1][-]{section.Alph1.3}{Comunicaci\363n SPI}{appendix.Alph1}% 63
+\BOOKMARK [1][-]{section.Alph1.4}{Guardado de muestras en memoria}{appendix.Alph1}% 64
+\BOOKMARK [1][-]{section.Alph1.5}{Lectura de muestras en memoria}{appendix.Alph1}% 65
+\BOOKMARK [0][-]{appendix.Alph2}{Recursos Android}{}% 66
+\BOOKMARK [1][-]{section.Alph2.1}{Aplicaci\363n Python}{appendix.Alph2}% 67
+\BOOKMARK [0][-]{appendix*.48}{Bibliograf\355a}{}% 68
+\BOOKMARK [0][-]{appendix*.48}{Lista de acr\363nimos}{}% 69
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 70

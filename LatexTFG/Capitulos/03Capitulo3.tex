@@ -27,11 +27,23 @@ Para la correcta funcionalidad del proyecto, ha sido necesario configurar el har
 %-------------------------------------------------------------------
 \label{cap3:sec:inicial}
 
-Tras haber realizado la elección del tema en el que se basaría nuestro trabajo de fin de grado, así como tras la elección del director que dirigiría dicho trabajo, estabamos ansiosos de empezar lo antes posible e introducirnos en la materia. Nos pareció apasionante la idea de poder desarrollar software para dispositivos empotrados, y aun más, sabiendo que el campo con el que estaría íntimamente relacionado sería la medicina. Tras los sabios consejos que nos transmitió Joaquín sobre que placa concreta usar, de que hardware podríamos disponer para la realización del proyecto, así como el software que se nos podría facilitar, estabamos decididos a comenzar. La placa hardware sobre la que desarrollariamos finalmente se trataba de una BeagleBone Black.
+Tras haber realizado la elección del tema en el que se basaría nuestro trabajo de fin de grado, así como tras la elección del director que dirigiría dicho trabajo, estabamos ansiosos de empezar lo antes posible e introducirnos en la materia. Nos pareció apasionante la idea de poder desarrollar software para dispositivos empotrados, y aun más, sabiendo que el campo con el que estaría íntimamente relacionado sería la medicina. Tras los sabios consejos que nos transmitió Joaquín sobre que placa concreta usar, de que hardware podríamos disponer para la realización del proyecto, así como el software que se nos podría facilitar, estabamos decididos a comenzar.
 
 Inicialmente, Joaquín nos proporcionó un pequeño proyecto sobre el que poder comenzar a trabajar y sentar las bases de un proyecto mucho mayor. Este proyecto además podía funcionar correctamente con diversos chips de Texas Instruments,concretamente nosotros escogimos el ADS1198. Este dispositivo electrónico es el encargado de realizar el muestreo y de realizar las conversiones con un \ac{ADC}. El código proporcionado era relativamente sencillo y fácil de entender. Se trataba de un programa realizado en C capaz de leer en espacio de usuario del dispositivo (en nuestro caso la BBB). Es decir, era capaz de recibir y tratar toda la información recibida de forma continua por el ADS1198. Hasta aquí todo es relativamente sencillo; gracias al módulo del kernel (para la comunicación SPI) del Debian de la BBB y al programa de usuario en C era posible gestionar casi toda la información recibida de las muestras simuladas y realizar el tratamiento pertinente.
 
-
+A continuación se muestra el \textbf{pseudocódigo} del programa original en C:
+\begin{algorithm}
+\SetAlgoLined
+ \textit{initializeGPIO}\;
+ \textit{configurateSPI}()\;
+ \textit{resetADS}()\;
+ \textit{setSampleRate}(1KHz)\;
+ \textit{enableInternalReference}()\;
+ \textit{readDataContinuously}()\;
+ \textit{closeSPI}()\;
+ \textit{StopReadDataContinuously}()\;
+ \textit{printTrace}()\;
+\end{algorithm}
 
 %-------------------------------------------------------------------
 \subsection{Objetivos}
@@ -66,12 +78,11 @@ Es una forma muy visual de ilustrar al lector, de las consecuencias de trabajar 
 
 El conjunto total de muestras que se perdía durante la transmisión de información era variable según distintas condiciones y factores externos que influyesen en el momento de la recopilación de información. Generalmente, si únicamente se ejecutaba el programa de usuario sin tener otras aplicaciones que consumiesen muchos recursos tanto de memoria como de cálculo computacional  en la BBB, la suma total de muestras perdidas podía encontrarse entre el 1 y el 2\% del total de muestras generadas. Sin embargo, si mientras se ejecutaba el programa en C, se ejecutaba algún otro programa que necesitase algún tipo de recurso para ser ejecutado, el número de muestras perdidas por la lectura en espacio de usuario podía dispararse. 
 
-Observamos que al ejecutar incluso ciertos comandos de consola, podría llegar a darse la situación anteriormente nombrada. Suponiendo que la ejecución del programa se realiza sobre un sistema operativo anfitrión con alguna distribución linux ejecutándose (en nuestro caso se trataba de una distribución Debian especial para la placa BBB), si tratabamos de ejecutar un comando como \texttt{top} \footnote{Más información sobre el comando top disponible en \href{https://linux.die.net/man/1/top}{https://linux.die.net/man/1/top}} (que muestra las tareas que esten ejecutándose en la máquina anfitriona en tiempo real y actualizadolas en intervalos cortos de tiempo como puede apreciarse en la [Fig \ref{fig:top}]), el número de muestras perdidas aumentaba de forma exponencial. Es decir, para que las pérdidas realmente no fuesen significativas, el dispositivo sobre el que se ejecutase el programa, no debería estar ejecutándo nada adicional, o al menos no muchas más aplicaciones. Siendo conscientes de la baja probabilidad de que esta situación se diese en un entorno real, sabíamos que algo teníamos que hacer para evitar esa pérdida de muestras en cualquier situación. Esta pérdida era básicamente producida por interrupciones que lanzaba el propio sistema operativo anfitrión cuando fuese preciso, otorgando la \ac{CPU} a otros procesos que no fuesen el programa que recogía las muestras durante cierto tiempo, suficiente para significar una pérdida representativa.
+Observamos que al ejecutar incluso ciertos comandos de consola, podría llegar a darse la situación anteriormente nombrada. Suponiendo que la ejecución del programa se realiza sobre un sistema operativo anfitrión con alguna distribución linux ejecutándose (en nuestro caso se trataba de una distribución Debian especial para la placa BBB), si tratabamos de ejecutar un comando como \texttt{top} \footnote{Más información sobre el comando top disponible en \href{https://linux.die.net/man/1/top}{https://linux.die.net/man/1/top}} (que muestra las tareas que esten ejecutándose en la máquina anfitriona en tiempo real y actualizadolas en intervalos cortos de tiempo como puede apreciarse en la [Fig \ref{fig:top}]), el número de muestras perdidas aumentaba de forma exponencial. Es decir, para que las pérdidas realmente no fuesen significativas, el dispositivo sobre el que se ejecutase el programa, no debería estar ejecutándo nada adicional, o al menos no muchas más aplicaciones. Siendo conscientes de la baja probabilidad de que esta situación se diese en un entorno real, sabíamos que algo teníamos que hacer para evitar esa pérdida de muestras en cualquier situación.
 
 \figura{Vectorial/top}{width=1\textwidth}{fig:top}%
 {Ejemplo de salida al ejecutar comando \texttt{top} en una terminal linux}
 
-Sabiendo que el sistema operativo no tenia por qué garantizarnos la CPU para el programa de usuario durante la mayor parte del tiempo que este se encuentra en ejecución, tuvimos que investigar la mejor forma de poder solucionar este problema.
 
 %-------------------------------------------------------------------
 \subsection{Alternativas}
@@ -88,7 +99,7 @@ Una vez estabamos decididos a mantener el sistema operativo, la solución tenía q
 A continuación se enumeran los motivos por los que escogimos recurrir a las PRUs:
 
 \begin{itemize}
-  \item Tienen acceso a los pins, así como a la memoria interna de la BBB y a los periféricos del principal procesador principal que incorpora.
+  \item Tienen acceso a los pines, así como a la memoria interna de la BBB y a los periféricos del principal procesador principal que incorpora.
   \item Estan diseñados para proveer software específico para periféricos como parte del sistema PRU-ICSS (Programmable Real-time Unit Industrial Control SubSystem).
   \item Son capaces de implementar soluciones relativamente simples a problemas complejos.
   \item Consta de un gran ancho de banda para comunicarse con la CPU principal y sus controladores, por lo que es improbable que se produzca el fenómeno conocido como cuello de botella. \footnote{Se denomina cuello de botella a la situación que se presenta cuando en un proceso productivo, una fase de producción es más lenta que otras, lo que ralentiza el proceso de producción global.}
@@ -159,7 +170,7 @@ Cabe destacar que los DTS requieren de punto y coma tras el cierre de una llave.
 %-------------------------------------------------------------------
 \label{cap3:subsec:dto}
 
-Un SoC (System-on-Chip) moderno es un dispositivo muy complejo; un DT completo podría suponer cientos de líneas de código. Situar un SoC en una placa junto a otros componentes solo hace que las cosas sean aun más complejas. Para que sea relativamente manejable, especialmente si hay dispositivos relaciones que comparten componentes, tiene sentido diferenciar los elementos comunes en ficheros con extensión \texttt{.dtsi}, para que sean incluidos desde los ficheros \texttt{.dts} que los requiriesen.
+Un SoC (System-on-Chip) moderno es un dispositivo muy complejo; un DT completo podría suponer cientos de líneas de código. Situar un SoC en una placa junto a otros componentes solo hace que las cosas sean aun más complejas. Para que sea relativamente manejable, especialmente si hay dispositivos relacionados que comparten componentes, tiene sentido diferenciar los elementos comunes en ficheros con extensión \texttt{.dtsi}, para que sean incluidos desde los ficheros \texttt{.dts} que los requiriesen.
 
 Pero cuando una placa como la BBB es compatible con accesorios expandibles, el problema puede ser aun más complejo. En última instancia, cada configuración posible requiere un DT para ser descrita, pero una vez que se tenga en cuenta el hardware de base y las expansiones que requieren el uso de unos pines GPIO determinados que pueden ser compartidos por otras configuraciones diferentes, el número de combinaciones posibles comienza a multiplicarse rápidamente.
 
@@ -317,7 +328,7 @@ Una vez configurado correctamente el DTO (tal y como se comenta en la sección \r
 %-------------------------------------------------------------------
 \label{cap3:sec:comunicacion}
 
-La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subsec:bus}. El proceso de comunicación se realiza en ensamblador también. Comienza dando el valor activo bajo a la señal Chip Select. A continuación se lee o se escribe un número específico de bits, de forma que se llama a la función SPICLK\_LOOP tantas veces como bits se quieran leer o escribir. Cuando ha concluido este proceso, se da el valor activo alto a la señal Chip Select. De esta forma se indica que ha finalizado una muestra concreta. Para mñas información sobre el proceso de comunicación SPI que se realiza en código ensamblador consultar el Apéndice \ref{ap1:com};
+La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subsec:bus}. El proceso de comunicación se realiza en ensamblador también. Comienza dando el valor activo bajo a la señal Chip Select. A continuación se lee o se escribe un número específico de bits, de forma que se llama a la función SPICLK\_LOOP tantas veces como bits se quieran leer o escribir. Cuando ha concluido este proceso, se da el valor activo alto a la señal Chip Select. De esta forma se indica que ha finalizado una muestra concreta. Para más información sobre el proceso de comunicación SPI que se realiza en código ensamblador consultar el Apéndice \ref{ap1:com};
 
 %\figura{Vectorial/spiens}{width=1\textwidth}{fig:spiens}%
 %{Comunicación SPI en código ensamblador}
@@ -339,7 +350,7 @@ La comunicación SPI funciona tal y como se explica en la sección \ref{cap2:subse
 
 Según se van procesando las muestras, es necesario almacenarlas en algun sitio, para luego poder acceder a ellas desde el programa en C, del que se habla en la sección \ref{cap3:sec:lectura} (que a su vez vuelve a transmitir la información a otras vías). Es en este caso cuando entran en juego los bancos de memoria del PRU, en la que se almacenan de forma temporal todas las muestras que se recogen.
 
-Este proceso de guardado de muestras en memoria se realiza en ensamblador. Para guardar la información de una muestra completa, se almacena la información almacenada en cada uno de los registros indicados en la seccion \ref{cap3:sec:comunicacion}. Es decir, una vez todos estos registros están rellenos con la información de las muestras, el siguiente paso es el almacenamiento en memoria de cada uno de estos registros, que una vez guardados en posiciones de memoria consecutivas, reflejan el contenido de una muestra completa. 
+Este proceso de guardado de muestras en memoria se realiza en ensamblador. Para guardar la información de una muestra completa, se almacena la información almacenada en los registros pertinentes. Es decir, una vez todos los registros precisos están rellenos con la información de las muestras, el siguiente paso es el almacenamiento en memoria de cada uno de estos registros, que una vez guardados en posiciones de memoria consecutivas, reflejan el contenido de una muestra completa. 
 
 Una vez se guardan las muestras, se lanza una interrupción del PRU hacia el programa principal en C, el cual se encuentra en ejecución y a la espera de una interrupción por parte del código ensamblador. Una vez capturada esta interrupción, la ejecución del código en C puede reanudarse (tal y como se explica en la sección \ref{cap3:sec:ecosistema}).
 
@@ -364,7 +375,7 @@ Todo este proceso se refleja en el código ensamblador ilustrado con detalle en e
 \figura{Vectorial/octave}{width=1\textwidth}{fig:octave}%
 {Representación de la traza del fichero binario en Matlab}
 
-Como ya se adelantaba en la sección \ref{cap3:sec:guardado}, se ha desarrollado un programa en C encargado de leer la información de las muestras almacenadas en el banco de memoria del PRU, para posteriormente guardarla en un fichero (se trata de un archivo binario) \footnote{Este fichero binario está limitado por software a un tamaño máximo de 50MB}. La traza del archivo binario puede ser representada mediante ciertos programas como Matlabs u Octave. La [Fig \ref{fig:octave}] muestra la representación de este binario mediante el programa de escritorio Octave (versión para linux).
+Como ya se adelantaba en la sección \ref{cap3:sec:guardado}, se ha desarrollado un programa en C encargado de leer la información de las muestras almacenadas en el banco de memoria del PRU, para posteriormente guardarla en un fichero (se trata de un archivo binario) \footnote{Este fichero binario está limitado por software a un tamaño máximo de 50MB}. La traza del archivo binario puede ser representada mediante ciertos programas como Matlab u Octave. La [Fig \ref{fig:octave}] muestra la representación de este binario mediante el programa de escritorio Octave (versión para linux).
 
 El programa en C está desarrollado a raíz de un ejemplo que se muestra en el cápitulo 13 del libro Exploring BeagleBone \citep{exploringBBB} y tanto ampliado como adaptado para su correcto funcionamiento en el presente proyecto.
 

@@ -18,31 +18,31 @@
 \contentsline {figure}{\numberline {2.11}{\ignorespaces Mult\IeC {\'\i }metro modelo 830L\relax }}{20}{figure.caption.19}
 \contentsline {figure}{\numberline {2.12}{\ignorespaces Otros materiales utilizados\relax }}{20}{figure.caption.20}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Ciclo completo de muestreo reflejado por el software de Saleae\relax }}{22}{figure.caption.21}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Ampliaci\'on de la [Fig \ref {fig:perdida1}]\relax }}{23}{figure.caption.22}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces P\'erdida de una muestra reflejada por el software de Saleae\relax }}{24}{figure.caption.23}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{25}{figure.caption.24}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema hardware del PRU de la BBB\relax }}{27}{figure.caption.25}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{29}{figure.caption.26}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto \citep {exploringBBB}\relax }}{32}{figure.caption.27}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{34}{figure.caption.32}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Bancos de memoria del PRU \citep {exploringBBB}\relax }}{35}{figure.caption.33}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Representaci\'on de la traza del fichero binario en Matlab\relax }}{37}{figure.caption.34}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Ciclo completo de muestreo reflejado por el software de Saleae\relax }}{22}{figure.caption.22}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Ampliaci\'on de la [Fig \ref {fig:perdida1}]\relax }}{23}{figure.caption.23}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces P\'erdida de una muestra reflejada por el software de Saleae\relax }}{24}{figure.caption.24}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{25}{figure.caption.25}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema hardware del PRU de la BBB\relax }}{27}{figure.caption.26}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{29}{figure.caption.27}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto \citep {exploringBBB}\relax }}{32}{figure.caption.28}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{34}{figure.caption.33}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Bancos de memoria del PRU \citep {exploringBBB}\relax }}{35}{figure.caption.34}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Representaci\'on de la traza del fichero binario en Matlab\relax }}{37}{figure.caption.35}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{40}{figure.caption.35}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{42}{figure.caption.36}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Pantallas principales de la aplicaci\'on Android\relax }}{45}{figure.caption.37}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{40}{figure.caption.36}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{42}{figure.caption.37}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Pantallas principales de la aplicaci\'on Android\relax }}{45}{figure.caption.38}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Pantalla inicial de autentificaci\'on}}}{45}{subfigure.3.1}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Men\'u principal de la aplicaci\'on}}}{45}{subfigure.3.2}
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Listado de pacientes de un doctor determinado}}}{45}{subfigure.3.3}
 \contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Listado completo del registro de ECGs de un paciente}}}{45}{subfigure.3.4}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Algoritmo de detecci\'on de complejos QRS usado para detectar PPM \relax }}{46}{figure.caption.38}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Interpretaci\'on de un ECG almacenado en el servidor\relax }}{47}{figure.caption.39}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Zoom de una secci\'on de un ECG de un paciente\relax }}{48}{figure.caption.40}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Notificaci\'on de la aplicaci\'on en caso de detectar indidencias\relax }}{49}{figure.caption.41}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Registro de incidencias de un paciente (a la derecha)\relax }}{49}{figure.caption.42}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Almacenamiento en la base de datos de un ECG\relax }}{51}{figure.caption.43}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{52}{figure.caption.44}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Algoritmo de detecci\'on de complejos QRS usado para detectar PPM \relax }}{46}{figure.caption.39}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Interpretaci\'on de un ECG almacenado en el servidor\relax }}{47}{figure.caption.40}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Zoom de una secci\'on de un ECG de un paciente\relax }}{48}{figure.caption.41}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Notificaci\'on de la aplicaci\'on en caso de detectar indidencias\relax }}{49}{figure.caption.42}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Registro de incidencias de un paciente (a la derecha)\relax }}{49}{figure.caption.43}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Almacenamiento en la base de datos de un ECG\relax }}{51}{figure.caption.44}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{52}{figure.caption.45}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

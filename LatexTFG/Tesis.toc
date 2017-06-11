@@ -27,11 +27,11 @@
 \contentsline {subsection}{\numberline {3.1.1}Objetivos}{22}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}Alternativas}{25}{subsection.3.1.2}
 \contentsline {section}{\numberline {3.2}Programaci\'on en tiempo real}{27}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{27}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}Decisiones de dise\~no}{28}{subsection.3.2.1}
 \contentsline {section}{\numberline {3.3}Configuraci\'on hardware}{28}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Device Tree}{30}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{30}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{31}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.2}Device Tree Overlay}{31}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Conexiones f\IeC {\'\i }sicas}{32}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}Ecosistema software}{34}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Inicizalizaci\'on ADS}{36}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}Comunicaci\'on SPI}{36}{subsection.3.4.2}
@@ -53,19 +53,19 @@
 \contentsline {chapter}{\numberline {5}Resultados}{53}{chapter.5}
 \contentsline {section}{\numberline {5.1}Conclusiones}{53}{section.5.1}
 \contentsline {section}{\numberline {5.2}Conclusions}{54}{section.5.2}
-\contentsline {chapter}{\numberline {A}Recursos software}{55}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}Device Tree Overlay}{55}{section.Alph1.1}
-\contentsline {section}{\numberline {A.2}Inicializaci\'on del ADS1198}{56}{section.Alph1.2}
-\contentsline {section}{\numberline {A.3}Comunicaci\'on SPI}{59}{section.Alph1.3}
-\contentsline {section}{\numberline {A.4}Guardado de muestras en memoria}{61}{section.Alph1.4}
-\contentsline {section}{\numberline {A.5}Lectura de muestras en memoria}{63}{section.Alph1.5}
-\contentsline {chapter}{\numberline {B}Recursos Android}{65}{appendix.Alph2}
-\contentsline {section}{\numberline {B.1}Aplicaci\'on Python}{65}{section.Alph2.1}
-\contentsline {section}{\numberline {B.2}Recepci\'on de datos}{66}{section.Alph2.2}
-\contentsline {section}{\numberline {B.3}C\'odigo servidor}{67}{section.Alph2.3}
-\contentsline {chapter}{\numberline {C}Contribuciones}{69}{appendix.Alph3}
-\contentsline {section}{\numberline {C.1}Contribuciones individuales}{69}{section.Alph3.1}
-\contentsline {subsection}{\numberline {C.1.1}Mario Michiels}{69}{subsection.Alph3.1.1}
-\contentsline {subsection}{\numberline {C.1.2}Cristian Pinto}{71}{subsection.Alph3.1.2}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{73}{appendix*.45}
-\contentsline {chapter}{Lista de acr\'onimos}{74}{appendix*.45}
+\contentsline {chapter}{\numberline {A}Recursos software}{57}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Device Tree Overlay}{57}{section.Alph1.1}
+\contentsline {section}{\numberline {A.2}Inicializaci\'on del ADS1198}{58}{section.Alph1.2}
+\contentsline {section}{\numberline {A.3}Comunicaci\'on SPI}{61}{section.Alph1.3}
+\contentsline {section}{\numberline {A.4}Guardado de muestras en memoria}{63}{section.Alph1.4}
+\contentsline {section}{\numberline {A.5}Lectura de muestras en memoria}{65}{section.Alph1.5}
+\contentsline {chapter}{\numberline {B}Recursos Android}{67}{appendix.Alph2}
+\contentsline {section}{\numberline {B.1}Aplicaci\'on Python}{67}{section.Alph2.1}
+\contentsline {section}{\numberline {B.2}Recepci\'on de datos}{68}{section.Alph2.2}
+\contentsline {section}{\numberline {B.3}C\'odigo servidor}{69}{section.Alph2.3}
+\contentsline {chapter}{\numberline {C}Contribuciones}{71}{appendix.Alph3}
+\contentsline {section}{\numberline {C.1}Contribuciones individuales}{71}{section.Alph3.1}
+\contentsline {subsection}{\numberline {C.1.1}Mario Michiels}{71}{subsection.Alph3.1.1}
+\contentsline {subsection}{\numberline {C.1.2}Cristian Pinto}{73}{subsection.Alph3.1.2}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{75}{appendix*.46}
+\contentsline {chapter}{Lista de acr\'onimos}{76}{appendix*.46}

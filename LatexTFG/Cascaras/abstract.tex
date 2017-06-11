@@ -15,15 +15,24 @@
 
 \begin{FraseCelebre}
 \begin{Frase}
-Encuéntrate y sé tú mismo; \\
-recuerda que no hay nadie como tú
+El ignorante afirma, el sabio duda y reflexiona.
 \end{Frase}
 \begin{Fuente}
-Dale Carnegie
+Aristóteles
 \end{Fuente}
 \end{FraseCelebre}
 
-Aquí va el resumen en inglés.
+The main purpose of the project is to get the reading of samples in real time with very strict deadlines, in order not to lose any sample. The project starts from an application in the user space that had losses in the reception of samples of between 1 and 2\% with respect to the total set of samples originally sent. It was observed that in addition to running this application in the user space if another task was executed in parallel, the number of lost samples was increased. A CPU offloading was necessary.
+
+To achieve this, the BeagleBone Black Programmable Real-Time Unit has been used, which is a hardware specifically designed for this type of operations, i.e., to perform simple tasks in real time. It is mainly programmed in assembly language and facilitates the interaction between the assembler code and an application in the user space.
+
+Once the solution is successfully implemented, loss of samples in the process is avoided. In addition, CPU is successfully offloaded, so that it is possible to execute other tasks in parallel.
+
+Finally, the BeagleBone Black communicates with an Android application 
+through Bluetooth. This application facilitates a patient to collect information from their electrocardiogram, so it is possible for a doctor to analyze and interpret this information even in real time. For the communication between doctor and patients to be possible, it is necessary that both devices have internet connection since the interaction is done through a server, which receives and resends the information. 
+
+\break
+\textbf{Keywords:} ECG, BeagleBone Black, PRU, ADS1198, Android
 
 
 \endinput

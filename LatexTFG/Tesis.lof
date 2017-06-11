@@ -5,29 +5,29 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Visi\'on global del poyecto\relax }}{3}{figure.caption.7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Estructura habitual de la se\~nal ECG durante un ciclo card\IeC {\'\i }aco.\relax }}{6}{figure.caption.8}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Estructura habitual de la se\~nal ECG durante un ciclo card\IeC {\'\i }aco \citep {onda}\relax }}{6}{figure.caption.8}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Estructura anat\'omica del coraz\'on humano\relax }}{7}{figure.caption.9}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Puntos clave en el registro de un ECG\relax }}{8}{figure.caption.10}
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Vista general de una BeagleBone Black\relax }}{9}{figure.caption.11}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Especificaci\'on hardware BeagleBone Black\relax }}{12}{figure.caption.12}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Est\'andar de comunicaci\'on SPI\relax }}{13}{figure.caption.13}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Configuraciones posibles de fase y polaridad en el est\'andar SPI\relax }}{13}{figure.caption.14}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Diagrama de funcionamiento interno ADS1198\relax }}{15}{figure.caption.15}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Est\'andar de comunicaci\'on SPI \citep {spi}\relax }}{13}{figure.caption.13}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Configuraciones posibles de fase y polaridad en el est\'andar SPI\relax }}{14}{figure.caption.14}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Diagrama de funcionamiento interno ADS1198 \citep {ads1198}\relax }}{15}{figure.caption.15}
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Software multiplataforma proporcionado por Saleae\relax }}{16}{figure.caption.16}
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Simulador de ECG utilizado durante el desarrollo del proyecto\relax }}{17}{figure.caption.17}
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Mult\IeC {\'\i }metro modelo 830L\relax }}{19}{figure.caption.19}
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Otros materiales utilizados\relax }}{19}{figure.caption.20}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Simulador de ECG utilizado durante el desarrollo del proyecto\relax }}{18}{figure.caption.17}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Mult\IeC {\'\i }metro modelo 830L\relax }}{20}{figure.caption.19}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Otros materiales utilizados\relax }}{20}{figure.caption.20}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Detecci\'on de p\'erdida de una muestra a trav\'es del software de Saleae\relax }}{22}{figure.caption.21}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces P\'erdida de tiempo producida por p\'erdida de control sobre la CPU\relax }}{23}{figure.caption.22}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces P\'erdida de otra muestra reflejado por el software de Saleae\relax }}{23}{figure.caption.23}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Ciclo completo de muestreo reflejado por el software de Saleae\relax }}{22}{figure.caption.21}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Ampliaci\'on de la [Fig \ref {fig:perdida1}]\relax }}{23}{figure.caption.22}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces P\'erdida de una muestra reflejada por el software de Saleae\relax }}{24}{figure.caption.23}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Ejemplo de salida al ejecutar comando \texttt {top} en una terminal linux\relax }}{25}{figure.caption.24}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema hardware del PRU de la BBB\relax }}{26}{figure.caption.25}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{28}{figure.caption.26}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto\relax }}{31}{figure.caption.27}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Esquema hardware del PRU de la BBB\relax }}{27}{figure.caption.25}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de conexiones f\IeC {\'\i }sicas disponibles en una BBB\relax }}{29}{figure.caption.26}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Restricciones en la asignaci\'on de modos a pines relevantes para el proyecto \citep {exploringBBB}\relax }}{32}{figure.caption.27}
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Conexiones f\IeC {\'\i }sicas necesarias para el proyecto\relax }}{34}{figure.caption.32}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Bancos de memoria del PRU\relax }}{35}{figure.caption.33}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Representaci\'on de la traza del fichero binario en Octave\relax }}{37}{figure.caption.34}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Bancos de memoria del PRU \citep {exploringBBB}\relax }}{35}{figure.caption.33}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Representaci\'on de la traza del fichero binario en Matlab\relax }}{37}{figure.caption.34}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Dongle Bluetooth 4.0 CSR utilizado en la BBB\relax }}{40}{figure.caption.35}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Pantalla principal de la aplicaci\'on Android original\relax }}{42}{figure.caption.36}
@@ -43,6 +43,7 @@
 \contentsline {figure}{\numberline {4.8}{\ignorespaces Registro de incidencias de un paciente (a la derecha)\relax }}{49}{figure.caption.42}
 \contentsline {figure}{\numberline {4.9}{\ignorespaces Almacenamiento en la base de datos de un ECG\relax }}{51}{figure.caption.43}
 \contentsline {figure}{\numberline {4.10}{\ignorespaces Interpretaci\'on de la se\~nal por parte de la aplicaci\'on Android\relax }}{52}{figure.caption.44}
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

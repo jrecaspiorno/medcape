@@ -11,62 +11,65 @@
 \BOOKMARK [1][-]{section.1.1}{Motivaci\363n}{chapter.1}% 11
 \BOOKMARK [1][-]{section.1.2}{Estructura de cap\355tulos}{chapter.1}% 12
 \BOOKMARK [1][-]{section.1.3}{Visi\363n global}{chapter.1}% 13
-\BOOKMARK [1][-]{section.1.4}{Contribuciones}{chapter.1}% 14
-\BOOKMARK [0][-]{chapter.2}{Antecedentes}{}% 15
-\BOOKMARK [1][-]{section.2.1}{Electrocardiograma}{chapter.2}% 16
-\BOOKMARK [2][-]{subsection.2.1.1}{Estructura de un ECG}{section.2.1}% 17
-\BOOKMARK [2][-]{subsection.2.1.2}{Funcionamiento interno del coraz\363n}{section.2.1}% 18
-\BOOKMARK [2][-]{subsection.2.1.3}{Obtenci\363n del ECG}{section.2.1}% 19
-\BOOKMARK [2][-]{subsection.2.1.4}{Utilidades del ECG}{section.2.1}% 20
-\BOOKMARK [1][-]{section.2.2}{Tecnolog\355as}{chapter.2}% 21
-\BOOKMARK [2][-]{subsection.2.2.1}{BeagleBone Black}{section.2.2}% 22
-\BOOKMARK [2][-]{subsection.2.2.2}{Bus SPI}{section.2.2}% 23
-\BOOKMARK [2][-]{subsection.2.2.3}{ADS1198}{section.2.2}% 24
-\BOOKMARK [2][-]{subsection.2.2.4}{Analizador l\363gico Saleae}{section.2.2}% 25
-\BOOKMARK [2][-]{subsection.2.2.5}{Simulador de pacientes}{section.2.2}% 26
-\BOOKMARK [2][-]{subsection.2.2.6}{Mult\355metro}{section.2.2}% 27
-\BOOKMARK [2][-]{subsection.2.2.7}{Otros recursos}{section.2.2}% 28
-\BOOKMARK [0][-]{chapter.3}{Desarrollo}{}% 29
-\BOOKMARK [1][-]{section.3.1}{Proyecto inicial}{chapter.3}% 30
-\BOOKMARK [2][-]{subsection.3.1.1}{Objetivos}{section.3.1}% 31
-\BOOKMARK [2][-]{subsection.3.1.2}{Alternativas}{section.3.1}% 32
-\BOOKMARK [1][-]{section.3.2}{Programaci\363n en tiempo real}{chapter.3}% 33
-\BOOKMARK [2][-]{subsection.3.2.1}{Decisiones de dise\361o}{section.3.2}% 34
-\BOOKMARK [1][-]{section.3.3}{Configuraci\363n hardware}{chapter.3}% 35
-\BOOKMARK [2][-]{subsection.3.3.1}{Device Tree}{section.3.3}% 36
-\BOOKMARK [2][-]{subsection.3.3.2}{Device Tree Overlay}{section.3.3}% 37
-\BOOKMARK [2][-]{subsection.3.3.3}{Conexiones f\355sicas}{section.3.3}% 38
-\BOOKMARK [1][-]{section.3.4}{Ecosistema software}{chapter.3}% 39
-\BOOKMARK [2][-]{subsection.3.4.1}{Inicizalizaci\363n ADS}{section.3.4}% 40
-\BOOKMARK [2][-]{subsection.3.4.2}{Comunicaci\363n SPI}{section.3.4}% 41
-\BOOKMARK [2][-]{subsection.3.4.3}{Guardado de muestras en memoria}{section.3.4}% 42
-\BOOKMARK [2][-]{subsection.3.4.4}{Lectura y transmisi\363n de muestras}{section.3.4}% 43
-\BOOKMARK [0][-]{chapter.4}{Aplicaci\363n Android}{}% 44
-\BOOKMARK [1][-]{section.4.1}{Env\355o de datos}{chapter.4}% 45
-\BOOKMARK [1][-]{section.4.2}{Recepci\363n de datos}{chapter.4}% 46
-\BOOKMARK [1][-]{section.4.3}{Mejoras desarrolladas}{chapter.4}% 47
-\BOOKMARK [1][-]{section.4.4}{Renovaci\363n visual}{chapter.4}% 48
-\BOOKMARK [1][-]{section.4.5}{Identificaci\363n complejo QRS}{chapter.4}% 49
-\BOOKMARK [1][-]{section.4.6}{Almacenamiento de ECGs}{chapter.4}% 50
-\BOOKMARK [2][-]{subsection.4.6.1}{Animaci\363n de ECGs}{section.4.6}% 51
-\BOOKMARK [1][-]{section.4.7}{Incidencias}{chapter.4}% 52
-\BOOKMARK [1][-]{section.4.8}{Ecosistema de streaming}{chapter.4}% 53
-\BOOKMARK [2][-]{subsection.4.8.1}{Caracter\355sticas del servidor}{section.4.8}% 54
-\BOOKMARK [2][-]{subsection.4.8.2}{Caracter\355sticas de la base de datos}{section.4.8}% 55
-\BOOKMARK [2][-]{subsection.4.8.3}{Interpretaci\363n de datos}{section.4.8}% 56
-\BOOKMARK [0][-]{chapter.5}{Resultados}{}% 57
-\BOOKMARK [1][-]{section.5.1}{Conclusiones}{chapter.5}% 58
-\BOOKMARK [1][-]{section.5.2}{Conclusions}{chapter.5}% 59
-\BOOKMARK [0][-]{appendix.Alph1}{Recursos software}{}% 60
-\BOOKMARK [1][-]{section.Alph1.1}{Device Tree Overlay}{appendix.Alph1}% 61
-\BOOKMARK [1][-]{section.Alph1.2}{Inicializaci\363n del ADS1198}{appendix.Alph1}% 62
-\BOOKMARK [1][-]{section.Alph1.3}{Comunicaci\363n SPI}{appendix.Alph1}% 63
-\BOOKMARK [1][-]{section.Alph1.4}{Guardado de muestras en memoria}{appendix.Alph1}% 64
-\BOOKMARK [1][-]{section.Alph1.5}{Lectura de muestras en memoria}{appendix.Alph1}% 65
-\BOOKMARK [0][-]{appendix.Alph2}{Recursos Android}{}% 66
-\BOOKMARK [1][-]{section.Alph2.1}{Aplicaci\363n Python}{appendix.Alph2}% 67
-\BOOKMARK [1][-]{section.Alph2.2}{Recepci\363n de datos}{appendix.Alph2}% 68
-\BOOKMARK [1][-]{section.Alph2.3}{C\363digo servidor}{appendix.Alph2}% 69
-\BOOKMARK [0][-]{appendix*.45}{Bibliograf\355a}{}% 70
-\BOOKMARK [0][-]{appendix*.45}{Lista de acr\363nimos}{}% 71
-\BOOKMARK [0][-]{fin.0}{Fin}{}% 72
+\BOOKMARK [0][-]{chapter.2}{Antecedentes}{}% 14
+\BOOKMARK [1][-]{section.2.1}{Electrocardiograma}{chapter.2}% 15
+\BOOKMARK [2][-]{subsection.2.1.1}{Estructura de un ECG}{section.2.1}% 16
+\BOOKMARK [2][-]{subsection.2.1.2}{Funcionamiento interno del coraz\363n}{section.2.1}% 17
+\BOOKMARK [2][-]{subsection.2.1.3}{Obtenci\363n del ECG}{section.2.1}% 18
+\BOOKMARK [2][-]{subsection.2.1.4}{Utilidades del ECG}{section.2.1}% 19
+\BOOKMARK [1][-]{section.2.2}{Tecnolog\355as}{chapter.2}% 20
+\BOOKMARK [2][-]{subsection.2.2.1}{BeagleBone Black}{section.2.2}% 21
+\BOOKMARK [2][-]{subsection.2.2.2}{Bus SPI}{section.2.2}% 22
+\BOOKMARK [2][-]{subsection.2.2.3}{ADS1198}{section.2.2}% 23
+\BOOKMARK [2][-]{subsection.2.2.4}{Analizador l\363gico Saleae}{section.2.2}% 24
+\BOOKMARK [2][-]{subsection.2.2.5}{Simulador de pacientes}{section.2.2}% 25
+\BOOKMARK [2][-]{subsection.2.2.6}{Mult\355metro}{section.2.2}% 26
+\BOOKMARK [2][-]{subsection.2.2.7}{Otros recursos}{section.2.2}% 27
+\BOOKMARK [0][-]{chapter.3}{Desarrollo}{}% 28
+\BOOKMARK [1][-]{section.3.1}{Proyecto inicial}{chapter.3}% 29
+\BOOKMARK [2][-]{subsection.3.1.1}{Objetivos}{section.3.1}% 30
+\BOOKMARK [2][-]{subsection.3.1.2}{Alternativas}{section.3.1}% 31
+\BOOKMARK [1][-]{section.3.2}{Programaci\363n en tiempo real}{chapter.3}% 32
+\BOOKMARK [2][-]{subsection.3.2.1}{Decisiones de dise\361o}{section.3.2}% 33
+\BOOKMARK [1][-]{section.3.3}{Configuraci\363n hardware}{chapter.3}% 34
+\BOOKMARK [2][-]{subsection.3.3.1}{Device Tree}{section.3.3}% 35
+\BOOKMARK [2][-]{subsection.3.3.2}{Device Tree Overlay}{section.3.3}% 36
+\BOOKMARK [2][-]{subsection.3.3.3}{Conexiones f\355sicas}{section.3.3}% 37
+\BOOKMARK [1][-]{section.3.4}{Ecosistema software}{chapter.3}% 38
+\BOOKMARK [2][-]{subsection.3.4.1}{Inicizalizaci\363n ADS}{section.3.4}% 39
+\BOOKMARK [2][-]{subsection.3.4.2}{Comunicaci\363n SPI}{section.3.4}% 40
+\BOOKMARK [2][-]{subsection.3.4.3}{Guardado de muestras en memoria}{section.3.4}% 41
+\BOOKMARK [2][-]{subsection.3.4.4}{Lectura y transmisi\363n de muestras}{section.3.4}% 42
+\BOOKMARK [0][-]{chapter.4}{Aplicaci\363n Android}{}% 43
+\BOOKMARK [1][-]{section.4.1}{Env\355o de datos}{chapter.4}% 44
+\BOOKMARK [1][-]{section.4.2}{Recepci\363n de datos}{chapter.4}% 45
+\BOOKMARK [1][-]{section.4.3}{Mejoras desarrolladas}{chapter.4}% 46
+\BOOKMARK [1][-]{section.4.4}{Renovaci\363n visual}{chapter.4}% 47
+\BOOKMARK [1][-]{section.4.5}{Identificaci\363n complejo QRS}{chapter.4}% 48
+\BOOKMARK [1][-]{section.4.6}{Almacenamiento de ECGs}{chapter.4}% 49
+\BOOKMARK [2][-]{subsection.4.6.1}{Animaci\363n de ECGs}{section.4.6}% 50
+\BOOKMARK [1][-]{section.4.7}{Incidencias}{chapter.4}% 51
+\BOOKMARK [1][-]{section.4.8}{Ecosistema de streaming}{chapter.4}% 52
+\BOOKMARK [2][-]{subsection.4.8.1}{Caracter\355sticas del servidor}{section.4.8}% 53
+\BOOKMARK [2][-]{subsection.4.8.2}{Caracter\355sticas de la base de datos}{section.4.8}% 54
+\BOOKMARK [2][-]{subsection.4.8.3}{Interpretaci\363n de datos}{section.4.8}% 55
+\BOOKMARK [0][-]{chapter.5}{Resultados}{}% 56
+\BOOKMARK [1][-]{section.5.1}{Conclusiones}{chapter.5}% 57
+\BOOKMARK [1][-]{section.5.2}{Conclusions}{chapter.5}% 58
+\BOOKMARK [0][-]{appendix.Alph1}{Recursos software}{}% 59
+\BOOKMARK [1][-]{section.Alph1.1}{Device Tree Overlay}{appendix.Alph1}% 60
+\BOOKMARK [1][-]{section.Alph1.2}{Inicializaci\363n del ADS1198}{appendix.Alph1}% 61
+\BOOKMARK [1][-]{section.Alph1.3}{Comunicaci\363n SPI}{appendix.Alph1}% 62
+\BOOKMARK [1][-]{section.Alph1.4}{Guardado de muestras en memoria}{appendix.Alph1}% 63
+\BOOKMARK [1][-]{section.Alph1.5}{Lectura de muestras en memoria}{appendix.Alph1}% 64
+\BOOKMARK [0][-]{appendix.Alph2}{Recursos Android}{}% 65
+\BOOKMARK [1][-]{section.Alph2.1}{Aplicaci\363n Python}{appendix.Alph2}% 66
+\BOOKMARK [1][-]{section.Alph2.2}{Recepci\363n de datos}{appendix.Alph2}% 67
+\BOOKMARK [1][-]{section.Alph2.3}{C\363digo servidor}{appendix.Alph2}% 68
+\BOOKMARK [0][-]{appendix.Alph3}{Contribuciones}{}% 69
+\BOOKMARK [1][-]{section.Alph3.1}{Contribuciones individuales}{appendix.Alph3}% 70
+\BOOKMARK [2][-]{subsection.Alph3.1.1}{Mario Michiels}{section.Alph3.1}% 71
+\BOOKMARK [2][-]{subsection.Alph3.1.2}{Cristian Pinto}{section.Alph3.1}% 72
+\BOOKMARK [0][-]{appendix*.45}{Bibliograf\355a}{}% 73
+\BOOKMARK [0][-]{appendix*.45}{Lista de acr\363nimos}{}% 74
+\BOOKMARK [0][-]{fin.0}{Fin}{}% 75

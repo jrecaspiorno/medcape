@@ -1,4 +1,4 @@
-\begin{thebibliography}{4}
+\begin{thebibliography}{6}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{elinux.org(2017)}]{BBBsite}
@@ -27,5 +27,20 @@
 \newblock {\em Desarrollo de dispositivos e-Health de bajo coste para Raspberry
   Pi\/}.
 \newblock 2013.
+
+\bibitem[{Wikipedia(2017{\natexlab{a}})}]{onda}
+{\sc Wikipedia}.
+\newblock {\em Electrocardiograma\/}.
+\newblock Versión electrónica, 2017{\natexlab{a}}.
+\newblock Disponible en \url{https://es.wikipedia.org/wiki/Electrocardiograma}
+  (último acceso,  Junio, 2017).
+
+\bibitem[{Wikipedia(2017{\natexlab{b}})}]{spi}
+{\sc Wikipedia}.
+\newblock {\em Serial Peripheral Interface\/}.
+\newblock Versión electrónica, 2017{\natexlab{b}}.
+\newblock Disponible en
+  \url{https://es.wikipedia.org/wiki/Serial_Peripheral_Interface} (último
+  acceso,  Junio, 2017).
 
 \end{thebibliography}

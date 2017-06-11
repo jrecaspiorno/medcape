@@ -35,7 +35,7 @@ La comunicación por socket no es más que el mecanismo por el cual estos dos prog
 \figura{Vectorial/dongle}{width=0.7\textwidth}{fig:dongle}%
 {Dongle Bluetooth 4.0 CSR utilizado en la BBB}
 
-Para que las muestras sean correctamente leídas es necesario que la BBB disponga de conexión Bluetooth, algo que de lo que de forma nativa no dispone. Para ello ha sido necesario utilizar un periférico que le aportase esta característica a la placa. En concreto, el periférico que hemos utilizado se denomina Bluetooth CSR 4.0 Dongle, y puede apreciarse de forma visual en la [Fig \ref{fig:dongle}]. 
+Para que las muestras sean correctamente leídas es necesario que la BBB disponga de conexión Bluetooth, algo que de lo que de forma nativa no dispone. Para ello ha sido necesario utilizar un periférico que le aportase esta característica a la placa. En concreto, el periférico que hemos utilizado se denomina Bluetooth CSR 4.0 Dongle, y puede apreciarse de forma visual en la [Fig \ref{fig:dongle}] \footnote{Fuente original: \href{http://es.dhgate.com/product/high-quality-bluetooth-4-0-usb-2-0-csr4-0/260526060.html}{http://es.dhgate.com/product/high-quality-bluetooth-4-0-usb-2-0-csr4-0/260526060.html}}. 
 
 Ha sido necesario configurar y emparejar este periférico con la BBB para que esta pudiese disponer de conexión Bluetooth. La configuración se ha realizado mediante la introducción de comandos en el terminal Debian de la BBB mediante el protocolo \texttt{ssh}, ya que la comunicación con la BBB no puede realizarse mediante interfaz visual.
 

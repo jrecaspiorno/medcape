@@ -66,12 +66,7 @@ En esta sección se tratará de dar una visión global del proyecto al lector con e
 \figura{Vectorial/global}{width=1.1\textwidth}{fig:global}%
 {Visión global del poyecto}
 
-El proceso (se ilustra en la [Fig \ref{fig:global}])comienza con la colocación apropiada de electrodos en el cuerpo del paciente, de forma que sea posible monitorizar sus señales biométricas. Estas señales captadas del paciente, son originalmente de carácter analógico. La intervención del ADS1198 es crucial para realizar el tratamiento de esta señal, y su conversión a formato digital. La señal digital es captada por la BeagleBone Black, y por un lado es almacenada en un fichero binario, y por otro es enviada mediante Bluetooth a una aplicación Android (en este caso la app del paciente). La app del paciente envía la información que recopila al servidor mediante una conexión a internet, y es el servidor el que reenvía esa información a otra aplicación Android, en este caso a la aplicación del doctor. De esta forma el doctor dispone de la información cardíaca del paciente para poder analizarla e interpretarla.
-
-%-------------------------------------------------------------------
-\section{Contribuciones}
-%-------------------------------------------------------------------
-\label{cap1:sec:contribuciones}
+El proceso (se ilustra en la [Fig \ref{fig:global}]) comienza con la colocación apropiada de electrodos en el cuerpo del paciente, de forma que sea posible monitorizar sus señales biométricas. Estas señales captadas del paciente, son originalmente de carácter analógico. La intervención del ADS1198 es crucial para realizar el tratamiento de esta señal, y su conversión a formato digital. La señal digital es captada por la BeagleBone Black, y por un lado es almacenada en un fichero binario, y por otro es enviada mediante Bluetooth a una aplicación Android (en este caso la app del paciente). La app del paciente envía la información que recopila al servidor mediante una conexión a internet, y es el servidor el que reenvía esa información a otra aplicación Android, en este caso a la aplicación del doctor. De esta forma el doctor dispone de la información cardíaca del paciente para poder analizarla e interpretarla.
 
 
 

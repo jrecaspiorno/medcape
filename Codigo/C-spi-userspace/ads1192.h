@@ -17,8 +17,8 @@
 #define N_DATA       (2+N_SAPLES*N_BPS)     // Status + Bytes per Int
 
 
-//#define ADS_SPI_HZ        300000        // Conservador
-#define ADS_SPI_HZ       1000000        // Máximo teórico SCLK=2*CLK=2*512=1024KHz
+#define ADS_SPI_HZ        300000        // Conservador
+//#define ADS_SPI_HZ       1000000        // Máximo teórico SCLK=2*CLK=2*512=1024KHz
 //#define ADS_SPI_HZ       3000000        // Parece funcionar...
 //#define ADS_SPI_HZ      10000000        // Peta un poco...
 

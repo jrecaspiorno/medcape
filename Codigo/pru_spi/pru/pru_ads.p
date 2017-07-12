@@ -26,10 +26,10 @@
 //Registro r31 sirve para generar interrupciones.
 //Hay que poner el bit 5 a 1 y en los bits [3-0] el número de interrupción (10 xxxx)
 // PRU0_R31_VEC_VALID | PRU_EVTOUT_0 = 10 0011
-// PRU0_R31_VEC_VALID | PRU_EVTOUT_0 = 10 0100
-#define PRU0_R31_VEC_VALID  32      // allows notification of program completion
-#define PRU_EVTOUT_0        3       // the event number that is sent back
-#define PRU_EVTOUT_1        4       //allows notification of sample ready in RAM to be given to host program(in C)
+// PRU0_R31_VEC_VALID | PRU_EVTOUT_1 = 10 0100
+#define PRU0_R31_VEC_VALID  32      // allows notification of events
+#define PRU_EVTOUT_0        3       // Evento de finalización
+#define PRU_EVTOUT_1        4       // Evento de notificación de tarea completada
 
 
 //
@@ -58,7 +58,9 @@ M_DELAY:
 #define CLK_DEL             r0      // 1KHz
 #define tmp                 r4      // tmp
 #define pRAM                r5      // RAM pointer
-#define nMSGs               r6      // Iterator
+#define iter                r6      // Iterator
+#define sNumber             r7      // Sample number
+    
    
 //--------------------------------------------------------------------------------
 //  Registers used:
@@ -90,22 +92,22 @@ MAIN:
 
 MORE_MSGs:
     // clear interrupt
-    MOV     r4, 21
-    SBCO    r4, CONST_PRUSSINTC, SICR_OFFSET, 4
+    MOV     tmp, 21
+    SBCO    tmp, CONST_PRUSSINTC, SICR_OFFSET, 4
     // wait for interrupt
     WBS     r31, #30
     // clear interrupt
-    MOV     r4, 21
-    SBCO    r4, CONST_PRUSSINTC, SICR_OFFSET, 4
+    MOV     tmp, 21
+    SBCO    tmp, CONST_PRUSSINTC, SICR_OFFSET, 4
 
     MOV     pRAM, 4                 // load the base address
-    LBBO    nMSGs,   pRAM, 0, 4     // load nMSGs, 4Bytes from pRAM+4
+    LBBO    iter,   pRAM, 0, 4      // load nMsgs, 4Bytes from pRAM+4
     MOV     pRAM, 8
-    QBEQ    START_DATA, nMSGs, 0    // No MSGs?
+    QBEQ    START_DATA, iter, 0     // No MSGs?
 
    
 NEXT_MSG:    
-    QBEQ    FIN_MSGs, nMSGs, 0          // More MSGs?
+    QBEQ    FIN_MSGs, iter, 0          // More MSGs?
 
         // Send MSG
         LBBO    r1, pRAM, 0, 8          // r1=bits to be sent, r2=data (from pRAM)
@@ -113,7 +115,7 @@ NEXT_MSG:
         CALL    FUNCT_SPI 
         SBBO    r3, pRAM, 4, 4          // r3=reply -> en pRAM[data]
 
-        SUB     nMSGs, nMSGs, 1         // iterator--
+        SUB     iter, iter, 1           // iterator--
         LBBO    r1, pRAM, 8, 4          // delay
         ADD     pRAM, pRAM, 12          // Pointer+=12Bytes
         
@@ -129,7 +131,7 @@ NEXT_MSG:
         
 FIN_MSGs:
         
-        MOV     r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1  //Generamos evento 1
+        MOV     r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1  // Evento de mensajes enviados
         JMP     MORE_MSGs 
 
 START_DATA:    
@@ -145,41 +147,68 @@ START_DATA:
     DELAY_MACRO tmp, CLK_DEL
 
     // load new CLK_DEL
-    MOV     pRAM, 0
+    MOV     pRAM, 0                 // load the base address of Data RAM0
     LBBO    CLK_DEL, pRAM, 0, 4
 
-    
+    // clear interrupt
+    MOV     tmp, 21
+    SBCO    tmp, CONST_PRUSSINTC, SICR_OFFSET, 4
+
     SET     START
-    MOV     r2, 0
-    MOV     pRAM, 0                 // load the base address
+    MOV     r2,   0                 // Data for MOSI
+    MOV     sNumber, 0              // Sample Number
+    
+NEXT_BANK:    
+    MOV     iter, 0                 // nSamples in the buffer
 
 NEXT_SAMPLE:
-    //Wait for data
-    WBC     nDRDY
+    
+    WBC     nDRDY                   //Wait for data
 
+    // End of sampling inte received?
+    QBBS    END, r31, #30
+
+    SBBO    sNumber, pRAM, 0, 2     // Sample number(2B) en pRAM
+    
     CLR     nCS
 
     //Read status
     MOV     r1, 16
     CALL    FUNCT_SPI 
-    SBBO    r3, pRAM, 0, 2          // Status(2B) en pRAM
+    SBBO    r3, pRAM, 2, 2          // Status(2B) en pRAM
     //Read data
     MOV     r1, 32
     CALL    FUNCT_SPI 
-    SBBO    r3, pRAM, 2, 4          // Channles(2B*2Ch) en pRAM
+    SBBO    r3, pRAM, 4, 4          // Channles(2B*2Ch) en pRAM
 
     SET     nCS
-    ADD     pRAM, pRAM, 6
+    ADD     pRAM, pRAM, 8
+    ADD     iter, iter, 1
+    ADD     sNumber, sNumber, 1
 
-    QBGT    NEXT_SAMPLE, pRAM, (6*10)
-
-    CLR     START
     
+    QBBC    NEXT_SAMPLE, iter.t10   //2^10 muestras leidas? (6KiB)
+
+    MOV     r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_1  // Evento de muestras leídas
+
+    // Cambiamos de banco
+    //QBBS    RAM0, pRAM.t13          // Banco 0??
+    QBBS    RAM0, pRAM.t14          // Banco 0?? con banco lleno!!
+    MOV     pRAM, 1                 // load the base address of Data RAM1
+    LSL     pRAM, pRAM, 13
+    JMP     NEXT_BANK
+    
+RAM0:    
+    MOV     pRAM, 0                 // load the base address of Data RAM0
+    JMP     NEXT_BANK
+
+END:
+   
+    CLR     START
 
     DELAY_MACRO tmp, DELAY_1S
-       
     
-    MOV     r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_0  //Generamos evento 0
+    MOV     r31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_0  //Generamos evento de finalización
     HALT                            // End of program
 
 

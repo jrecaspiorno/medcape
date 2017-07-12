@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <time.h>
+#include <string.h>
+#include <time.h>
 #include <prussdrv.h>
 #include <pruss_intc_mapping.h>
 
@@ -19,6 +21,11 @@
 #define PRU0_DATA_RAM1 AM33XX_DATARAM1_PHYS_BASE
 
 #define SPI_DATA_LENG   7
+
+#define BYTES_PER_SAMPLE        8               //Bytes per sample (nSumber+STATUS+CH1+CH2) 16bits each
+#define SAMPLES_PER_BANK        (1<<10)         //Complete camples per data bank
+#define N_BANKS                 4               //Data banks to be sampled
+
 
 // Freq=1/( (2xCLK_LEVEL_DELAY) × (2×5×10^(−9)) )
 enum FREQUENCY {    // measured and calibrated, but can be calculated
@@ -37,13 +44,7 @@ enum FREQUENCY {    // measured and calibrated, but can be calculated
 	FREQ_1kHz = 49995
 };
 
-static uint32_t *pru1_data0;
-
-
-
-
 int config_ads(uint32_t *pru1_data0, int spi_period, uint8_t *id, uint8_t *config1, uint8_t *config2){
-
     int i, j, id_index;
     
     i=0;
@@ -89,16 +90,19 @@ int config_ads(uint32_t *pru1_data0, int spi_period, uint8_t *id, uint8_t *confi
 
 
 void ads_set_rate_intref(uint32_t *pru1_data0, uint8_t *config1, uint8_t *config2, uint8_t sample_rate){
-
+    uint8_t nRegs;
+    
     pru1_data0[1]=1;
 
     *config1=(*config1&0xf8)|(sample_rate&0x7);
     *config2=*config2|0x20;
+    
+    nRegs=2;
     //nBits
-    pru1_data0[2]=4*8;
+    pru1_data0[2]=(nRegs+2)*8;
     //(Write register|CONFIG1) | (nregs-1) | DATA1 | DATA2
     pru1_data0[3]=  ((WREG|CONFIG1)<<24) | 
-                    ((1-1)<<16)          | 
+                    ((nRegs-1)<<16)      | 
                     (*config1<<8)        |
                     (*config2);
     //Delay
@@ -113,46 +117,75 @@ void ads_set_rate_intref(uint32_t *pru1_data0, uint8_t *config1, uint8_t *config
     
 }
 
-void end_config_ads(uint32_t *pru1_data0){
-    pru1_data0[0]=FREQ_100kHz;
+void ads_test_signal(uint32_t *pru1_data0, uint8_t *config2){
+    uint8_t nRegs;
+    
+    pru1_data0[1]=2;
+
+    *config2=*config2|0x03;
+    nRegs=1;
+    //nBits
+    pru1_data0[2]=(nRegs+2)*8;
+    //(Write register|CONFIG2) | (nregs-1) | DATA1
+    pru1_data0[3]=  ((WREG|CONFIG2)<<16) | 
+                    ((nRegs-1)<<8)       | 
+                    (*config2);
+    //Delay
+    pru1_data0[4]=8;
+
+    nRegs=2;
+    //nBits
+    pru1_data0[5]=(nRegs+2)*8;
+    //(Write register|CH1SET) | (nregs-1) | DATA1
+    pru1_data0[6]=  ((WREG|CH1SET)<<24)   | 
+                    ((nRegs-1)<<16)       | 
+                    (0x05<<8)             | 
+                    (0x05);
+    //Delay
+    pru1_data0[7]=8;
+       
+    
+    //Send an event to the PRU
+    prussdrv_pru_send_event(ARM_PRU0_INTERRUPT);
+
+    //wait till it will be completed
+    prussdrv_pru_wait_event(PRU_EVTOUT_1);
+    prussdrv_pru_clear_event(PRU_EVTOUT_1,  PRU1_ARM_INTERRUPT  );
+}
+
+void end_config_ads(uint32_t *pru1_data0, int spi_period){
+    pru1_data0[0]=spi_period;
     pru1_data0[1]=0;
     //Send an event to the PRU
     prussdrv_pru_send_event(ARM_PRU0_INTERRUPT);
 }
 
-
-    
-
-
 int main(int argc, char *argv[]) {
-    int opt, spi_period=FREQ_25kHz, tmp_srate=1000, sample_rate=FREQ_1kHz;
-    int secs=20, test_signal=0, i;
+    uint32_t *pru1_data0, *pru1_data1;
+    int opt, tmp_srate=1000, sample_rate=FREQ_1kHz;
+    int test_signal=1, i, j;
     uint8_t id, config1, config2;
     uint16_t *pRAM;
-
+    time_t current_time;
+    struct tm *time_info;
+    char time_string[30];  // space for "YYYY-MM-DD_HH-MM-SS\0"
+    FILE *pf_data;
+    
     if(getuid()!=0){
         printf("You must run this program as root. Exiting.\n");
         exit(EXIT_FAILURE);
     }
 
     //Parse command-line options
-    while((opt = getopt(argc, argv, "ts:r:hl:")) != -1) {
+    while((opt = getopt(argc, argv, "tr:h:")) != -1) {
         switch(opt) {
             case 'h':
-                printf("%s [-t] [-s SPI_PERIOD] [-r SAMPLE_RATE]\n", argv[0]);
+                printf("%s [-t] [-r SAMPLE_RATE]\n", argv[0]);
                 printf("-t:\t\t\ttest signal enabled\n");
-                printf("-s SPI_PERIOD in 20ns:\t\t Freq = 1/(SPI_PERIOD*20ns)\n");
                 printf("-r SAMPLE_RATE:\t\t125, 250, 500, 1000, 2000, 4000, 8000 [Hz]\n");
                 exit(0);
             case 't':
                 test_signal=1;
-                break;
-            case 's':
-                spi_period=atoi(optarg);
-                if(spi_period>FREQ_500kHz || spi_period<FREQ_12_5MHz){
-                    printf("SPI freq. not supported\n");
-                    exit(-1);
-                }
                 break;
             case 'r':
                 tmp_srate=atoi(optarg);
@@ -176,15 +209,20 @@ int main(int argc, char *argv[]) {
                     exit(-1);
                 }
                 break;
-                
-            case 'l':
-                secs=atoi(optarg);
-                break;
             default:
                 printf("Error parsing: %c\n", (char)opt);
                 exit(-1);
         }
     }
+
+    time(&current_time);
+    time_info=localtime(&current_time);
+    strftime(time_string, sizeof(time_string), "%F_%H-%M-%S.dat", time_info);
+
+    if ( (pf_data=fopen(time_string, "w")) == NULL ) {
+        perror("Error al fichero de datos");
+        exit(EXIT_FAILURE);
+    }    
     
     // Initialize structure used by prussdrv_pruintc_intc
     // PRUSS_INTC_INITDATA is found in pruss_intc_mapping.h
@@ -199,12 +237,21 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // set up the pointer to PRU memory
+    // set up the pointer to PRU0 RAM0 bank
     if( prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, (void**)&pru1_data0) == -1 ){
-        printf("PRU map error.\n");
+        printf("PRU RAM0 map error.\n");
         exit(EXIT_FAILURE);
     }
 
+    // set up the pointer to PRU0 RAM1 bank
+    if( prussdrv_map_prumem(PRUSS0_PRU1_DATARAM, (void**)&pru1_data1) == -1 ){
+        printf("PRU RAM1 map error.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    memset(pru1_data0, 0x00, 8192);
+    memset(pru1_data1, 0x00, 8192);
+    
     if( prussdrv_exec_program (0, "pru_ads.bin") == -1 ){
         printf("PRU exec error.\n");
         exit(EXIT_FAILURE);
@@ -212,7 +259,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     
     // Especificamos velocidad de transmisión y leemos regtistros de configuración
-    if(config_ads(pru1_data0, spi_period, &id, &config1, &config2)){
+    if(config_ads(pru1_data0, FREQ_25kHz, &id, &config1, &config2)){
         printf("Error inicializando ADS\n");
         exit(-1);
     }
@@ -224,23 +271,44 @@ int main(int argc, char *argv[]) {
    
  
     //Set Test signal
+    if(test_signal){
+        printf("Set test signals\n");
+        ads_test_signal(pru1_data0, &config2);
+    }
+
     //Print POR registers
     
     //End config and start auto sample
-    end_config_ads(pru1_data0);
+    end_config_ads(pru1_data0,FREQ_100kHz);
+    
+    //4*2^4*6Bytes
+    for(i=0; i<N_BANKS; i++){
+        //wait till it will be completed
+        prussdrv_pru_wait_event(PRU_EVTOUT_1);
+        prussdrv_pru_clear_event(PRU_EVTOUT_1,  PRU1_ARM_INTERRUPT);
+
+        pRAM=(i%2)?(uint16_t*)pru1_data1:(uint16_t*)pru1_data0;
+        
+        fwrite(pRAM, BYTES_PER_SAMPLE*SAMPLES_PER_BANK, 1, pf_data);
+        
+        //printf("Data Bank RAM%d:\n", i%2);
+        //for(j=0; j<(4*SAMPLES_PER_BANK); j+=4){
+        //    printf("sNumber: 0x%04x Status: 0x%04x Ch1: 0x%04x Ch2: 0x%04x\n", pRAM[j], pRAM[j+1], pRAM[j+2], pRAM[j+3]);
+        //}
+    }
     
     printf("Finishing...\n");
+
+    //Send an event to the PRU
+    prussdrv_pru_send_event(ARM_PRU0_INTERRUPT);
+   
+
     // Wait for event completion from PRU
     int n = prussdrv_pru_wait_event (PRU_EVTOUT_0);  // This assumes the PRU generates an interrupt
                                                      // connected to event out 0 immediately before halting
     prussdrv_pru_clear_event (PRU_EVTOUT_0,  PRU0_ARM_INTERRUPT  );
     printf("PRU program completed, event number %d.\n", n);
 
-    pRAM=(uint16_t*)pru1_data0;
-    printf("Data:\n");
-    for(i=0; i<10*3; i+=3){
-        printf("Status: 0x%04x Ch1: 0x%04x Ch2: 0x%04x\n", pRAM[i], pRAM[i+1], pRAM[i+2]);
-    }
 
     // Disable PRU and close memory mappings
     if( prussdrv_pru_disable(0) == -1 ){

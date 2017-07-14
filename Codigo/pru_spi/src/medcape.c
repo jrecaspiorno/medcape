@@ -162,7 +162,7 @@ void end_config_ads(uint32_t *pru1_data0, int spi_period){
 
 int main(int argc, char *argv[]) {
     uint32_t *pru1_data0, *pru1_data1;
-    int opt, tmp_srate=1000, sample_rate=FREQ_1kHz;
+    int opt, tmp_srate, sample_rate, spi_freq;
     int test_signal=1, i, j;
     uint8_t id, config1, config2;
     uint16_t *pRAM;
@@ -170,6 +170,11 @@ int main(int argc, char *argv[]) {
     struct tm *time_info;
     char time_string[30];  // space for "YYYY-MM-DD_HH-MM-SS\0"
     FILE *pf_data;
+
+    //Especificamos Sample rate por defecto
+    //sample_rate=SRATE_1K;
+    sample_rate=SRATE_8K;
+
     
     if(getuid()!=0){
         printf("You must run this program as root. Exiting.\n");
@@ -215,6 +220,9 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    //Velocidad del bus SPI en función de velocidad de muestreo (para poder leer todas las muestras)
+    spi_freq=(sample_rate>SRATE_1K)?FREQ_500kHz:FREQ_100kHz;
+    
     time(&current_time);
     time_info=localtime(&current_time);
     strftime(time_string, sizeof(time_string), "%F_%H-%M-%S.dat", time_info);
@@ -279,7 +287,7 @@ int main(int argc, char *argv[]) {
     //Print POR registers
     
     //End config and start auto sample
-    end_config_ads(pru1_data0,FREQ_100kHz);
+    end_config_ads(pru1_data0,spi_freq);
     
     //4*2^4*6Bytes
     for(i=0; i<N_BANKS; i++){
